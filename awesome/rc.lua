@@ -456,7 +456,7 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     keydoc.group("spawn commands"),
-    awful.key({ modkey,           }, "q", function () scratch.drop("urxvt -background rgba:0000/0000/0000/F000","center", "left",0.4, 0.80, true, 1) end,"drop left-in scratch pad"),
+    awful.key({ modkey,           }, "q", function () scratch.drop("urxvt -background rgba:0000/0000/0000/F000 -e bash -ic 'screen -xRR'","center", "left",0.4, 0.80, true, 1) end,"drop left-in scratch pad"),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
     awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn("iceweasel -ProfileManager") end,"spawn iceweasel"),
     awful.key({ modkey, "Control" }, "r", awesome.restart,"restart awesome (Xephyr?)")
