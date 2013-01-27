@@ -433,10 +433,10 @@ globalkeys = awful.util.table.join(
               end,"send tag to next screen"),
     awful.key({modkey},          ".", shifty.add,"create new tag"),
     awful.key({modkey},          "p", shifty.rename,"rename tag"),
-    awful.key({modkey, "Shift"}, ".", -- nopopup new tag
+    awful.key({modkey, "Shift"}, ".", 
     function()
-        shifty.add({nopopup = true})
-    end,"create new tag (nopopup)"),
+        shifty.add({name = 'emerg'})
+    end,"create new tag called emerg"),
 
 
 
