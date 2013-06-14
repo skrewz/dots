@@ -377,12 +377,30 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,"view previously selected tag"),
     awful.key({ modkey,           }, "F2", keydoc.display,"display this keydoc"),
     -- keydoc.group("awesome keys"),
-    awful.key({ modkey,           }, "b",     function () awful.tag.incmwfact(-0.05)    end,"decrease mwfact"),
-    awful.key({ modkey,           }, "m",     function () awful.tag.incmwfact( 0.05)    end,"increase mwfact"),
-    awful.key({ modkey, "Shift"   }, "b",     function () awful.tag.incnmaster( 1)      end,"increase nmaster"),
-    awful.key({ modkey, "Shift"   }, "m",     function () awful.tag.incnmaster(-1)      end,"decrease nmaster"),
-    awful.key({ modkey, "Control" }, "b",     function () awful.tag.incncol( 1)         end,"increase ncol"),
-    awful.key({ modkey, "Control" }, "m",     function () awful.tag.incncol(-1)         end,"decrease ncol"),
+    awful.key({ modkey,           }, "b",     function ()
+      awful.tag.incmwfact(-0.05)
+      naughty.notify({ title = "Decreased:  master width factor", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+    end,"decrease master width factor"),
+    awful.key({ modkey,           }, "m",     function ()
+      awful.tag.incmwfact( 0.05)
+      naughty.notify({ title = " Increased: master width factor", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+    end,"increase master width factor"),
+    awful.key({ modkey, "Shift"   }, "b",     function ()
+      awful.tag.incnmaster( 1)
+      naughty.notify({ title = "Increased: number of master windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+    end,"increase number of master windows"),
+    awful.key({ modkey, "Shift"   }, "m",     function ()
+      awful.tag.incnmaster(-1)
+      naughty.notify({ title = "Decreased: number of master windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+    end,"decrease number of master windows"),
+    awful.key({ modkey, "Control" }, "b",     function ()
+      awful.tag.incncol( 1)
+      naughty.notify({ title = "Increased: number of column windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+    end,"increase number of column windows"),
+    awful.key({ modkey, "Control" }, "m",     function ()
+      awful.tag.incncol(-1)
+      naughty.notify({ title = "Decreased: number of column windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+    end,"decrease number of column windows"),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end,"cycle through layouts"),
     -- Directional focus with right hand of dvorak layout:
     keydoc.group("directional focus keymaps"),
@@ -433,6 +451,7 @@ globalkeys = awful.util.table.join(
               end,"send tag to next screen"),
     awful.key({modkey},          ".", shifty.add,"create new tag"),
     awful.key({modkey},          "p", shifty.rename,"rename tag"),
+    -- Circumvent for when you don't want your window manager in your way:
     awful.key({modkey, "Shift"}, ".", 
     function()
         shifty.add({name = 'emerg'})
@@ -448,6 +467,7 @@ globalkeys = awful.util.table.join(
 
     keydoc.group("special keys"),
     awful.key({                   }, "#9", function () awful.util.spawn("xscreensaver-command -lock") end,"lock screen"),
+    -- These bindings do it for my standard
     awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"toggle mute"),
     awful.key({                   }, "#123", function () awful.util.spawn("amixer set PCM 2dB+"); awful.util.spawn("amixer set Master unmute") end,"increase pcm volume"),
     awful.key({                   }, "#122", function () awful.util.spawn("amixer set PCM 2dB-"); awful.util.spawn("amixer set Master unmute") end,"decrease pcm volume"),
@@ -456,7 +476,7 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     keydoc.group("spawn commands"),
-    awful.key({ modkey,           }, "q", function () scratch.drop("urxvt -background rgba:0000/0000/0000/F000 -e bash -ic 'screen -xRR'","center", "left",0.4, 0.80, true, 1) end,"drop left-in scratch pad"),
+    awful.key({ modkey,           }, "q", function () scratch.drop("urxvt -background rgba:0000/0000/0000/F000 -e bash -ic 'ssh -t skrewz@slovener.hosts.skrewz.net screen -xRR weechat'","center", "left",0.4, 0.80, true, 1) end,"drop left-in scratch pad"),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
     awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn("iceweasel -ProfileManager") end,"spawn iceweasel"),
     awful.key({ modkey, "Control" }, "r", awesome.restart,"restart awesome (Xephyr?)")
@@ -477,18 +497,43 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
+    keydoc.group("further client interactions"),
     -- awful.key({ modkey,           }, "f",      function (c) scratch.pad.set(c, 0.9999, 0.20, true, 1) end ),
-    awful.key({ modkey,           }, "c",      function (c) c:kill()                         end),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
-    --awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
-    --awful.key({ modkey,           }, "n",      function (c) c.minimized = not c.minimized    end),
-    awful.key({ modkey,           }, "f",
-        function (c)
-            c.maximized_horizontal = not c.maximized_horizontal
-            c.maximized_vertical   = not c.maximized_vertical
-        end)
+    awful.key({ modkey,           }, "c",      function (c) c:kill()                         end,"kill client"),
+    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,"toggle floating for client"),
+    -- awful.key({ modkey, "Shift"   }, "Return", awful.client.setmaster                           ,"make client master"),
+    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,"swap client with master"),
+    awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end,"redraw current client"),
+    awful.key({ modkey,           }, "w",      function (c)
+      naughty.notify({ title = "Window ID", text = "Client: "..
+      "class = " .. c.class .. "\n" ..
+      "name = " .. c.name .. "\n" ..
+      "window id = " .. c.window .. "\n" ..
+      "type = " .. tostring(c.type) .. "\n" ..
+      "instance = " .. tostring(c.instance) .. "\n" ..
+      ".", timeout = 10 })
+    end,"toggle on-top for client"),
+    awful.key({ modkey, "Shift"   }, "w", function (c) 
+      -- Attempt at getting initial sizing for this one too:
+      --  naughty.notify({ title = "Debug", text = "Now: size_hints=" .. c.size_hints.user_position .. ".", timeout = 2 })
+      if c.sticky == true then
+        c.sticky = false
+        c.ontop = false
+        c.size_hints_honor = false
+        awful.client.floating.set(c,false)
+      else
+        c.sticky = true
+        c.ontop = true
+        c.size_hints_honor = true
+        awful.client.floating.set(c,true)
+      end
+      naughty.notify({ title = "Omni+mini+sticky", text = "For this client: " .. tostring(c.sticky) .. ".", timeout = 2 })
+    end,"minimal-omnipresent-mode for client"),
+    --awful.key({ modkey,           }, "n",      function (c) c.minimized = not c.minimized    end,"minimze client"),
+    awful.key({ modkey,           }, "f", function (c)
+      c.maximized_horizontal = not c.maximized_horizontal
+      c.maximized_vertical   = not c.maximized_vertical
+    end, "toggle fullscreen for client")
 )
 
 -- }}}
@@ -656,8 +701,8 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
-    { rule = { class = "gimp" },
-      properties = { floating = true } },
+    -- { rule = { class = "gimp" },
+    --   properties = { floating = true } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
