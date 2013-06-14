@@ -476,7 +476,7 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     keydoc.group("spawn commands"),
-    awful.key({ modkey,           }, "q", function () scratch.drop("urxvt -background rgba:0000/0000/0000/F000 -e bash -ic 'ssh -t skrewz@slovener.hosts.skrewz.net screen -xRR weechat'","center", "left",0.4, 0.80, true, 1) end,"drop left-in scratch pad"),
+    awful.key({ modkey,           }, "q", function () scratch.drop("bin/skrewz-left-scratch.sh","center", "left",0.4, 0.80, true, 2) end,"drop left-in scratch pad"),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
     awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn("iceweasel -ProfileManager") end,"spawn iceweasel"),
     awful.key({ modkey, "Control" }, "r", awesome.restart,"restart awesome (Xephyr?)")
@@ -539,10 +539,10 @@ clientkeys = awful.util.table.join(
 -- }}}
 
 -- Compute the maximum number of digit we need, limited to 9
-keynumber = 0
-for s = 1, screen.count() do
-   keynumber = math.min(9, math.max(#tags[s], keynumber));
-end
+-- keynumber = 0
+-- for s = 1, screen.count() do
+--    keynumber = math.min(9, math.max(#tags[s], keynumber));
+-- end
 
 --for s = 1, screen.count() do
 --    globalkeys = awful.util.table.join(globalkeys,
