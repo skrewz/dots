@@ -478,7 +478,7 @@ globalkeys = awful.util.table.join(
     keydoc.group("spawn commands"),
     awful.key({ modkey,           }, "q", function () scratch.drop("bin/skrewz-left-scratch.sh","center", "left",0.4, 0.80, true, 2) end,"drop left-in scratch pad"),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
-    awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn("iceweasel -ProfileManager") end,"spawn iceweasel"),
+    awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn("chromium") end,"spawn chromium"),
     awful.key({ modkey, "Control" }, "r", awesome.restart,"restart awesome (Xephyr?)")
     -- awful.key({ modkey, "Shift"   }, "q", awesome.quit), -- Don't want this. :S
 
@@ -553,10 +553,10 @@ clientkeys = awful.util.table.join(
 --end
 
 globalkeys = awful.util.table.join(globalkeys,keydoc.group("screen manipulation"))
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(2) end,"focus screen 2"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,2) end,"move to screen 2"))
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(1) end,"focus screen 1"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,1) end,"move to screen 1"))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(1) end,"focus screen 1"))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,1) end,"move to screen 1"))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(2) end,"focus screen 2"))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,2) end,"move to screen 2"))
 globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "e", function ()           awful.screen.focus(3) end,"focus screen 3"))
 clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,3) end,"move to screen 3"))
 globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "u", function ()           awful.screen.focus(4) end,"focus screen 4"))
