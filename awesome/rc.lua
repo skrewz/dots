@@ -45,6 +45,12 @@ shifty.config.tags = { -- {{{
 	ncols       = 2,
 	init        = true,
     },
+    netw = {
+        layout      = awful.layout.suit.tile,
+        mwfact      = 0.65,
+	ncols       = 2,
+	init        = true,
+    },
 --    w1 = {
 --        mwfact    = 0.60,
 --        init      = true,
