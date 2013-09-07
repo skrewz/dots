@@ -36,20 +36,20 @@ shifty.config.tags = { -- {{{
     media = {
         layout      = awful.layout.suit.tile,
         mwfact      = 0.65,
-	ncols       = 2,
-	init        = true,
+        ncols       = 2,
+        init        = true,
     },
     browsdump = {
         layout      = awful.layout.suit.tile,
         mwfact      = 0.65,
-	ncols       = 2,
-	init        = true,
+        ncols       = 2,
+        init        = true,
     },
     netw = {
         layout      = awful.layout.suit.tile,
         mwfact      = 0.65,
-	ncols       = 2,
-	init        = true,
+        ncols       = 2,
+        init        = true,
     },
 --    w1 = {
 --        mwfact    = 0.60,
@@ -355,22 +355,22 @@ function search_tag_interactive ()
 
     -- http://awesome.naquadah.org/doc/api/modules/naughty.html <- awful.prompt.run luadoc
     awful.prompt.run({
-	fg_cursor = '#ffffff', bg_cursor = '#000000', ul_cursor = "single",
-	prompt = 'Tag-search: ', text = ""},
-	mypromptbox[mouse.screen].widget,
-	-- shifty.taglist[scr][shifty.tag2index(scr, t) * 2],
-	function (name)
-	    if name:len() > 0 then
-		local all_found = shifty.fuzzy_name2tags(name)
-		if all_found then 
-		    local found = all_found[1]
-		    naughty.notify({ title = "Changed tag", text = "entered: \"" .. name .. "\" which yields " .. (#all_found) .. " tag(s); selected " .. found.name, timeout = 4 })
-		    awful.tag.viewonly(found)
-		end
-	    end
-	end,
-	shifty.completion,
-	awful.util.getdir("cache") .. "/history_tags"
+        fg_cursor = '#ffffff', bg_cursor = '#000000', ul_cursor = "single",
+        prompt = 'Tag-search: ', text = ""},
+        mypromptbox[mouse.screen].widget,
+        -- shifty.taglist[scr][shifty.tag2index(scr, t) * 2],
+        function (name)
+            if name:len() > 0 then
+                local all_found = shifty.fuzzy_name2tags(name)
+                if all_found then 
+                    local found = all_found[1]
+                    naughty.notify({ title = "Changed tag", text = "entered: \"" .. name .. "\" which yields " .. (#all_found) .. " tag(s); selected " .. found.name, timeout = 4 })
+                    awful.tag.viewonly(found)
+                end
+            end
+        end,
+        shifty.completion,
+        awful.util.getdir("cache") .. "/history_tags"
     )
 end
 
@@ -482,7 +482,7 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     keydoc.group("spawn commands"),
-    awful.key({ modkey,           }, "q", function () scratch.drop("bin/skrewz-left-scratch.sh","center", "left",0.4, 0.80, true, 2) end,"drop left-in scratch pad"),
+    -- awful.key({ modkey,           }, "q", function () scratch.drop("bin/skrewz-left-scratch.sh","center", "left",0.4, 0.80, true, 2) end,"drop left-in scratch pad"),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
     awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn("chromium") end,"spawn chromium"),
     awful.key({ modkey, "Control" }, "r", awesome.restart,"restart awesome (Xephyr?)")
