@@ -477,12 +477,14 @@ globalkeys = awful.util.table.join(
     awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"toggle mute"),
     awful.key({                   }, "#123", function () awful.util.spawn("amixer set PCM 2dB+"); awful.util.spawn("amixer set Master unmute") end,"increase pcm volume"),
     awful.key({                   }, "#122", function () awful.util.spawn("amixer set PCM 2dB-"); awful.util.spawn("amixer set Master unmute") end,"decrease pcm volume"),
+    awful.key({                   }, "#232", function () awful.util.spawn("xbacklight -dec 10"); end,"decrease backlight"),
+    awful.key({                   }, "#233", function () awful.util.spawn("xbacklight -inc 10"); end,"increase backlight"),
     awful.key({ modkey, "Shift"   }, "F11", function () awful.util.spawn("xmodmap .config/Xmodmap.us") end,"xmodmap: us qwerty"),
     awful.key({ modkey, "Shift"   }, "F12", function () awful.util.spawn("xmodmap .config/Xmodmap.skrewzdvorak") end,"xmodmap: skrewz-dvorak"),
 
     -- Standard program
     keydoc.group("spawn commands"),
-    -- awful.key({ modkey,           }, "q", function () scratch.drop("bin/skrewz-left-scratch.sh","center", "left",0.4, 0.80, true, 2) end,"drop left-in scratch pad"),
+    awful.key({ modkey,           }, "q", function () scratch.drop("bin/skrewz-left-scratch.sh","center", "left",0.4, 0.80, true,1) end,"drop left-in scratch pad"),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
     awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn("chromium") end,"spawn chromium"),
     awful.key({ modkey, "Control" }, "r", awesome.restart,"restart awesome (Xephyr?)")
@@ -504,7 +506,6 @@ globalkeys = awful.util.table.join(
 
 clientkeys = awful.util.table.join(
     keydoc.group("further client interactions"),
-    -- awful.key({ modkey,           }, "f",      function (c) scratch.pad.set(c, 0.9999, 0.20, true, 1) end ),
     awful.key({ modkey,           }, "c",      function (c) c:kill()                         end,"kill client"),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,"toggle floating for client"),
     -- awful.key({ modkey, "Shift"   }, "Return", awful.client.setmaster                           ,"make client master"),
