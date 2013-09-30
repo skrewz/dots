@@ -141,6 +141,16 @@ alias gd="git diff"
 alias gs="git status"
 
 
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -lA --full-time'
+alias l='ls $LS_OPTIONS -oh'
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+
+
+
 if [ -e ~/.bash_aliases_local ]; then
   source ~/.bash_aliases_local
 fi
