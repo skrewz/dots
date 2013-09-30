@@ -25,6 +25,15 @@ if [ -f /etc/bashrc ]; then
         . /etc/bashrc
 fi
 
+export LS_OPTIONS='--color=auto'
+if [ -e "$HOME/.dircolors" ]; then
+  eval "$(dircolors "$HOME/.dircolors")"
+else
+  eval "$(dircolors)"
+fi
+
+
+
 # If you don't use this, you'll get annoyed when you accidentally press
 # Control-s and your terminal hangs misearably until you press Control-q, or
 # something like that.  Anyway. The phenomenon is called XON/XOFF-control.
@@ -74,9 +83,6 @@ fi
 # convenient when you know it works this way.
 alias ssh-add='ssh-add -t $(($(date --date "$(date --date tomorrow +%Y-%m-%d) 6:00:00" +%s) - $(date +%s))) $HOME/.ssh/id_rsa_private_use $HOME/.ssh/id_rsa_work'
 
-export LS_OPTIONS='--color=auto'
-eval "`dircolors`"
-
 
 # Failed history completion doesn't execute by default.
 # (That being said, C-^ for completion makes this almost unneeded.)
@@ -122,7 +128,7 @@ for file in \
   $HOME/.bash_colors \
   $HOME/.bash_colors_autogen \
   /etc/bash_completion; do
-  [ ! -r "$file" ] || source "$file"
+  if [ -r "$file" ]; then source "$file"; fi
 done
 
 # Treat screen sessions as login profiles.
