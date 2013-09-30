@@ -1,0 +1,20 @@
+#!/bin/bash
+basedigit=4
+color=3$basedigit
+invcolor=4$basedigit
+hl_color_of_choice=
+
+if egrep -q "screen" <<< "$TERM"; then
+  if [ "$UID" == "0" ]; then
+    export PS1="\[\e[${color};1m\](s)\[\e[0m\]:\[\e[37;${invcolor};1m\]\u\[\e[0m\]\[\e[${invcolor};22m\]@\[\e[${invcolor};1m\]\h\[\e[0m\]\[\e[37;22m\],\[\e[${color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
+  else
+    export PS1="\[\e[${color};1m\](s)\[\e[${color};22m\]\u\[\e[37;22m\]@\[\e[${color};1m\]\h\[\e[37;22m\],\[\e[${color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
+  fi
+else # some sort of stupid terminal
+  if [ "$UID" == "0" ]; then
+    export PS1="\[\e[37;${invcolor};1m\]\u\[\e[0m\]\[\e[${invcolor};22m\]@\[\e[${invcolor};1m\]\h\[\e[0m\]\[\e[37;22m\],\[\e[${color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
+
+  else
+    export PS1="\[\e[${color};22m\]\u\[\e[37;22m\]@\[\e[${color};1m\]\h\[\e[37;22m\],\[\e[${color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
+  fi
+fi
