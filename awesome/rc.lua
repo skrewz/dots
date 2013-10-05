@@ -1,8 +1,8 @@
 -- vim: fdm=marker fml=1
 -- Standard awesome library
-require("awful")
-require("awful.autofocus")
-require("awful.rules")
+local awful = require("awful")
+awful.autofocus = require("awful.autofocus")
+awful.rules = require("awful.rules")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
@@ -12,9 +12,13 @@ local scratch = require("scratch")
 
 local keydoc = require("keydoc")
 
+bashets  = require("bashets")
 
 -- shifty - dynamic tagging library
-require("shifty")
+shifty = require("shifty")
+
+-- useful for debugging, marks the beginning of rc.lua exec
+print("Entered rc.lua: " .. os.time())
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -253,15 +257,73 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 --                                     menu = mymainmenu })
 -- }}}
 
--- {{{ Wibox
+-- {{{ helper wibox widgets 
+--3.5spacer_widget =  wibox.widget.textbox()
+spacer_widget = widget({ type = "textbox"})
+--3.5spacer_widget:set_text(' ')
+spacer_widget.text = ''
+-- }}}
+
+-- {{{ bashets: 
+-- See: http://awesome.naquadah.org/wiki/Bashets and clone https://gitorious.org/bashets
+
+-- Scripts in here, where possible, will use a 0-100 scale:
+bashets.set_script_path("~/.config/awesome/support_scripts/bashets/")
+
+-- http://awesome.naquadah.org/wiki/Widgets_in_awesome says this is >3.5:
+-- bashet_battery = wibox.widget.textbox()
+--bashet_battery = widget({ type = "textbox", name = "bashet_battery" })
+--bashet_battery = widget({ type = "progressbar", name = "bashet_battery" })
+
+
+-- FIXME: Set up callbacks for bashets that don't neccesarily output anything
+-- interesting. (battery that's full/absent, wifi that's absent), and let the
+-- callback reduce the width of the bashet widget.
+
+--bashet_battery = awful.widget.progressbar()
+bashet_battery = awful.widget.graph()
+bashet_battery:set_max_value(100)
+bashet_battery:set_width(20)
+bashet_battery:set_color('blue')
+--bashet_battery:set_vertical(true)
+bashets.register("battery_percentage.bashet.sh", {widget=bashet_battery, separator = ' ', update_time = 60, format='$1',})
+
+bashet_ram = awful.widget.progressbar()
+bashet_ram:set_max_value(100)
+bashet_ram:set_width(2)
+bashet_ram:set_color('green')
+bashet_ram:set_vertical(true)
+bashets.register("ram_usage_percentage.bashet.sh", {widget=bashet_ram, separator = ' ', update_time = 10, format='$1',})
+
+--bashet_cpu = awful.widget.progressbar()
+bashet_cpu = awful.widget.graph()
+bashet_cpu:set_max_value(100)
+bashet_cpu:set_width(20)
+bashet_cpu:set_color('red')
+--bashet_cpu:set_vertical(true)
+bashets.register("cpu_usage_percentage.bashet.sh", {widget=bashet_cpu, separator = ' ', update_time = 2, format='$1',})
+
+--bashet_wifi = awful.widget.progressbar()
+bashet_wifi = awful.widget.graph()
+bashet_wifi:set_max_value(100)
+bashet_wifi:set_width(20)
+bashet_wifi:set_color('darkgrey')
+--bashet_wifi:set_vertical(true)
+bashets.register("wifi_signal_usable_percentage.bashet.sh", {widget=bashet_wifi, separator = ' ', update_time = 6, format='$1',})
+
+-- Needs to go after all bashet initialization:
+bashets.start()
+-- }}}
+-- {{{ Wibox'es:
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right"},"%A, week %V, %Y-%m-%d %H:%M:%S",1)
+mytextclock = awful.widget.textclock({},"%a, %Y-%m-%d, W%V, %H:%M:%S",1)
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
 
 -- Create a wibox for each screen and add it
 mywibox = {}
+my_left_wibox = {}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -301,7 +363,7 @@ mytasklist.buttons = awful.util.table.join(
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
-    mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
+    mypromptbox[s] = awful.widget.prompt()
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     mylayoutbox[s] = awful.widget.layoutbox(s)
@@ -318,12 +380,28 @@ for s = 1, screen.count() do
     --                                          return awful.widget.tasklist.label.currenttags(c, s)
     --                                      end, mytasklist.buttons)
 
+    --my_left_wibox[s] = awful.wibox({ position = "bottom", screen = s, height = "17"})
+    --my_left_wibox[s].widgets = {
+    --  {
+    --    spacer_widget,
+    --    mytaglist[s],
+    --    spacer_widget,
+    --    layout = awful.widget.layout.horizontal.leftright
+    --  }
+    --}
+    --awful.wibox.align(my_left_wibox[s],'center')
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = "15" })
+    mywibox[s] = awful.wibox({ position = "top", screen = s, height = "17" })
     -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
         {
             --mylauncher,
+            bashet_battery,
+            bashet_ram,
+            bashet_cpu,
+            spacer_widget,
+            bashet_wifi,
+            spacer_widget,
             mytaglist[s],
             mypromptbox[s],
             layout = awful.widget.layout.horizontal.leftright
@@ -339,7 +417,6 @@ end
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    awful.button({ modkey }, 2 , function () awful.util.spawn("scripts/daily_tasks/open_iceweasel_on_pastebuffer.sh") end),
     awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
@@ -473,7 +550,7 @@ globalkeys = awful.util.table.join(
 
     keydoc.group("special keys"),
     awful.key({                   }, "#9", function () awful.util.spawn("xscreensaver-command -lock") end,"lock screen"),
-    -- These bindings do it for my standard
+    -- These bindings do it for my standard-layout keyboard with multimedia keys.
     awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"toggle mute"),
     awful.key({                   }, "#123", function () awful.util.spawn("amixer set PCM 2dB+"); awful.util.spawn("amixer set Master unmute") end,"increase pcm volume"),
     awful.key({                   }, "#122", function () awful.util.spawn("amixer set PCM 2dB-"); awful.util.spawn("amixer set Master unmute") end,"decrease pcm volume"),
@@ -670,11 +747,15 @@ for i = 1, (shifty.config.maxtags or 9) do
 -- }}}
 
 
+-- mouse binds for clients {{{
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
-    awful.button({ modkey }, 2 , function () awful.util.spawn("scripts/daily_tasks/open_iceweasel_on_pastebuffer.sh") end),
-    awful.button({ modkey }, 3, awful.mouse.client.resize))
+    --awful.button({ modkey }, 2 , function () awful.util.spawn("scripts/daily_tasks/open_iceweasel_on_pastebuffer.sh") end),
+    awful.button({ modkey }, 3, awful.mouse.client.resize),
+    awful.button({ modkey }, 4, function () awful.util.spawn("transset --point --min 0.1 --inc 0.02") end),
+    awful.button({ modkey }, 5, function () awful.util.spawn("transset --point --min 0.1 --dec 0.05") end))
+-- }}}
 
 -- {{{ Shifty config (continued)
 -- SHIFTY: initialize shifty
@@ -704,12 +785,10 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule = { class = "MPlayer" },
-      properties = { floating = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
-    -- { rule = { class = "gimp" },
-    --   properties = { floating = true } },
+    { rule = { class = "gimp" },
+      properties = { floating = true } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
@@ -734,7 +813,7 @@ client.add_signal("manage", function (c, startup)
     if not startup then
         -- Set the windows at the slave,
         -- i.e. put it at the end of others instead of setting it master.
-        -- awful.client.setslave(c)
+        awful.client.setslave(c)
 
         -- Put windows in a smart way, only if they does not set an initial position.
         if not c.size_hints.user_position and not c.size_hints.program_position then
@@ -749,3 +828,5 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- }}}
 
 -- End
+
+print("Exited rc.lua: " .. os.time())
