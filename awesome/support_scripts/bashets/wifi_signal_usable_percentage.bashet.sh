@@ -14,7 +14,11 @@ max_minus_dbms_cut_off="-40"
 # interface. If you want to look at a specific one, set it here.
 interface=
 
+[ -x "/sbin/iwconfig" ] || exit 0
+
 current_level="$(LC_ALL=C /sbin/iwconfig $interface |& sed -nre "s/^.*Signal level=(-?[0-9.]+) dBm.*/\1/; tp; b; :p p" | head -1)"
+[ "0" = "$?" ] || exit 0
+
 bc << EOF
 define abs(x) {if (x<0) {return -x}; return x;}
 define min(x,y) {if (x<y)  {return x}; return y;}
