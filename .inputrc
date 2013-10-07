@@ -19,7 +19,7 @@ set output-meta on
 
 # do not bell on tab-completion
 set bell-style none
-set bell-style visible
+#set bell-style visible
 
 
 $if Bash
