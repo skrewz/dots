@@ -140,9 +140,10 @@ alias gd="git diff"
 # (Who calls `gs` from the CLI anyway?)
 alias gs="git status"
 function s-git-commit-rebase-push()
-{
+{ # {{{
   local message=""
   local all=""
+  declare -a cmdlineparms
   while [ "0" != "$#" ]; do 
     case "$1" in
       --message)
@@ -154,32 +155,24 @@ function s-git-commit-rebase-push()
         echo "Not recognized, aborting: \"$1\"." >&2
         return 1 ;;
       *)
-        message="$2"
-        shift ;;
+        cmdlineparms+=( "$1" ) ;;
     esac
     shift
   done
 
-
-  # ``! -n'' is not the same as ``-z''. When, do you think?
-  if [ ! -n "$message" ]; then
-    echo "s-git-commit-rebase-push: Won't proceed without a --message" >&2
-    return 1
-  fi
-
-  echo -e "s-git-commit-rebase-push: \e[32mYour stash list, *prior* to doing anything: \n=====================\e[0m" >&2
+  echo -e "\e[32ms-git-commit-rebase-push: Your stash list, *prior* to doing anything: \n=====================\e[0m" >&2
   git stash list
-  echo -e "s-git-commit-rebase-push: \e[32mYour git status, *prior* to doing anything: \n=====================\e[0m" >&2
+  echo -e "\e[32ms-git-commit-rebase-push: Your git status, *prior* to doing anything: \n=====================\e[0m" >&2
   git status
 
   # Make the commit:
-  echo -e "s-git-commit-rebase-push: \e[32mCommitting with \`git commit --message \"$message\"${all:+ -a}\`...\n=====================\e[0m" >&2
-  git commit --message "$message"${all:+ -a}
+  echo -e "\e[32ms-git-commit-rebase-push: Committing with \`git commit -v${message:+ --message \"$message\"}${all:+ -a}${cmdlineparms[@]}\`...\n=====================\e[0m" >&2
+  git commit -v${message:+ --message "$message"}${all:+ -a} ${cmdlineparms[@]}
 
   # Loop over the forceful rebase of it:
   local stashed=""
   while true; do
-    echo -e "s-git-commit-rebase-push: \e[32mOne iteration of: stashing/rebasing/pop'ing\n=====================\e[0m" >&2
+    echo -e "\e[32ms-git-commit-rebase-push: One iteration of: stashing/rebasing/pop'ing\n=====================\e[0m" >&2
     if [ "0" != "$(git diff | wc -l )" ]; then
       stashed="yes"
       git stash || return 1
@@ -190,10 +183,11 @@ function s-git-commit-rebase-push()
     if [ -n "$stashed" ]; then
       git stash pop || return 1
     fi
+    echo -e "\e[32ms-git-commit-rebase-push: Pushing...\n=====================\e[0m" >&2
     git push && break
   done
-  echo -e "s-git-commit-rebase-push: \e[32mPushed.\e[0m" >&2
-}
+  echo -e "\e[32ms-git-commit-rebase-push: Pushed.\e[0m" >&2
+} # }}}
 
 
 alias ls='ls $LS_OPTIONS'
