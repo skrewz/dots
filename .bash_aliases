@@ -131,6 +131,11 @@ function s-avg-numbers ()
   echo  "scale=5; ($(s-sum-numbers <<< "$input"))/$(wc -l <<< "$input")" | bc | sed -re "s/0+$//g"
 } # }}}
 
+if hostname -d | grep -q ".boooking.com$"; then
+  alias rootify="echo 'skrewz-alias: Becoming root through [some complicated bash logic]...' >&2; sudo su -l -c 'bash --rcfile $HOME/.bashrc-when-sudo-su-ing'"
+else
+  alias rootify="echo 'skrewz-alias: Becoming root through su...' >&2; su"
+fi
 
 #alias taillogs="echo \"skrewz-alias: Running tail -Fs.3 /var/log/{httpd/*/*_log.\$(date +%Y-%m-%d),services/trace.\$(date +%Y-%m-%d).log}:\" >&2; sudo tail -n2 -Fs.3 /var/log/{httpd/*/*_log.\$(date +%Y-%m-%d),services/trace.\$(date +%Y-%m-%d).log}"
 
