@@ -139,6 +139,61 @@ alias g="git"
 alias gd="git diff"
 # (Who calls `gs` from the CLI anyway?)
 alias gs="git status"
+function s-git-commit-rebase-push()
+{
+  local message=""
+  local all=""
+  while [ "0" != "$#" ]; do 
+    case "$1" in
+      --message)
+        message="$2"
+        shift ;;
+      --all|-a)
+        all="mm-hm." ;;
+      -*)
+        echo "Not recognized, aborting: \"$1\"." >&2
+        return 1 ;;
+      *)
+        message="$2"
+        shift ;;
+    esac
+    shift
+  done
+
+
+  # ``! -n'' is not the same as ``-z''. When, do you think?
+  if [ ! -n "$message" ]; then
+    echo "s-git-commit-rebase-push: Won't proceed without a --message" >&2
+    return 1
+  fi
+
+  echo -e "s-git-commit-rebase-push: \e[32mYour stash list, *prior* to doing anything: \n=====================\e[0m" >&2
+  git stash list
+  echo -e "s-git-commit-rebase-push: \e[32mYour git status, *prior* to doing anything: \n=====================\e[0m" >&2
+  git status
+
+  # Make the commit:
+  echo -e "s-git-commit-rebase-push: \e[32mCommitting with \`git commit --message \"$message\"${all:+ -a}\`...\n=====================\e[0m" >&2
+  git commit --message "$message"${all:+ -a}
+
+  # Loop over the forceful rebase of it:
+  local stashed=""
+  while true; do
+    echo -e "s-git-commit-rebase-push: \e[32mOne iteration of: stashing/rebasing/pop'ing\n=====================\e[0m" >&2
+    if [ "0" != "$(git diff | wc -l )" ]; then
+      stashed="yes"
+      git stash || return 1
+    fi
+
+    git pull --no-edit --rebase || return 1
+
+    if [ -n "$stashed" ]; then
+      git stash pop || return 1
+    fi
+    git push && break
+  done
+  echo -e "s-git-commit-rebase-push: \e[32mPushed.\e[0m" >&2
+}
 
 
 alias ls='ls $LS_OPTIONS'
