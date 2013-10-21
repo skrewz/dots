@@ -122,7 +122,7 @@ function s-sum-numbers ()
   if [ "$1" = "--div" ]; then
     divisor="$2"
   fi
-  ( echo -n 'scale=5; ('; sed -e 's/$/ +\\/g' ; echo "0)/$divisor") | bc | sed -re "s/0+$//g"
+ ( echo -n 'scale=5; ('; sed -e 's/$/ +\\/g' ; echo "0)/$divisor") | bc | sed -re "s/\.?0+$//g"
 } # }}}
 
 function s-avg-numbers ()
@@ -131,7 +131,7 @@ function s-avg-numbers ()
   echo  "scale=5; ($(s-sum-numbers <<< "$input"))/$(wc -l <<< "$input")" | bc | sed -re "s/0+$//g"
 } # }}}
 
-if hostname -d | grep -q ".boooking.com$"; then
+if [ "skrewz" != "$(whoami)" ]; then
   alias rootify="echo 'skrewz-alias: Becoming root through [some complicated bash logic]...' >&2; sudo su -l -c 'bash --rcfile $HOME/.bashrc-when-sudo-su-ing'"
 else
   alias rootify="echo 'skrewz-alias: Becoming root through su...' >&2; su"
@@ -144,6 +144,12 @@ alias g="git"
 alias gd="git diff"
 # (Who calls `gs` from the CLI anyway?)
 alias gs="git status"
+
+# keystrokes matter:
+alias dn="dirname"
+alias bn="basename"
+alias wh="which"
+
 function s-git-commit-rebase-push()
 { # {{{
   local message=""
