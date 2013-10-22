@@ -1,0 +1,175 @@
+! This is skrewz's xmodmap for weirdly-customized ``norsk dvorak'' bindings.
+!
+! I'm Danish, but Norwegian is close enough.
+!
+! There's a couple of things that may be worthwhile reusing (but really, these
+! things are *custom*.)
+! - arrow keys an altgr-[htns].
+! - backslash/lesser-than/greater-than on the altgr-[bmd] keys.
+! - dash/underscore on the right pinky
+! - equals/tilde above enter on us qwerty layouts (useful for g~<movement> in
+!   vim)
+! - Insert on the left index finger (useful for altgr-shift-i pastes in
+!   X---shift-altgr-i doesn't work, however.)
+! - F6 for browser controls on the left hand's index finger.
+!
+! At some point, I really should change to using a better keyboard definition
+! language. Changing modmaps takes several minutes, but xkbd stuff is
+! mostly-instantaneous.
+
+
+clear    shift
+clear    lock
+clear    control
+clear    mod1
+clear    mod2
+clear    mod3
+clear    mod4
+clear    mod5
+
+keycode   8 =
+keycode   9 = 
+keycode  10 = 1 exclam exclamdown onesuperior
+keycode  11 = 2 quotedbl at twosuperior
+keycode  12 = 3 numbersign sterling threesuperior
+keycode  13 = 4 dollar dollar onequarter
+keycode  14 = 5 percent
+keycode  15 = 6 ampersand
+keycode  16 = 7 
+keycode  17 = 8 parenleft
+keycode  18 = 9 parenright
+keycode  19 = 0
+keycode  20 = plus question plusminus questiondown
+keycode  21 = acute grave dead_acute dead_grave
+keycode  22 = BackSpace Delete
+keycode  23 = Tab ISO_Left_Tab
+keycode  24 = aring Aring oslash Ooblique
+keycode  25 = comma semicolon
+keycode  26 = period colon
+keycode  27 = p P
+keycode  28 = y Y
+keycode  29 = f F
+keycode  30 = g G bracketleft
+keycode  31 = c C bracketright
+keycode  32 = r R braceleft
+keycode  33 = l L braceright
+keycode  34 = apostrophe asterisk       dead_circumflex multiply
+keycode  35 = asciitilde asciicircum    dead_diaeresis  dead_tilde
+keycode  36 = Return
+keycode  37 = Control_L
+keycode  38 = a A
+keycode  39 = o O
+keycode  40 = e E
+keycode  41 = u U F6
+keycode  42 = i I Insert
+keycode  43 = d D backslash
+keycode  44 = h H Left
+keycode  45 = t T Down
+keycode  46 = n N Up
+keycode  47 = s S Right 
+keycode  48 = minus slash underscore
+keycode  49 = bar
+keycode  50 = Shift_L
+keycode  51 = asciitilde equal equal
+keycode  52 = ae AE
+keycode  53 = q Q
+keycode  54 = j J
+keycode  55 = k K
+keycode  56 = x X
+keycode  57 = b B less
+keycode  58 = m M greater
+keycode  59 = w W
+keycode  60 = v V
+keycode  61 = z Z
+keycode  62 = Shift_R
+keycode  63 = KP_Multiply
+keycode  64 = Alt_L
+keycode  65 = space
+keycode  66 = Escape
+keycode  67 = F1
+keycode  68 = F2
+keycode  69 = F3
+keycode  70 = F4
+keycode  71 = F5
+keycode  72 = F6
+keycode  73 = F7
+keycode  74 = F8
+keycode  75 = F9
+keycode  76 = F10
+keycode  77 = Num_Lock Pointer_EnableKeys
+keycode  78 = Scroll_Lock
+keycode  79 = KP_Home KP_7
+keycode  80 = KP_Up KP_8
+keycode  81 = KP_Prior KP_9
+keycode  82 = KP_Subtract
+keycode  83 = KP_Left KP_4
+keycode  84 = KP_Begin KP_5
+keycode  85 = KP_Right KP_6
+keycode  86 = KP_Add
+keycode  87 = KP_End KP_1
+keycode  88 = KP_Down KP_2
+keycode  89 = KP_Next KP_3
+keycode  90 = KP_Insert KP_0
+keycode  91 = KP_Delete KP_Decimal
+keycode  92 =
+keycode  93 =
+! doesn't exist on a US keyboard:
+keycode  94 = oslash Ooblique 
+keycode  95 = F11
+keycode  96 = F12
+keycode  97 = Home
+keycode  98 = Up
+keycode  99 = Prior
+keycode 100 = Left
+keycode 101 =
+keycode 102 = Right
+keycode 103 = End
+keycode 104 = Down
+keycode 105 = Control_R
+keycode 106 = Home End
+keycode 107 = 
+keycode 108 = Mode_switch
+keycode 109 = Control_R
+keycode 110 = Home
+keycode 111 = Up
+keycode 112 = Prior
+keycode 113 = Left
+keycode 114 = Right
+keycode 115 = End
+keycode 116 = Down
+keycode 117 = Next
+keycode 118 = Insert
+keycode 119 = Delete
+keycode 120 =
+keycode 121 =
+keycode 122 =
+keycode 123 =
+keycode 124 =
+keycode 125 =
+keycode 126 =
+keycode 127 = Pause
+keycode 128 =
+keycode 129 =
+keycode 130 =
+keycode 131 =
+keycode 132 =
+! keycode 133 = Meta_L
+keycode 133 = Super_L
+! right command key on mac keyb:
+keycode 134 = Mode_switch
+! F13 on mac keyb:
+keycode 191 = Insert
+
+keycode 227 = Control_R
+keycode 233 = XF86Forward
+keycode 234 = XF86Back
+
+add     shift   = Shift_L Shift_R
+! add     lock    = Caps_Lock
+! Commented out, since Control_R doesn't exist
+! add     control = Control_L Control_R
+add     control = Control_L Control_R
+add     mod1    = Alt_L
+add     mod4    = Super_L
+
+! vim: ft=xmodmap
