@@ -549,7 +549,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,"jump to urgent clients"),
 
     keydoc.group("special keys"),
-    awful.key({                   }, "#9", function () awful.util.spawn("xscreensaver-command -lock") end,"lock screen"),
+    awful.key({                   }, "#9", function () awful.util.spawn("xtrlock") end,"lock screen"),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
     awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"toggle mute"),
     awful.key({                   }, "#123", function () awful.util.spawn("amixer set PCM 2dB+"); awful.util.spawn("amixer set Master unmute") end,"increase pcm volume"),
