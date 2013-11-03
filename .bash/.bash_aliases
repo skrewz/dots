@@ -229,6 +229,17 @@ alias gs="git status"
 alias dn="dirname"
 alias bn="basename"
 alias wh="which"
+function cdwh()
+{ # {{{
+  [ -n "$1" ] || { echo "No parameter given to $FUNCNAME. Giving up."; return 1; }
+  cd "$(dirname "$(which "$1")")"
+} # }}}
+function vimwh()
+{ # {{{
+  [ -n "$1" ] || { echo "No parameter given to $FUNCNAME. Giving up."; return 1; }
+  echo "Spawning \`vim \"$(which "$1")\"..." >&2
+  vim "$(which "$1")"
+} # }}}
 
 function s-git-commit-rebase-push()
 { # {{{
