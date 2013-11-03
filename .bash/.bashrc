@@ -11,7 +11,9 @@ skrewz_sends_mails_as="skrewz+mailteselfbounces@skrewz.net"
 alias rootify="echo 'skrewz-alias: Becoming root through su...' >&2; su"
 
 if [ -d "$HOME/.bashrc.d" ]; then
-  for file in "$HOME/.bashrc.d/"*.sh; do
+  # Allow more .d directories (or symlinks, ahem) in there:
+  for file in "$HOME/.bashrc.d/"*.sh "$HOME/.bashrc.d/"*.d/*.sh; do
+    [ -r "$file" ] || continue
     . "$file"
   done
 fi
