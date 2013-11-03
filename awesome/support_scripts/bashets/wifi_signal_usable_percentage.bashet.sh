@@ -3,6 +3,10 @@
 # The idea here is: Return a number between 0 and 100 which operatively
 # reflects how strong one's signal is, so as to be used in a dashboard.
 
+# TODO: Make this not call iwconfig every time, but instead return based on /proc/net/wireless.
+# `watch -n 1 "awk 'NR==3 {print \"WiFi Signal Strength = \" \$3 \"00 %\"}''' /proc/net/wireless"`
+
+
 # Small scale experimentation (walking around with an iperf running) has led me
 # to rougly -50dBm to be the upper limit that I need to care about,
 # throughput-wise, and on the other end, when I hit -80dBm, my connection
