@@ -224,6 +224,7 @@ alias g="git"
 alias gd="git diff"
 # (Who calls `gs` from the CLI anyway?)
 alias gs="git status"
+alias gp="git pull && git status"
 
 # keystrokes matter:
 alias dn="dirname"
