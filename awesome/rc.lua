@@ -551,9 +551,9 @@ globalkeys = awful.util.table.join(
     keydoc.group("special keys"),
     awful.key({                   }, "#9", function () awful.util.spawn("xtrlock") end,"lock screen"),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
-    awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"toggle mute"),
-    awful.key({                   }, "#123", function () awful.util.spawn("amixer set PCM 2dB+"); awful.util.spawn("amixer set Master unmute") end,"increase pcm volume"),
-    awful.key({                   }, "#122", function () awful.util.spawn("amixer set PCM 2dB-"); awful.util.spawn("amixer set Master unmute") end,"decrease pcm volume"),
+    awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"enable mute"),
+    awful.key({                   }, "#123", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end,"increase volume"),
+    awful.key({                   }, "#122", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --decrease") end,"decrease volume"),
     awful.key({                   }, "#232", function () awful.util.spawn("xbacklight -dec 10"); end,"decrease backlight"),
     awful.key({                   }, "#233", function () awful.util.spawn("xbacklight -inc 10"); end,"increase backlight"),
     awful.key({ modkey, "Shift"   }, "F11", function () awful.util.spawn("xmodmap .config/Xmodmap.us") end,"xmodmap: us qwerty"),
