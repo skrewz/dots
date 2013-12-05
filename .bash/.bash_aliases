@@ -230,6 +230,7 @@ alias gp="git pull && git status"
 alias dn="dirname"
 alias bn="basename"
 alias wh="which"
+
 function cdwh()
 { # {{{
   [ -n "$1" ] || { echo "No parameter given to $FUNCNAME. Giving up."; return 1; }
@@ -241,6 +242,8 @@ function vimwh()
   echo "Spawning \`vim \"$(which "$1")\"..." >&2
   vim "$(which "$1")"
 } # }}}
+
+complete -c wh vimwh cdwh
 
 function s-git-commit-rebase-push()
 { # {{{
