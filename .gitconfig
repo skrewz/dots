@@ -1,0 +1,12 @@
+[user]
+	name = Anders Breindahl
+	email = skrewz@skrewz.net
+	signingkey = DE987EBC589C6344
+[credential]
+	helper = cache --timeout=3600
+[color]
+	ui = true
+[core]
+	pager = /bin/less
+[push]
+	default = matching

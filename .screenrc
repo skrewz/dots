@@ -1,0 +1,27 @@
+startup_message off
+defscrollback 500000
+bell_msg ""
+vbell off
+nonblock on
+hardstatus on
+hardstatus alwayslastline
+logfile "$HOME/.screenlog-%Y%m%d-%0c:%s"
+logtstamp on
+logtstamp after 120
+shelltitle b
+
+unsetenv SSH_AUTH_SOCK
+setenv SSH_AUTH_SOCK "$HOME/.ssh/auth-sock"
+#
+# This reads:
+# - %{= kw} sets the current attributes (``%{'') to white (``w'') text on black
+#   (``k'') background.
+# - %-w shows the windows *before* the current one, each with something similar
+#   to ``%n %t'' in format
+# - %{= wk} manually inverts the colors
+# - %n %t shows the window number and title
+# - %{-} restores the last set color
+# - %+w shows the windows *after* the current one
+# - %< truncates the 
+hardstatus string '%{= KW}%H%{= Kw} %Y%m%d %c:%s | %{= KW}%-w%{= wk}%n %t%{-}%+w%<'
+altscreen on
