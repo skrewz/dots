@@ -28,8 +28,22 @@ set tabstop=8 " Conventional, see :help 30.5
 
 set expandtab " Nobody likes tab characters.
 
+silent !mkdir -p ~/.vim_local > /dev/null 2>&1
+
 filetype plugin indent on
 
+" Remember view upon enter/leave. In particular folds.
+" http://vim.wikia.com/wiki/VimTip991 + http://stackoverflow.com/a/1549318
+silent !mkdir -p ~/.vim_local/views > /dev/null 2>&1
+set viewdir=~/.vim_local/views/
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
+
+
+" spelling settings
+setglobal spell spelllang=en_uk
+silent !mkdir -p ~/.vim_local/spell > /dev/null 2>&1
+execute "set spellfile=~/.vim_local/spell/wordlist.".&g:spelllang.".".&g:encoding.".add"
 
 
 " Test if this is a host where Dvorak-style keybinds shouldn't be enacted.
