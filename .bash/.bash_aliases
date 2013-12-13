@@ -231,6 +231,27 @@ alias dn="dirname"
 alias bn="basename"
 alias wh="which"
 
+if which youtube-dl &> /dev/null; then
+  function yd() {
+    cd /tmp/
+    pwd
+    if [ "-m" == "$1" ]; then
+      filename="$(youtube-dl --continue --title --get-filename "$2")"
+      echo "Downloading to ${filename}..."
+      youtube-dl --continue --output "$filename" "$2" &
+      sleep 1
+      echo "sleep 5"
+      sleep 4
+      echo "Spawning \`mplayer ${filename}*\`..."
+      mplayer "$filename"*
+    else
+      filename="$(youtube-dl --continue --title --get-filename "$1")"
+      echo "Downloading to ${filename}..."
+      youtube-dl --continue --output "$filename" "$1"
+    fi
+  }
+fi
+
 function cdwh()
 { # {{{
   [ -n "$1" ] || { echo "No parameter given to $FUNCNAME. Giving up."; return 1; }
