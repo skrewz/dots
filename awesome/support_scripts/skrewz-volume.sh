@@ -31,7 +31,7 @@ while [ "0" != "$#" ]; do
   shift
 done
 
-pactl_list_short_sinks="$(pactl list short sinks)"
+pactl_list_short_sinks="$( ( grep bluetooth <(pactl list short sinks | sort); grep -v bluetooth <(pactl list short sinks | sort) ) | head -1)"
 if [ -z "$pactl_list_short_sinks" ]; then
   echo "No sinks. Can't proceed. Aborting." >&2
   exit 1
