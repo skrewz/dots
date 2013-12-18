@@ -263,8 +263,12 @@ function vimwh()
   echo "Spawning \`vim \"$(which "$1")\"..." >&2
   vim "$(which "$1")"
 } # }}}
+function cpwh()
+{ # {{{
+  cp -v "$(which "$1")" "$2"
+} # }}}
 
-complete -c wh vimwh cdwh
+complete -c wh vimwh cdwh cpwh
 
 function s-git-commit-rebase-push()
 { # {{{
