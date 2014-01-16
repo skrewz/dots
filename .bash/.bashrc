@@ -1,5 +1,6 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
+# Should get overruled later on:
 export PS1='\h:\w\$ '
 umask 0002
 #export TERM=rxvt
@@ -44,13 +45,6 @@ fi
 stty -ixon
 
 
-function set_title ()
-{
-  local word_blacklist=$'vim\nbash\nhistory\nsed\nsort\ntail\necho\negrep\ngrep'
-  local words="$(HISTTIMEFORMAT="" history | sed -re "s/^\s*[0-9]*\s*//"  | uniq | tail -n60 | tr " " "\n" | sort -u | egrep '^[A-Za-z0-9_.-]+$' | grep -vF "$word_blacklist" | sort -u | tr "\n" " ")"
-  echo -ne "\\e]0;$USER@$HOSTNAME: $words\\007"
-}
-
 function print_bash_bt ()
 {
   echo "BASH_SOURCE:"
@@ -63,10 +57,11 @@ function print_bash_bt ()
     echo "key:$key, value \"${BASH_ARGV[$key]}\"."
   done
 }
-export -f print_bash_bt set_title
 
-# Initial attempts at making grep-friendly urxvt titles:
-export PROMPT_COMMAND="set_title; history -a; "
+export -f print_bash_bt
+
+
+
 
 
 # Change the window title of X terminals 
@@ -114,11 +109,6 @@ export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
 # alias cp='cp -i'
 # alias mv='mv -i'
 
-basedigit=4
-color=3$basedigit
-invcolor=4$basedigit
-hl_color_of_choice=
-
 for path in \
   $HOME/sdks/arm-cs-tools/bin \
   $HOME/bin; do
@@ -126,9 +116,8 @@ for path in \
 done
 
 for file in \
-  $HOME/.bash_aliases \
-  $HOME/.bash_colors \
-  $HOME/.bash_colors_autogen \
+  $HOME/.bash/.bash_aliases \
+  $HOME/.bash/.bashprompt \
   /etc/bash_completion; do
   if [ -r "$file" ]; then source "$file"; fi
 done
