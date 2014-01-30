@@ -1,7 +1,15 @@
 #!/bin/bash
 # basedigit sets the major color:
-if hostname --domain | grep -qF "booking.com"; then
-  basedigit=4
+
+# Can't let domains slip into github'ed stuff, so working around:
+sha1of_domain="$(hostname --domain | sha1sum | cut -d\  -f1)"
+
+if grep -qF $'7ad2097bf738491a6f32bd8bfd754f9a2ccb7490\n109232fc14b9343ee992ed025da46d0ad8ca1018' <<< "$sha1of_domain"; then
+  basedigit=5
+elif grep -qF $'f788a971e2a58b4559dbeb8b6028c588f173cb6f\nead5a4d48fbef658ecbd0130a8833255f91f3fc4' <<< "$sha1of_domain"; then
+  basedigit=2
+elif [ -n "$(hostname --domain)" ]; then
+  basedigit=1 # Somewhere else where the machines know of their domains.
 else
   basedigit=6
 fi
@@ -10,14 +18,19 @@ root_basedigit=1
 
 export prompt_color=3
 # inspired by http://stackoverflow.com/a/2774197
-declare -A col
-col=( [reset]="$(tput sgr0)" [bold]="$(tput smso)" [invred]=$'\e[41m' [red]=$'\e[31m' [green]="$(tput setaf 2)")
+#col=( [reset]="$(tput sgr0)" [bold]="$(tput smso)" [invred]=$'\e[41m' [red]=$'\e[31m' [green]="$(tput setaf 2)")
+col_reset="$(tput sgr0)"
+col_bold="$(tput smso)"
+col_invred=$'\e[41m'
+col_red=$'\e[31m'
+col_green="$(tput setaf 2)"
+
 if [ "0" != "$UID" ]; then
-  col['base']=$'\e['"3${basedigit}m"
-  col['invbase']=$'\e['"4${basedigit}m"
+  col_base=$'\e['"3${basedigit}m"
+  col_invbase=$'\e['"4${basedigit}m"
 else
-  col['base']=$'\e['"3${rootbasedigit}m"
-  col['invbase']=$'\e['"4${rootbasedigit}m"
+  col_base=$'\e['"3${rootbasedigit}m"
+  col_invbase=$'\e['"4${rootbasedigit}m"
 fi
 
 function set_title ()
@@ -29,27 +42,27 @@ function set_title ()
 
 function render_name ()
 { # {{{
-  echo -n "\[${col['base']}\]$USER\[${col['reset']}\]"
+  echo -n "\[$col_base\]$USER\[$col_reset\]"
   #echo -n "$USER"
 } # }}}
 function render_hostname ()
 { # {{{
-  echo -n "@\[${col['base']}\]${HOSTNAME%%.*}\[${col['reset']}\]"
+  echo -n "@\[$col_base\]${HOSTNAME%%.*}\[$col_reset\]"
 } # }}}
 function render_time ()
 { # {{{
-  echo -n " \[${col['base']}\]$(date +%H:%M)\[${col['reset']}\]"
+  echo -n " \[$col_base\]$(date +%H)\[$col_reset\]:\[$col_base\]$(date +%M)\[$col_reset\]"
 } # }}}
 function render_pwd ()
 { # {{{
-  echo -n " \[${col['base']}\]$(pwd | sed -e "s|$HOME|~|")\[${col['reset']}\]"
+  echo -n " \[$col_base\]$(pwd | sed -e "s|$HOME|~|")\[$col_reset\]"
 } # }}}
 function render_low_battery_when_discharging ()
 { # {{{
   which acpi >& /dev/null || return
-  time_remaining="$(acpi | sed -nre "s/.* 0?([0-9]*:[0-9]{2})[0-9:]* remaining$/\1/;tp;b;:p p")"
+  time_remaining="$(acpi 2>/dev/null | sed -nre "s/.* 0?([0-9]*:[0-9]{2})[0-9:]* remaining$/\1/;tp;b;:p p")"
   if grep "^0:[1234][0-9]+" <<< "$time_remaining" ; then
-    echo -n " \[${col['invred']}\]${time_remaining//:/h}m left\[${col['reset']}\] "
+    echo -n " \[${col['invred']}\]${time_remaining//:/h}m left\[$col_reset\] "
   fi
 } # }}}
 
