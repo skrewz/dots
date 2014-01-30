@@ -22,7 +22,7 @@ fi
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%M: '
 export HISTCONTROL=ignorespace
 # Line numbers in bash -x output:
-export PS4='+(${BASH_SOURCE##*/}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+export PS4='+${BASH_SOURCE##*/}:${LINENO}: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
 if [ -f /etc/bashrc ]; then
         . /etc/bashrc
