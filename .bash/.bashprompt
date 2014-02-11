@@ -39,6 +39,23 @@ function set_title ()
   local words="$(HISTTIMEFORMAT="" history | sed -re "s/^\s*[0-9]*\s*//"  | uniq | tail -n60 | tr " " "\n" | sort -u | egrep '^[A-Za-z0-9_.-]+$' | grep -vF "$word_blacklist" | sort -u | tr "\n" " ")"
   printf "\e]0;$USER@$HOSTNAME: $words\007"
 } # }}}
+last_motd_modtime="0"
+motd_file_to_bashprompt_check="/etc/motd.local"
+function check_motd_updates ()
+{ # {{{
+  [ -r "$motd_file_to_bashprompt_check" ] || return 0
+  local render_width=120
+  local lotsofequals="$(seq 1 $render_width | tr -d '0-9' | tr "\n" "=")"
+  local cur_motd_update_time="$(stat -c%Y "$motd_file_to_bashprompt_check")"
+  if [ "$last_motd_modtime" -lt "$cur_motd_update_time" ]; then
+    printf "\e[32m > %-$((render_width-10)).$((render_width-10))s < \e[0m\n" "$motd_file_to_bashprompt_check updated @ $(date --date "@$cur_motd_update_time" +%F-%T).  $lotsofequals" >&2
+    while read line; do
+      printf "\e[32m > \e[0m%-$((render_width-10))s\e[32m < \e[0m\n" "$line" >&2
+    done <<< "$(< "$motd_file_to_bashprompt_check")"
+    printf "\e[32m > %-$((render_width-10)).$((render_width-10))s < \e[0m\n" "$lotsofequals" >&2
+  fi
+  last_motd_modtime="$cur_motd_update_time"
+} # }}}
 
 function render_name ()
 { # {{{
@@ -78,7 +95,7 @@ function render_retval ()
 
 # Put more into here, if needed. May output newlines etc if so called for.
 declare last_dollar_questionmark=0
-declare -a functions_to_call_pre_prompt=( set_title )
+declare -a functions_to_call_pre_prompt=( set_title check_motd_updates )
 #declare -a functions_to_render_prompt=( render_name render_time render_pwd render_retval )
 declare -a functions_to_render_prompt=( render_name render_hostname render_time render_pwd render_low_battery_when_discharging render_retval )
 
