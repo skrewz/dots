@@ -44,7 +44,8 @@ motd_file_to_bashprompt_check="/etc/motd.local"
 function check_motd_updates ()
 { # {{{
   [ -r "$motd_file_to_bashprompt_check" ] || return 0
-  local render_width=120
+  [ -n "$(< $motd_file_to_bashprompt_check)" ] || return 0
+  local render_width="$( (( 120 > COLUMNS )) && echo "$COLUMNS" || echo 120)"
   local lotsofequals="$(seq 1 $render_width | tr -d '0-9' | tr "\n" "=")"
   local cur_motd_update_time="$(stat -c%Y "$motd_file_to_bashprompt_check")"
   if [ "$last_motd_modtime" -lt "$cur_motd_update_time" ]; then
