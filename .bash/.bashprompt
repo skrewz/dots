@@ -87,6 +87,15 @@ function render_low_battery_when_discharging ()
   fi
 } # }}}
 
+function render_no_ssh_profiles ()
+{ # {{{
+  [ -x /usr/bin/ssh-add ] || return
+  num_profiles="$(/usr/bin/ssh-add -l | grep -vF "The agent has no identities" | wc -l)"
+  if [ "0" = "$num_profiles" ]; then
+    echo -n " \[$col_invred\](no ssh keys)\[$col_reset\] "
+  fi
+} # }}}
+
 function render_retval ()
 { # {{{
   if [ "$last_dollar_questionmark" != 0 ]; then
@@ -99,9 +108,14 @@ function render_retval ()
 
 # Put more into here, if needed. May output newlines etc if so called for.
 declare last_dollar_questionmark=0
-declare -a functions_to_call_pre_prompt=( set_title check_motd_updates )
-#declare -a functions_to_render_prompt=( render_name render_time render_pwd render_retval )
-declare -a functions_to_render_prompt=( render_name render_hostname render_time render_pwd render_low_battery_when_discharging render_retval )
+if [ -z "${functions_to_call_pre_prompt:+x}" ]; then
+  declare -a functions_to_call_pre_prompt=()
+fi
+functions_to_call_pre_prompt+=( set_title check_motd_updates )
+if [ -z "${functions_to_render_prompt:+x}" ]; then
+  declare -a functions_to_render_prompt=()
+fi
+functions_to_render_prompt+=( render_name render_hostname render_time render_pwd render_low_battery_when_discharging render_retval )
 
 function skrewz_prompt_command ()
 { # {{{
