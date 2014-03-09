@@ -104,7 +104,8 @@ function render_retval ()
   else
     echo -en ' \[\e[32;1m'
   fi
-  echo '\]\$\[\e[0m\] '
+  #echo '\]'"$([ "$last_dollar_questionmark" = 0 ] && echo '\$' || echo "($last_dollar_questionmark) \\$")"'\[\e[0m\] '
+  echo '\]'"$last_dollar_questionmark"'\[\e[0m\] '
 } # }}}
 
 # Put more into here, if needed. May output newlines etc if so called for.
@@ -145,6 +146,6 @@ function skrewz_prompt_rendering_command ()
 export -f set_title skrewz_prompt_command skrewz_prompt_rendering_command
 
 # These together render the prompt. The PS1 has to be used 
-export PROMPT_COMMAND="last_dollar_questionmark=$?; skrewz_prompt_command"
+export PROMPT_COMMAND='last_dollar_questionmark=$?; skrewz_prompt_command'
 
 # vim: fdm=marker fml=1
