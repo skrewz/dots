@@ -1,31 +1,33 @@
 #!/bin/bash
 
-# basedigit sets the major color:
-if hostname --domain | grep -qF "booking.com"; then
-  basedigit=4
-else
-  basedigit=6
-fi
-
-color=3$basedigit
-invcolor=4$basedigit
-
-# root_basedigit probably should be 1 (red):
-root_basedigit=1
-root_color=3$root_basedigit
-root_invcolor=4$root_basedigit
-
-if egrep -q "screen" <<< "$TERM"; then
-  if [ "$UID" == "0" ]; then
-    export PS1="\[\e[${root_color};1m\](s)\[\e[0m\]:\[\e[37;${root_invcolor};1m\]\u\[\e[0m\]\[\e[${root_invcolor};22m\]@\[\e[${root_invcolor};1m\]\h\[\e[0m\]\[\e[37;22m\],\[\e[${root_color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${root_color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
-  else
-    export PS1="\[\e[${color};1m\](s)\[\e[${color};22m\]\u\[\e[37;22m\]@\[\e[${color};1m\]\h\[\e[37;22m\],\[\e[${color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
-  fi
-else # some sort of stupid terminal
-  if [ "$UID" == "0" ]; then
-    export PS1="\[\e[37;${root_invcolor};1m\]\u\[\e[0m\]\[\e[${root_invcolor};22m\]@\[\e[${root_invcolor};1m\]\h\[\e[0m\]\[\e[37;22m\],\[\e[${root_color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${root_color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
-
-  else
-    export PS1="\[\e[${color};22m\]\u\[\e[37;22m\]@\[\e[${color};1m\]\h\[\e[37;22m\],\[\e[${color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
-  fi
-fi
+# skrewz@20140309: This shuold be disableable. Instead comes .bashprompt.
+# 
+# # basedigit sets the major color:
+# if hostname --domain | grep -qF "booking.com"; then
+#   basedigit=4
+# else
+#   basedigit=6
+# fi
+# 
+# color=3$basedigit
+# invcolor=4$basedigit
+# 
+# # root_basedigit probably should be 1 (red):
+# root_basedigit=1
+# root_color=3$root_basedigit
+# root_invcolor=4$root_basedigit
+# 
+# if egrep -q "screen" <<< "$TERM"; then
+#   if [ "$UID" == "0" ]; then
+#     export PS1="\[\e[${root_color};1m\](s)\[\e[0m\]:\[\e[37;${root_invcolor};1m\]\u\[\e[0m\]\[\e[${root_invcolor};22m\]@\[\e[${root_invcolor};1m\]\h\[\e[0m\]\[\e[37;22m\],\[\e[${root_color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${root_color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
+#   else
+#     export PS1="\[\e[${color};1m\](s)\[\e[${color};22m\]\u\[\e[37;22m\]@\[\e[${color};1m\]\h\[\e[37;22m\],\[\e[${color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
+#   fi
+# else # some sort of stupid terminal
+#   if [ "$UID" == "0" ]; then
+#     export PS1="\[\e[37;${root_invcolor};1m\]\u\[\e[0m\]\[\e[${root_invcolor};22m\]@\[\e[${root_invcolor};1m\]\h\[\e[0m\]\[\e[37;22m\],\[\e[${root_color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${root_color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
+# 
+#   else
+#     export PS1="\[\e[${color};22m\]\u\[\e[37;22m\]@\[\e[${color};1m\]\h\[\e[37;22m\],\[\e[${color};22m\]\D{%H:%M}\[\e[37;22m\]:\[\e[${color};22m\]\w\[\$(if [ \$? != 0 ]; then echo '\e[31;1m'; else echo '\e[32;1m'; fi)\]\\\$\[\e[0m\] "
+#   fi
+# fi
