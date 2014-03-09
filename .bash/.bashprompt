@@ -19,11 +19,12 @@ root_basedigit=1
 export prompt_color=3
 # inspired by http://stackoverflow.com/a/2774197
 #col=( [reset]="$(tput sgr0)" [bold]="$(tput smso)" [invred]=$'\e[41m' [red]=$'\e[31m' [green]="$(tput setaf 2)")
-col_reset="$(tput sgr0)"
-col_bold="$(tput smso)"
+#col_reset="$(tput sgr0)"
+#col_bold="$(tput smso)"
+col_reset=$'\e[0m'
+col_bold=$'\e[1m'
 col_invred=$'\e[41m'
 col_red=$'\e[31m'
-col_green="$(tput setaf 2)"
 
 if [ "0" != "$UID" ]; then
   col_base=$'\e['"3${basedigit}m"
@@ -92,7 +93,7 @@ function render_no_ssh_profiles ()
   [ -x /usr/bin/ssh-add ] || return
   num_profiles="$(/usr/bin/ssh-add -l | grep -vF "The agent has no identities" | wc -l)"
   if [ "0" = "$num_profiles" ]; then
-    echo -n " \[$col_invred\](no ssh keys)\[$col_reset\] "
+    echo -n " \[$col_invred$col_bold\](no ssh keys)\[$col_reset\] "
   fi
 } # }}}
 
