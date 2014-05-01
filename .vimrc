@@ -1,7 +1,7 @@
 syntax on
 colorscheme delek
 syntax on
-filetype on
+set nocompatible
 set foldmethod=syntax
 set foldminlines=10
 " Extra space when scrolling:
@@ -30,7 +30,6 @@ set expandtab " Nobody likes tab characters.
 
 silent !mkdir -p ~/.vim_local > /dev/null 2>&1
 
-filetype plugin indent on
 
 " Remember view upon enter/leave. In particular folds.
 " http://vim.wikia.com/wiki/VimTip991 + http://stackoverflow.com/a/1549318
@@ -39,11 +38,51 @@ set viewdir=~/.vim_local/views/
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
+" Setting up Vundle: {{{
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim 
+call vundle#begin()
+
+" Makes vundle handle itself:
+Plugin 'gmarik/Vundle.vim'
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+"Plugin 'user/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install (update) plugins
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+" }}}
 
 " spelling settings
 setglobal spell spelllang=en_uk
 silent !mkdir -p ~/.vim_local/spell > /dev/null 2>&1
 execute "set spellfile=~/.vim_local/spell/wordlist.".&g:spelllang.".".&g:encoding.".add"
+let g:tex_comment_nospell= 1
 
 
 " Test if this is a host where Dvorak-style keybinds shouldn't be enacted.
