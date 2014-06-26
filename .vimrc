@@ -79,12 +79,18 @@ filetype plugin indent on    " required
 
 " }}}
 
+silent !mkdir -p ~/.vim_local/spell > /dev/null 2>&1
+silent !mkdir -p ~/.vim_local/swapfiles > /dev/null 2>&1
+set dir=~/.vim_local/swapfiles
+
 " spelling settings
 setglobal spelllang=en_uk
-silent !mkdir -p ~/.vim_local/spell > /dev/null 2>&1
-execute "set spellfile=~/.vim_local/spell/wordlist.".&g:spelllang.".".&g:encoding.".add"
 setglobal nospell 
 let g:tex_comment_nospell= 1
+
+execute "set spellfile=~/.vim_local/spell/wordlist.".&g:spelllang.".add"
+
+
 
 
 " Test if this is a host where Dvorak-style keybinds shouldn't be enacted.
@@ -126,6 +132,7 @@ let g:fuf_modesDisable = []
 noremap <C-f>f :FufMruFileInCwd<Enter>
 noremap <C-f>F :FufFile<Enter>
 
+map <f1> vG$!~/bin/ol2sanity.pl<cr>
 
 
 " Make the gnupg plugin prefer armored and symmetrically encrypted files:
