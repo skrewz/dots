@@ -2,7 +2,8 @@
 alias bashcolors='for first in {0..47}; do for second in {0..8}; do printf "  \\e[%u;%um%s[%0.2u;%0.2um\e[0m "  $first $second "\e" $first $second; done; echo; done'
 
 if [ -d ~/repos ]; then
-  alias my_local_diffs='for repo in ~/repos/*; do [ -d "$repo" ] && cd "$repo" && git diff --name-only 2>&1 | sed -e "s/^/$(basename "$repo"): /"; cd - >/dev/null; done'
+  alias my_local_diffs='echo "Wrong alias. Try s-git-local-diffs"'
+  alias s-git-local-diffs='for repo in ~/repos/*; do [ -d "$repo" ] && cd "$repo" && git status >&/dev/null || continue; git diff --name-only 2>&1 | sed -e "s/^/$(basename "$repo"): /"; cd - >/dev/null; done'
 fi
 
 
@@ -69,7 +70,6 @@ function s-range-print-numeric-range ()
     oldval="$newval"
   done
 } # }}}
-
 # Meant for timing of commands at a later stage. Poor man's `at`.
 function s-wait-until-after ()
 { # {{{
@@ -115,7 +115,6 @@ function s-as-sum-of-powers-of-two ()
   fi
   echo "$string"
 } # }}}
-
 function s-sum-numbers ()
 { # {{{
   divisor="1"
@@ -124,12 +123,24 @@ function s-sum-numbers ()
   fi
  ( echo -n 'scale=5; ('; sed -e 's/$/ +\\/g' ; echo "0)/$divisor") | bc | sed -re "s/\.?0+$//g"
 } # }}}
-
 function s-avg-numbers ()
 { # {{{
   input="$(cat)"
   echo  "scale=5; ($(s-sum-numbers <<< "$input"))/$(wc -l <<< "$input")" | bc | sed -re "s/0+$//g"
 } # }}}
+
+# an attempt at convenient multiline word-delimited blockwise grep; i.e.
+# (limited to and output like large egrep -C behaviour.)
+# s-mlgrep "delim" <egrep options>
+#
+#   Yields the output delim-delimited blocks that match the egrep expression
+#
+function s-mlgrep ()
+{
+  local delim="$1"
+  shift
+  eval "parallel --gnu --pipe --block 1 --recstart \"$delim\" \"egrep --colour=always -C9999999 $@\"" 2> >(grep --line-buffered -vF "parallel: Warning: A full record was not matched in a block.")
+}
 
 
 function s-hex-to-binary-and-decimal ()
@@ -152,7 +163,6 @@ function s-hex-to-binary-and-decimal ()
   done
   echo -e "0x$arg == $decimal\n     == 0b$binary"
 } # }}}
-
 function s-binary-to-hex-and-decimal ()
 { # {{{
   if ! egrep -q "^(0b)?(0|1){8}$" <<< "$1"; then
@@ -170,7 +180,6 @@ function s-binary-to-hex-and-decimal ()
   done
   echo -e "0b$arg == $sum\n           == 0x$(printf "%x" $sum)"
 } # }}}
-
 function s-iostat ()
 { # {{{
   input="$(cat)"
@@ -211,11 +220,7 @@ function s-iostat ()
   done
 } # }}}
 
-if [ "skrewz" != "$(whoami)" ]; then
-  alias rootify="echo 'skrewz-alias: Becoming root through [some complicated bash logic]...' >&2; sudo su -l -c 'bash --rcfile $HOME/.bashrc-when-sudo-su-ing'"
-else
-  alias rootify="echo 'skrewz-alias: Becoming root through \`su -\`...' >&2; su -"
-fi
+alias rootify="echo 'skrewz-alias: Becoming root through [some complicated bash logic]...' >&2; sudo -i su -l -c 'bash --rcfile $HOME/.bashrc-when-sudo-su-ing'"
 
 #alias taillogs="echo \"skrewz-alias: Running tail -Fs.3 /var/log/{httpd/*/*_log.\$(date +%Y-%m-%d),services/trace.\$(date +%Y-%m-%d).log}:\" >&2; sudo tail -n2 -Fs.3 /var/log/{httpd/*/*_log.\$(date +%Y-%m-%d),services/trace.\$(date +%Y-%m-%d).log}"
 
@@ -230,6 +235,12 @@ alias gp="git pull && git status"
 alias dn="dirname"
 alias bn="basename"
 alias wh="which"
+
+function cdl()
+{
+  cd "$1"
+  ls -ghA --color | (head -n10; lines="$(wc -l)"; echo $'\n'"[ $lines more...]")
+}
 
 if which youtube-dl &> /dev/null; then
   function yd() {
@@ -318,6 +329,11 @@ function s-git-commit-rebase-push()
     git push && break
   done
   echo -e "\e[32ms-git-commit-rebase-push: Pushed.\e[0m" >&2
+} # }}}
+
+function s-xclip-pwd ()
+{ # {{{
+  pwd | xclip -i
 } # }}}
 
 
