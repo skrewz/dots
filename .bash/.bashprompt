@@ -26,6 +26,7 @@ col_bold=$'\e[1m'
 col_underline=$'\e[4m'
 col_invred=$'\e[41m'
 col_red=$'\e[31m'
+col_green=$'\e[32m'
 
 if [ "0" != "$UID" ]; then
   col_base=$'\e['"3${basedigit}m"
@@ -68,12 +69,12 @@ function check_motd_updates ()
 
 function render_name ()
 { # {{{
+  local rendername="${USER:0:3}"
   if [ "0" != "$UID" ]; then
-    echo -n "\[$col_base\]$USER\[$col_reset\]"
+    echo -n "\[$col_base\]$rendername\[$col_reset\]"
   else
-    echo -n "\[$col_base\]\[$col_bold\]\[$col_underline\]$USER\[$col_reset\]"
+    echo -n "\[$col_base\]\[$col_bold\]\[$col_underline\]$rendername\[$col_reset\]"
   fi
-  #echo -n "$USER"
 } # }}}
 function render_hostname ()
 { # {{{
@@ -101,7 +102,7 @@ function render_no_ssh_profiles ()
   [ -x /usr/bin/ssh-add ] || return
   num_profiles="$(/usr/bin/ssh-add -l | grep -vF "The agent has no identities" | wc -l)"
   if [ "0" = "$num_profiles" ]; then
-    echo -n " \[$col_invred$col_bold\](no ssh keys)\[$col_reset\] "
+    echo -n "\[$col_invred$col_bold\][no ssh keys]\[$col_reset\] "
   fi
 } # }}}
 
