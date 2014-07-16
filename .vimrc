@@ -45,6 +45,7 @@ call vundle#begin()
 
 " Makes vundle handle itself:
 Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -79,9 +80,10 @@ filetype plugin indent on    " required
 " }}}
 
 " spelling settings
-setglobal spell spelllang=en_uk
+setglobal spelllang=en_uk
 silent !mkdir -p ~/.vim_local/spell > /dev/null 2>&1
 execute "set spellfile=~/.vim_local/spell/wordlist.".&g:spelllang.".".&g:encoding.".add"
+setglobal nospell 
 let g:tex_comment_nospell= 1
 
 
