@@ -11,6 +11,10 @@ skrewz_sends_mails_to="skrewz@skrewz.net"
 skrewz_sends_mails_as="skrewz+mailteselfbounces@skrewz.net"
 alias rootify="echo 'skrewz-alias: Becoming root through su...' >&2; su"
 
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
 if [ -d "$HOME/.bashrc.d" ]; then
   # Allow more .d directories (or symlinks, ahem) in there:
   for file in "$HOME/.bashrc.d/"*.sh "$HOME/.bashrc.d/"*.d/*.sh; do
@@ -18,15 +22,19 @@ if [ -d "$HOME/.bashrc.d" ]; then
     . "$file"
   done
 fi
+for file in \
+  $HOME/.bash/.bash_aliases \
+  $HOME/.bash/.bashprompt \
+  /etc/bash_completion; do
+  [  -r "$file" ] || continue
+  . "$file"
+done
 
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%M: '
 export HISTCONTROL=ignorespace
 # Line numbers in bash -x output:
 export PS4='+${BASH_SOURCE##*/}:${LINENO}: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
 
-if [ -f /etc/bashrc ]; then
-        . /etc/bashrc
-fi
 
 export LS_OPTIONS='--color=auto'
 if [ -e "$HOME/.dircolors" ]; then
@@ -42,7 +50,7 @@ fi
 # something like that.  Anyway. The phenomenon is called XON/XOFF-control.
 
 # And I'm turning it off.
-stty -ixon
+stty -ixon > /dev/null 2>&1
 
 
 function print_bash_bt ()
@@ -78,7 +86,8 @@ fi
 
 # Alias ssh-add to be timeout'ing out-of-hours on the following day. Kind of
 # convenient when you know it works this way.
-alias ssh-add='ssh-add -t $(($(date --date "$(date --date tomorrow +%Y-%m-%d) 6:00:00" +%s) - $(date +%s))) $HOME/.ssh/id_rsa_private_use $HOME/.ssh/id_rsa_work'
+alias s-ssh-add='/usr/bin/ssh-add -t $(($(date --date "$(date --date tomorrow +%Y-%m-%d) 6:00:00" +%s) - $(date +%s))) $HOME/.ssh/id_rsa_private_use $HOME/.ssh/id_rsa_work'
+alias ssh-add='echo "ssh-add (alias): spawning s-ssh-add instead." >&2; s-ssh-add'
 
 
 # Failed history completion doesn't execute by default.
@@ -115,12 +124,6 @@ for path in \
   [ ! -d "$path" ] || PATH="$PATH:$path"
 done
 
-for file in \
-  $HOME/.bash/.bash_aliases \
-  $HOME/.bash/.bashprompt \
-  /etc/bash_completion; do
-  if [ -r "$file" ]; then source "$file"; fi
-done
 
 # Treat screen sessions as login profiles.
 #if [[ "$TERM" =~ screen ]] && [ -f ~/.bash_profile ]; then
