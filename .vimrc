@@ -46,6 +46,7 @@ call vundle#begin()
 " Makes vundle handle itself:
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Lokaltog/vim-easymotion'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -78,6 +79,19 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 " }}}
+
+" Easymotion configuration
+" See :h easymotion.txt
+let g:EasyMotion_smartcase = 1
+" \ may be the default, but now it's conjiggered too:
+map \ <Plug>(easymotion-prefix)
+
+" nmap s         <Plug>(easymotion-s2)
+" xmap s         <Plug>(easymotion-s2)
+" omap z         <Plug>(easymotion-s2)
+nmap <Leader>s <Plug>(easymotion-sn)
+xmap <Leader>s <Plug>(easymotion-sn)
+omap <Leader>z <Plug>(easymotion-sn)
 
 silent !mkdir -p ~/.vim_local/spell > /dev/null 2>&1
 silent !mkdir -p ~/.vim_local/swapfiles > /dev/null 2>&1
@@ -142,3 +156,5 @@ let g:GPGPreferArmor = 1
 
 let g:syntastic_puppet_lint_disable = 1
 let g:syntastic_puppet_validate_disable = 1
+
+" vim: fdm=marker fml=1
