@@ -396,11 +396,11 @@ for s = 1, screen.count() do
     mywibox[s].widgets = {
         {
             --mylauncher,
-            bashet_battery,
-            bashet_ram,
-            bashet_cpu,
+            s = 1 and bashet_battery or nil,
+            s = 1 and bashet_ram or nil,
+            s = 1 and bashet_cpu or nil,
             spacer_widget,
-            bashet_wifi,
+            s = 1 and bashet_wifi or nil,
             spacer_widget,
             mytaglist[s],
             mypromptbox[s],
@@ -549,7 +549,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,"jump to urgent clients"),
 
     keydoc.group("special keys"),
-    awful.key({                   }, "#9", function () awful.util.spawn("xtrlock") end,"lock screen"),
+    awful.key({                   }, "#9", function () awful.util.spawn("xscreensaver-command -lock") end,"lock screen"),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
     awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"enable mute"),
     awful.key({                   }, "#123", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end,"increase volume"),
@@ -561,9 +561,10 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     keydoc.group("spawn commands"),
-    awful.key({ modkey,           }, "q", function () scratch.drop("bin/skrewz-left-scratch.sh","center", "left",0.4, 0.80, true,1) end,"drop left-in scratch pad"),
+    --awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/skrewz-left-scratch.sh","center", "left",0.4, 0.80, true,1) end,"drop left-in scratch pad"),
+    awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/skrewz-bottom-scratch.sh","bottom", "center",1.0, 0.40, true,2) end,"drop bottom-in scratch pad"),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
-    awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn("chromium") end,"spawn chromium"),
+    awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh") end,"spawn browser"),
     awful.key({ modkey, "Control" }, "r", awesome.restart,"restart awesome (Xephyr?)")
     -- awful.key({ modkey, "Shift"   }, "q", awesome.quit), -- Don't want this. :S
 
