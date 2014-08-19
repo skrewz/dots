@@ -1,0 +1,63 @@
+// Custom danish Dvorak, built upon Norweigan Dvorak
+// Written by Anders Dannesboe <anders@dannesboe.dk>,
+// adapted by Anders Breindahl <skrewz@skrewz.net>:
+partial alphanumeric_keys
+xkb_symbols "basic" {
+    include "no(dvorak)"
+
+    name[Group1]="Danish Custom Dvorak";
+    key <AE04> { [4          , dollar     , currency        , onequarter      ] };
+
+    key <TLDE> { [bar        , section    , brokenbar       , paragraph       ] };
+
+    key <AC03> { [e          , E          , EuroSign        , cent            ] };
+    key <AC05> { [i          , I          , idotless        , Iabovedot       ] };
+    key <AC06> { [d          , D          , eth             , ETH             ] };
+    key <AC10> { [s          , S          , ssharp                            ] };
+
+    key <AD01> { [aring      , Aring      , oslash          , Oslash          ] };
+    //            ^^ å         ^^ Å         ^^ ø              ^^ Ø
+    key <AB01> { [ae         , AE         , braceleft       , bracketleft     ] };
+    key <AB05> { [x          , X          , multiply                          ] };
+    key <AB07> { [m          , M          , greater                           ] };
+
+    key <SPCE> { [space      , space                                          ] };
+
+    key <LSGT> { [oslash     , Ooblique   , bar             , backslash       ] };
+
+    key <AB06> { [b          , B          , less                              ] };
+    key <AB07> { [m          , M          , greater                           ] };
+
+    // Productivity improvements, here:
+    key <AC06> { [d          , D          , backslash                         ] };
+    key <AC07> { [h          , H          , Left                              ] };
+    key <AC08> { [t          , T          , Down                              ] };
+    key <AC09> { [n          , N          , Up              , asciitilde      ] };
+    key <AC10> { [s          , S          , Right           , section         ] };
+    key <AC11> { [minus      , slash      , underscore      , diaeresis       ] };
+    key <AC12> { [equal      , underscore , dead_tilde      , guillemotright  ] };
+
+    // This sits above enter on a us/qwerty layout:
+    key <BKSL> { [asciitilde , equals     , dead_tilde                        ] };
+
+    // brackets on the row above the home row's right hand:
+    key <AD07> { [g          , G          , bracketleft                       ] };
+    key <AD08> { [c          , C          , bracketright                      ] };
+    key <AD09> { [r          , R          , braceleft                         ] };
+    key <AD10> { [l          , L          , braceright                        ] };
+
+    key <AD11> { [apostrophe , asterisk   , dead_circumflex , acute           ] };
+    //            ^^ '         ^^ *         ^^ ê or ô         ^^ ´
+    key <AD12> { [asciitilde , asciicircum, dead_diaeresis  , dead_caron      ] };
+    //            ^^ ~         ^^ ^         ^^ ě or ǒ         ^^^ ě or ǒ
+
+    // TODO: There's gotta be some meat on this bind...:
+    key <CAPS> { [ Escape ]};
+
+    // fixed https://bugs.freedesktop.org/show_bug.cgi?id=4397
+    include "level3(ralt_switch)"
+};
+
+xkb_symbols "dvorak" {
+    include "custom_dvorak(basic)"};
+// vim: ft=xkb
