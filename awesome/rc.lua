@@ -561,8 +561,8 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     keydoc.group("spawn commands"),
-    --awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/skrewz-left-scratch.sh","center", "left",0.4, 0.80, true,1) end,"drop left-in scratch pad"),
-    awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/skrewz-bottom-scratch.sh","bottom", "center",1.0, 0.40, true,2) end,"drop bottom-in scratch pad"),
+    awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/skrewz-left-scratch.sh","center", "left",0.4, 0.80, true,1) end,"drop left-in scratch pad"),
+    awful.key({ modkey,           }, "j", function () scratch.drop(".config/awesome/support_scripts/skrewz-right-scratch.sh","center", "right",0.4, 0.80, true,1) end,"drop right-in scratch pad"),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
     awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh") end,"spawn browser"),
     awful.key({ modkey, "Control" }, "r", awesome.restart,"restart awesome (Xephyr?)")
