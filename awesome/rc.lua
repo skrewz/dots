@@ -399,7 +399,6 @@ for s = 1, screen.count() do
             s = 1 and bashet_battery or nil,
             s = 1 and bashet_ram or nil,
             s = 1 and bashet_cpu or nil,
-            spacer_widget,
             s = 1 and bashet_wifi or nil,
             spacer_widget,
             mytaglist[s],
