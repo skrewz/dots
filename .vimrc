@@ -47,6 +47,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
+Plugin 'nathanaelkane/vim-indent-guides'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -79,6 +80,15 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 " }}}
+
+" Indent guides configuration:
+" :help indent_guides_auto_colors  for a start.
+
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_enable_on_vim_startup=1
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black    ctermbg=234
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=235
+
 
 " Easymotion configuration
 " See :h easymotion.txt
