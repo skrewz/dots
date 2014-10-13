@@ -158,6 +158,14 @@ noremap <C-f>F :FufFile<Enter>
 
 map <f1> vG$!~/bin/ol2sanity.pl<cr>
 
+noremap <S-s> :call GetDate('')<CR>
+function! GetDate(format)
+  let format = empty(a:format) ? '+%Y-%m-%d\ %H:%M:%S' : a:format
+  let cmd = '/bin/date ' . shellescape(format)
+  let result = substitute(system(cmd), '[\]\|[[:cntrl:]]', '', 'g')
+  " Append space + result to current line without moving cursor.
+  call setline(line('.'), getline('.') . ' ' . result)
+endfunction
 
 " Make the gnupg plugin prefer armored and symmetrically encrypted files:
 
