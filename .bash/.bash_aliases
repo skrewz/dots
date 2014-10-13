@@ -136,11 +136,11 @@ function s-avg-numbers ()
 #   Yields the output delim-delimited blocks that match the egrep expression
 #
 function s-mlgrep ()
-{
+{ # {{{
   local delim="$1"
   shift
   eval "parallel --gnu --pipe --block 1 --recstart \"$delim\" \"egrep --colour=always -C9999999 $@\"" 2> >(grep --line-buffered -vF "parallel: Warning: A full record was not matched in a block.")
-}
+} # }}}
 
 
 function s-hex-to-binary-and-decimal ()
@@ -334,6 +334,11 @@ function s-git-commit-rebase-push()
 function s-xclip-pwd ()
 { # {{{
   pwd | xclip -i
+} # }}}
+
+function s-today-notes ()
+{ # {{{
+  vim ~/notes/$(date +%F).notes
 } # }}}
 
 
