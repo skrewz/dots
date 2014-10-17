@@ -39,7 +39,7 @@ fi
 function set_title ()
 { # {{{
   local word_blacklist=$'vim\nbash\nhistory\nsed\nsort\ntail\necho\negrep\ngrep'
-  local words="$(HISTTIMEFORMAT="" history | sed -re "s/^\s*[0-9]*\s*//"  | uniq | tail -n60 | tr " " "\n" | sort -u | egrep '^[A-Za-z0-9_.-]+$' | grep -vF "$word_blacklist" | sort -u | tr "\n" " ")"
+  local words="$(HISTTIMEFORMAT="" history | sed -re "s/^\s*[0-9]*\s*//"  | uniq | tail -n60 | tr " " "\n" | sort -u | egrep '^[A-Za-z0-9_-]+$' | grep -vF "$word_blacklist" | uniq | tr "\n" " ")"
   printf "\e]0;$USER@$HOSTNAME: $words\007"
 } # }}}
 last_motd_modtimes=( $(date +%s) $(date +%s) )
