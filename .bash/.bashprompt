@@ -89,14 +89,18 @@ function human_pleasantly_box ()
   local header_colour=$'\e[0m'
   local width="0"
   local header=""
-  while [ "$#" != "0" ]; do
+  while [ "$#" != "0" ]; do # <- needs to be ``while [ "$#" != "0" ]; do'' exactly.
     case "$1" in
+      # Poor man's dynamic --help (note code dependency):
+      --help) echo -e "Supposedly, $FUNCNAME bash-parses for:\n" 1>&2; type $FUNCNAME | sed -rn '/while \[ "\$\#" != "0" \]/,/^\s*done;/ {/^\s*(--|\*)/ {s/^\s*//;s/[|)]//g;p}}' 1>&2; return 0;;
+
+
       --border-color|--border-colour|--frame-colour|--frame-color) border_colour=$'\e'"[${2}m"; shift ;;
       --width)                        width="$(($2 - 2))";         shift ;;
       --header)                       header="$2";                 shift ;;
       --text-color|--text-colour)     text_colour=$'\e'"[${2}m";   shift ;;
       --header-color|--header-colour) header_colour=$'\e'"[${2}m"; shift ;;
-      *) echo "No, not recognized to $FUNCNAME(): \"${1}\". Aborting." >&2; return 1 ;;
+      *|--help:[error-out]) echo "No, not recognized to $FUNCNAME(): \"${1}\". Aborting." >&2; return 1 ;;
     esac
     shift
   done
