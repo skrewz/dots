@@ -16,6 +16,7 @@ fi
 # root_basedigit probably should be 1 (red):
 root_basedigit=1
 
+export prompt_line_offset=5
 export prompt_color=3
 # inspired by http://stackoverflow.com/a/2774197
 #col=( [reset]="$(tput sgr0)" [bold]="$(tput smso)" [invred]=$'\e[41m' [red]=$'\e[31m' [green]="$(tput setaf 2)")
@@ -125,6 +126,41 @@ function human_pleasantly_box ()
   echo -n "${border_colour}└"; for ((i=0;i<width;i++)); do echo -n "─"; done; echo $'┘\e[0m';
 } # }}}
 
+# Starts all registered ``floats'', i.e. background processes of the shell
+# pid's are stored in $floats_pids---should be accessible from the shell
+function start_floats()
+{ # {{{
+  for floatname in "${!float_functions_and_intervals[@]}"; do
+    local delay="${float_functions_and_intervals[$floatname]}"
+    if ! egrep -q "^[0-9]+$" <<< "$delay"; then
+      echo "Not a valid delay: $delay; ignoring." >&2
+      continue
+    fi
+    while true; do eval "$floatname"; sleep "$delay"; done &
+    floats_pids["$floatname"]="$!"
+  done
+} # }}}
+function stop_floats()
+{ # {{{
+  for floatname in "${!float_functions_and_intervals[@]}"; do
+    echo ">>> Killing float $floatname supposedly with pid ${floats_pids[$floatname]}...">&2
+    kill "${floats_pids[$floatname]}"
+    floats_pids["$floatname"]=""
+  done
+} # }}}
+
+function render_floating_uptime()
+{ # {{{
+  content="$(echo -e "$(uptime)")"
+  echo -ne "\033[s\033[0;0H$(human_pleasantly_box <<< "$content")\033[u\e[0m"
+} # }}}
+
+
+function place_cursor_at_bottom_line()
+{ # {{{
+  echo -ne "\033[${LINES}B"
+} # }}}
+
 function render_name ()
 { # {{{
   local rendername="${USER:0:3}"
@@ -204,8 +240,31 @@ fi
 if [ -z "${functions_to_render_prompt:+x}" ]; then
   declare -a functions_to_render_prompt=()
 fi
-functions_to_render_prompt+=( render_name render_hostname render_time render_pwd render_battery_when_discharging render_retval )
+if [ -z "${float_functions_and_intervals:+x}" ]; then
+  declare -A float_functions_and_intervals
+fi
+float_functions_and_intervals=(\
+  [render_floating_uptime]="1"  \
+)
+functions_to_render_prompt+=( place_cursor_at_bottom_line render_name render_hostname render_time render_pwd render_battery_when_discharging render_retval )
 functions_to_call_post_prompt=( update_bashprompt_last_command_ran_at_epoch )
+
+function skrewz_get_cursor_position ()
+{ # {{{
+  # http://stackoverflow.com/a/2575525 as inspiration:
+  # skrewz@20141026: Seems to always output ``^[0-9]+:1$''?
+  local curpos;
+  exec < /dev/tty
+  local oldstty="$(stty -g)"
+  stty raw -echo min 0
+
+  echo -en "\e[6n" > /dev/tty
+  read -sdR curpos
+  curpos="${curpos#*[}"
+  curpos="${curpos//;/:}"
+  stty "$oldstty"
+  echo "$curpos"
+} # }}}
 
 function skrewz_prompt_command ()
 { # {{{
@@ -238,5 +297,6 @@ export -f set_title skrewz_prompt_command skrewz_prompt_rendering_command
 
 # These together render the prompt. The PS1 has to be used 
 export PROMPT_COMMAND='last_dollar_questionmark=$?; skrewz_prompt_command'
+#start_floats
 
 # vim: fdm=marker fml=1
