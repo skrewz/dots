@@ -10,8 +10,9 @@ xkb_symbols "basic" {
 
     key <TLDE> { [brokenbar  , section    , brokenbar       , paragraph       ] };
 
-    key <AC03> { [e          , E          , EuroSign        , cent            ] };
-    key <AC05> { [i          , I          , insert                            ] };
+    key <AC03> { [e          , E          , F5              , cent            ] };
+    key <AC04> { [u          , U          , F6                                ] };
+    key <AC05> { [i          , I          , insert          , insert          ] };
     key <AC06> { [d          , D          , eth             , ETH             ] };
     key <AC10> { [s          , S          , ssharp                            ] };
 
