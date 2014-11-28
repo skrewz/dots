@@ -1,6 +1,9 @@
 // Custom danish Dvorak, built upon Norweigan Dvorak
 // Written by Anders Dannesboe <anders@dannesboe.dk>,
 // adapted by Anders Breindahl <skrewz@skrewz.net>:
+//
+// Note to self: /usr/share/X11/xkb/symbols/us suggests that symbols can be
+// specified as ``U2030'', too.
 partial alphanumeric_keys
 xkb_symbols "basic" {
     include "no(dvorak)"
