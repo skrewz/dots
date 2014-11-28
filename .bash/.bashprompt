@@ -1,5 +1,11 @@
 #!/bin/bash
 # TODO: Put git-awareness into prompt_command.
+# TODO: Make prompt_command render two lines for a set of functions to
+# provide what's-going-on messages. Perhaps this, above the prompt line:
+# skr@montenegriner 11:25 ~ 0 human_pleasantly_box <<< "■ message 1    ■ message 2"
+# ┌───────────────────────────┐
+# │■ message 1    ■ message 2 │
+# └───────────────────────────┘
 
 # Can't let domains slip into github'ed stuff, so working around:
 sha1of_domain="$(hostname --domain | sha1sum | cut -d\  -f1)"
@@ -246,7 +252,7 @@ fi
 float_functions_and_intervals=(\
   [render_floating_uptime]="1"  \
 )
-functions_to_render_prompt+=( place_cursor_at_bottom_line render_name render_hostname render_time render_pwd render_battery_when_discharging render_retval )
+functions_to_render_prompt+=( render_name render_hostname render_time render_pwd render_battery_when_discharging render_retval )
 functions_to_call_post_prompt=( update_bashprompt_last_command_ran_at_epoch )
 
 function skrewz_get_cursor_position ()

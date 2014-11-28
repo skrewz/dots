@@ -121,6 +121,7 @@ export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
 for path in \
   $HOME/sdks/arm-cs-tools/bin \
   $HOME/repos/projects/shoutcast_ripperscripts \
+  $HOME/repos/projects/bin-of-bins/* \
   $HOME/bin; do
   [ ! -d "$path" ] || PATH="$PATH:$path"
 done
