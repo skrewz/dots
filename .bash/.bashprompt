@@ -212,7 +212,7 @@ function update_bashprompt_last_command_ran_at_epoch ()
 function render_long_delay_since_last_command ()
 { # {{{
   if (( $(date +%s) - bashprompt_last_command_ran_at_epoch > 3600 )); then
-    echo -e "${col_base}\e[1m■\e[22m Last prompt \"\e[0m$(date -d "@$bashprompt_last_command_ran_at_epoch" +%H:%M)${col_base}\" above is \e[0m$(date -d "@$bashprompt_last_command_ran_at_epoch" +%F\ %T)${col_base}      ◔ \e[0m$(human_readable_duration "$(($(date +%s) - $bashprompt_last_command_ran_at_epoch))")${col_base} ago\e[0m"
+    echo -e "${col_base}\e[1m■\e[22m Last prompt \"\e[0m$(date -d "@$bashprompt_last_command_ran_at_epoch" +%H:%M)${col_base}\" above is \e[0m$(date -d "@$bashprompt_last_command_ran_at_epoch" +%F\ %T)${col_base}      ◔ \e[0m$(human_readable_duration "$(($(date +%s) - $bashprompt_last_command_ran_at_epoch))")${col_base} ago (now's \e[0m$(date +%F)${col_base}\e[1m\e[22m)\e[0m"
   fi
 } # }}}
 
