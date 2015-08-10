@@ -11,11 +11,12 @@ local naughty   = require("naughty")
 local scratch = require("scratch")
 
 local keydoc = require("keydoc")
+local wibox = require("wibox")
 
-bashets  = require("bashets")
+local bashets  = require("bashets")
 
 -- shifty - dynamic tagging library
-shifty = require("shifty")
+local shifty = require("shifty")
 
 -- useful for debugging, marks the beginning of rc.lua exec
 print("Entered rc.lua: " .. os.time())
@@ -258,8 +259,8 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 -- }}}
 
 -- {{{ helper wibox widgets 
---3.5spacer_widget =  wibox.widget.textbox()
-spacer_widget = widget({ type = "textbox"})
+spacer_widget =  wibox.widget.textbox()
+--3,4spacer_widget = widget({ type = "textbox"})
 --3.5spacer_widget:set_text(' ')
 spacer_widget.text = ''
 -- }}}
@@ -271,7 +272,7 @@ spacer_widget.text = ''
 bashets.set_script_path("~/.config/awesome/support_scripts/bashets/")
 
 -- http://awesome.naquadah.org/wiki/Widgets_in_awesome says this is >3.5:
--- bashet_battery = wibox.widget.textbox()
+--bashet_battery = wibox.widget.textbox()
 --bashet_battery = widget({ type = "textbox", name = "bashet_battery" })
 --bashet_battery = widget({ type = "progressbar", name = "bashet_battery" })
 
@@ -304,25 +305,27 @@ bashet_cpu:set_color('red')
 bashets.register("cpu_usage_percentage.bashet.sh", {widget=bashet_cpu, separator = ' ', update_time = 2, format='$1',})
 
 --bashet_wifi = awful.widget.progressbar()
-bashet_wifi = awful.widget.graph()
-bashet_wifi:set_max_value(100)
-bashet_wifi:set_width(20)
-bashet_wifi:set_color('darkgrey')
+-- bashet_wifi = awful.widget.graph()
+-- bashet_wifi:set_max_value(100)
+-- bashet_wifi:set_width(20)
+-- bashet_wifi:set_color('darkgrey')
 --bashet_wifi:set_vertical(true)
-bashets.register("wifi_signal_usable_percentage.bashet.sh", {widget=bashet_wifi, separator = ' ', update_time = 6, format='$1',})
+-- bashets.register("wifi_signal_usable_percentage.bashet.sh", {widget=bashet_wifi, separator = ' ', update_time = 6, format='$1',})
 
 -- Needs to go after all bashet initialization:
 bashets.start()
 -- }}}
 -- {{{ Wibox'es:
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({},"%a, %Y-%m-%d, W%V, %H:%M:%S",1)
+mytextclock = awful.widget.textclock("%a, %Y-%m-%d, W%V, %H:%M:%S",1)
 
 -- Create a systray
-mysystray = widget({ type = "systray" })
+--3,4mysystray = widget({ type = "systray" })
+mysystray = wibox.widget.systray()
 
 -- Create a wibox for each screen and add it
 mywibox = {}
+my_bottomwibox = {}
 my_left_wibox = {}
 mypromptbox = {}
 mylayoutbox = {}
@@ -373,14 +376,18 @@ for s = 1, screen.count() do
                            awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
     -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
+    --3.4mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
+    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
 
     -- Create a tasklist widget
     --mytasklist[s] = awful.widget.tasklist(function(c)
     --                                          return awful.widget.tasklist.label.currenttags(c, s)
     --                                      end, mytasklist.buttons)
 
-    --my_left_wibox[s] = awful.wibox({ position = "bottom", screen = s, height = "17"})
+    --my_left_wibox[s] = awful.wibox({ position = "left", screen = s, width = "64"})
+    -- Widgets that are aligned up and down
+    --local leftbar_layout = wibox.layout.fixed.vertical()
+    --leftbar_layout:add(mytaglist[s])
     --my_left_wibox[s].widgets = {
     --  {
     --    spacer_widget,
@@ -392,25 +399,52 @@ for s = 1, screen.count() do
     --awful.wibox.align(my_left_wibox[s],'center')
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s, height = "17" })
+    --my_bottomwibox[s] = awful.wibox({ position = "bottom", screen = s, height = "32" })
     -- Add widgets to the wibox - order matters
-    mywibox[s].widgets = {
-        {
-            --mylauncher,
-            s = 1 and bashet_battery or nil,
-            s = 1 and bashet_ram or nil,
-            s = 1 and bashet_cpu or nil,
-            s = 1 and bashet_wifi or nil,
-            spacer_widget,
-            mytaglist[s],
-            mypromptbox[s],
-            layout = awful.widget.layout.horizontal.leftright
-        },
-        mylayoutbox[s],
-        mytextclock,
-        s == 1 and mysystray or nil,
-        --mytasklist[s],
-        layout = awful.widget.layout.horizontal.rightleft
-    }
+    --3.4mywibox[s].widgets = {
+    --3.4    {
+    --3.4        --mylauncher,
+    --3.4        s = 1 and bashet_battery or nil,
+    --3.4        s = 1 and bashet_ram or nil,
+    --3.4        s = 1 and bashet_cpu or nil,
+    --3.4        s = 1 and bashet_wifi or nil,
+    --3.4        spacer_widget,
+    --3.4        mytaglist[s],
+    --3.4        mypromptbox[s],
+    --3.4        --3.4layout = awful.widget.layout.horizontal.leftright
+    --3.4        layout = awful.widget.layout.horizontal.leftright
+    --3.4    },
+    --3.4    mylayoutbox[s],
+    --3.4    mytextclock,
+    --3.4    s == 1 and mysystray or nil,
+    --3.4    --mytasklist[s],
+    --3.4    layout = awful.widget.layout.horizontal.rightleft
+    --3.4}
+
+    -- Widgets that are aligned to the left
+    local left_layout = wibox.layout.fixed.horizontal()
+    --left_layout:add(mylauncher)
+    left_layout:add(bashet_battery)
+    --left_layout:add(bashet_wifi)
+    left_layout:add(bashet_ram)
+    left_layout:add(bashet_cpu)
+    left_layout:add(mytaglist[s])
+    left_layout:add(mypromptbox[s])
+
+    -- Widgets that are aligned to the right
+    local right_layout = wibox.layout.fixed.horizontal()
+    if s == 1 then right_layout:add(wibox.widget.systray()) end
+    --right_layout:add(memwidget)
+    --right_layout:add(batwidget)
+    right_layout:add(mytextclock)
+    right_layout:add(mylayoutbox[s])
+
+    local layout = wibox.layout.align.horizontal()
+    layout:set_left(left_layout)
+    layout:set_middle(mytasklist[s])
+    layout:set_right(right_layout)
+
+    mywibox[s]:set_widget(layout)
 end
 -- }}}
 
@@ -519,8 +553,8 @@ globalkeys = awful.util.table.join(
     awful.key({modkey, "Shift"},   "l", shifty.send_next,"move client to previous tag"),
     awful.key({modkey},            "g", awful.tag.viewprev,"view previous tag"),
     awful.key({modkey},            "l", awful.tag.viewnext,"view next tag"),
-    awful.key({modkey, "Control"}, "g", shifty.shift_prev,"exchange with previous tag"),
-    awful.key({modkey, "Control"}, "l", shifty.shift_next,"exchange with next tag"),
+    awful.key({modkey, "Control"}, "g", shifty.shift_prev,nil,"exchange with previous tag"),
+    awful.key({modkey, "Control"}, "l", shifty.shift_next,nil,"exchange with next tag"),
     awful.key({modkey           }, "r", search_tag_interactive, "beta: search tagname"),
 
     awful.key({modkey, "Control"}, ",",
@@ -548,7 +582,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,"jump to urgent clients"),
 
     keydoc.group("special keys"),
-    awful.key({                   }, "#9", function () awful.util.spawn("xscreensaver-command -lock") end,"lock screen"),
+    awful.key({                   }, "#9", function () awful.util.spawn("xscreensaver-command -lock") end,"lock with xscreensaver"),
+    awful.key({ modkey            }, "#9", function () awful.util.spawn("xtrlock") end,"lock with xtrlock"),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
     awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"enable mute"),
     awful.key({                   }, "#123", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end,"increase volume"),
