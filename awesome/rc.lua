@@ -456,6 +456,24 @@ root.buttons(awful.util.table.join(
 ))
 -- }}}
 
+-- yank of shifty.name2tags:
+function fuzzy_name2tags (user_input,scr)
+    local ret = {}
+    local a, b = 1, scr or screen.count()
+
+    for s = a, b do
+        for i, t in ipairs(awful.tag.gettags(s)) do
+            if string.find(t.name,user_input) then
+                table.insert(ret, t)
+            end
+        end
+    end
+    if #ret > 0 then return ret end
+end
+function fuzzy_name2tag (user_input,scr,idx)
+    local ts = fuzzy_name2tags(user_input,scr)
+    if ts then return ts[idx or 1] end
+end
 
 
 function search_tag_interactive ()
@@ -471,7 +489,7 @@ function search_tag_interactive ()
         -- shifty.taglist[scr][shifty.tag2index(scr, t) * 2],
         function (name)
             if name:len() > 0 then
-                local all_found = shifty.fuzzy_name2tags(name)
+                local all_found = fuzzy_name2tags(name,scr)
                 if all_found then 
                     local found = all_found[1]
                     naughty.notify({ title = "Changed tag", text = "entered: \"" .. name .. "\" which yields " .. (#all_found) .. " tag(s); selected " .. found.name, timeout = 4 })
@@ -672,10 +690,10 @@ clientkeys = awful.util.table.join(
 --end
 
 globalkeys = awful.util.table.join(globalkeys,keydoc.group("screen manipulation"))
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(1) end,"focus screen 1"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,1) end,"move to screen 1"))
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(2) end,"focus screen 2"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,2) end,"move to screen 2"))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(2) end,"focus screen 1"))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,2) end,"move to screen 1"))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(1) end,"focus screen 2"))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,1) end,"move to screen 2"))
 globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "e", function ()           awful.screen.focus(3) end,"focus screen 3"))
 clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,3) end,"move to screen 3"))
 globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "u", function ()           awful.screen.focus(4) end,"focus screen 4"))
