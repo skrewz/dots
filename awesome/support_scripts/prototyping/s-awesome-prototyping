@@ -1,0 +1,123 @@
+#!/bin/bash
+
+set -o errexit -o nounset -o pipefail
+trap "echo 'Interrupted. Aborting with error exit status.'; exit 1;" INT
+trap "err=\"\$?\"; echo \"Error occured in subcommand @ \${BASH_SOURCE[0]}:\$LINENO.\"; [ \"2\" = \"\$(tput colors)\" ] || echo -ne \"\\e[31;1m\${err} @ >>> \\e[0m\"; echo -n \"\$(sed -n \${LINENO}p < \"\${BASH_SOURCE[0]}\")\"; [ \"2\" = \"\$(tput colors)\" ] && echo \"\" || echo -e \"\\e[31;1m <<<\\e[0m\"; exit 1;" ERR
+
+basedir="$(dirname "$0")"
+
+
+declare -A pids
+pids["awesome_dev"]="$( [ ! -r "$basedir/.pids/awesome_dev.pid" ] || cat "$basedir/.pids/awesome_dev.pid")"
+pids["xephyr"]="$( [ ! -r "$basedir/.pids/xephyr.pid" ] || cat "$basedir/.pids/xephyr.pid")"
+
+awesome_configuration_file="$HOME/.config/awesome/rc.lua"
+
+
+function ensure_instance_stopped()
+{ # {{{
+  local instance="$1"
+  if ps -p "${pids["$instance"]}" >& /dev/null; then
+    stop_instance "$instance"
+  fi
+} # }}}
+function ensure_instance_started()
+{ # {{{
+  local instance="$1"
+  if ! ps -p "${pids["$instance"]}" >& /dev/null; then
+    start_instance "$instance"
+  fi
+} # }}}
+function stop_instance()
+{ # {{{
+  local instance="$1"
+
+  if ps -p "${pids["$1"]}" >& /dev/null; then
+    kill -9 "${pids["$1"]}"
+  fi
+  pids["$instance"]=''
+  rm -f "$basedir/.pids/$instance.pid"
+} # }}}
+function start_instance()
+{ # {{{
+  local instance="$1"
+  case "$instance" in
+    awesome_dev)
+      DISPLAY=:1 awesome  -c "$awesome_configuration_file" &> "$basedir/.logs/$instance.log" & pid="$!"
+      ;;
+    xephyr)
+      Xephyr -screen 800x600 :1 &> "$basedir/.logs/$instance.log" & pid="$!"
+      sleep 2 # to allow Xephyr to start properly
+      ;;
+  esac
+  pids["$instance"]="$pid"
+  echo "$pid" > "$basedir/.pids/$instance.pid"
+} # }}}
+function load_xkb()
+{ # {{{
+  ensure_instance_started awesome_dev
+  DISPLAY=:1 setxkbmap skrewz-dvorak || true
+} # }}}
+function load_xresources()
+{ # {{{
+  ensure_instance_started awesome_dev
+  DISPLAY=:1 xrdb ~/.Xresources
+} # }}}
+
+declare -A options=( \
+  ['verbose']="" \
+  ['start']="" \
+  ['stop']="" \
+  ['restart']="" \
+  ['taillogs']="" \
+)
+
+while [ "0" != "$#" ]; do
+  for key in "${!options[@]}"; do
+    if [[ "--$key" == "$1" ]]; then
+      if [[ $key =~ : ]]; then
+        echo "Key matched colon; setting value instead." &>2
+        options["$key"]="$2"
+        shift
+      else
+        options["$key"]="set"
+      fi
+      shift
+      continue 2
+    fi
+  done
+  # Manual option parsing for non-$options options:
+  case "$1" in
+    --help)
+      echo "(no automatic parsing of \$options here, yet. These are a good starting point, though:)"
+      for keys in "${!options[@]}"; do
+        echo "--$key: ${options[$key]##.*##}"
+      done | column -t
+      ;;
+    *)
+      echo "Unrecogized option: \"$1\". Aborting."
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+
+if [[ -n "${options['start']}" ]]; then
+  ensure_instance_started xephyr
+  ensure_instance_started awesome_dev
+  load_xkb
+  load_xresources
+elif [[ -n "${options['taillogs']}" ]]; then
+  tail -F $(for key in "${!pids[@]}"; do echo -n " $basedir/.logs/$key.log"; done)
+elif [[ -n "${options['restart']}" ]]; then
+  ensure_instance_stopped awesome_dev
+  ensure_instance_started awesome_dev
+  load_xkb
+  load_xresources
+elif [[ -n "${options['stop']}" ]]; then
+  ensure_instance_stopped awesome_dev
+  ensure_instance_stopped xephyr
+fi
+
+# vim: fdm=marker fml=1
