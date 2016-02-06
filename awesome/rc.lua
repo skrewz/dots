@@ -18,6 +18,8 @@ local bashets  = require("bashets")
 -- shifty - dynamic tagging library
 local shifty = require("shifty")
 
+local lain = require("lain")
+
 -- useful for debugging, marks the beginning of rc.lua exec
 print("Entered rc.lua: " .. os.time())
 
@@ -29,15 +31,6 @@ require("debian.menu")
 
 -- {{{ shifty.config configuration
 shifty.config.tags = { -- {{{
-    ["1"] = { position    = 1, init = false, },
-    ["2"] = { position    = 2, init = false, },
-    ["3"] = { position    = 3, init = false, },
-    ["4"] = { position    = 4, init = false, },
-    ["5"] = { position    = 5, init = false, },
-    ["6"] = { position    = 6, init = false, },
-    ["7"] = { position    = 7, init = false, },
-    ["8"] = { position    = 8, init = false, },
-    ["9"] = { position    = 9, init = false, },
     media = {
         layout      = awful.layout.suit.tile,
         mwfact      = 0.65,
@@ -166,12 +159,12 @@ shifty.config.tags = { -- {{{
 --  * all other parameters (e.g. layout, mwfact) follow awesome's tag API
 shifty.config.defaults = {
     layout = awful.layout.suit.tile,
-    ncol = 1,
-    mwfact = 0.60,
+    ncol = 2,
+    mwfact = 0.30,
     persist = true,
     floatBars = true,
     guess_name = true,
-    guess_position = true,
+    guess_position = false,
 }
 -- }}}
 
@@ -215,7 +208,7 @@ layouts =
     --awful.layout.suit.tile,
     --awful.layout.suit.tile.left,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.bottom,
+    --awful.layout.suit.tile.bottom,
     --awful.layout.suit.tile.top,
     --awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
@@ -256,6 +249,16 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 
 --mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 --                                     menu = mymainmenu })
+-- }}}
+
+-- lain widgets {{{
+--[[
+lain_cpu_widget = lain.widgets.cpu({
+    settings = function()
+        widget:set_markup("Cpu " .. cpu_now.usage)
+    end
+})
+--]]
 -- }}}
 
 -- {{{ helper wibox widgets 
@@ -425,6 +428,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
     --left_layout:add(mylauncher)
+    --left_layout:add(lain_cpu_widget)
     left_layout:add(bashet_battery)
     --left_layout:add(bashet_wifi)
     -- left_layout:add(bashet_ram)
@@ -474,33 +478,6 @@ end
 function fuzzy_name2tag (user_input,scr,idx)
     local ts = fuzzy_name2tags(user_input,scr)
     if ts then return ts[idx or 1] end
-end
-
-
-function search_tag_interactive ()
-    local theme = beautiful.get()
-    local t = awful.tag.selected()
-    local scr = t.screen
-
-    -- http://awesome.naquadah.org/doc/api/modules/naughty.html <- awful.prompt.run luadoc
-    awful.prompt.run({
-        fg_cursor = '#ffffff', bg_cursor = '#000000', ul_cursor = "single",
-        prompt = 'Tag-search: ', text = ""},
-        mypromptbox[mouse.screen].widget,
-        -- shifty.taglist[scr][shifty.tag2index(scr, t) * 2],
-        function (name)
-            if name:len() > 0 then
-                local all_found = fuzzy_name2tags(name,scr)
-                if all_found then 
-                    local found = all_found[1]
-                    naughty.notify({ title = "Changed tag", text = "entered: \"" .. name .. "\" which yields " .. (#all_found) .. " tag(s); selected " .. found.name, timeout = 4 })
-                    awful.tag.viewonly(found)
-                end
-            end
-        end,
-        shifty.completion,
-        awful.util.getdir("cache") .. "/history_tags"
-    )
 end
 
 -- {{{ Key bindings
@@ -572,9 +549,9 @@ globalkeys = awful.util.table.join(
     awful.key({modkey, "Shift"},   "l", shifty.send_next,"move client to previous tag"),
     awful.key({modkey},            "g", awful.tag.viewprev,"view previous tag"),
     awful.key({modkey},            "l", awful.tag.viewnext,"view next tag"),
-    awful.key({modkey, "Control"}, "g", shifty.shift_prev,nil,"exchange with previous tag"),
-    awful.key({modkey, "Control"}, "l", shifty.shift_next,nil,"exchange with next tag"),
-    awful.key({modkey           }, "r", search_tag_interactive, "beta: search tagname"),
+    awful.key({modkey, "Control"}, "g", shifty.shift_prev,"exchange with previous tag"),
+    awful.key({modkey, "Control"}, "l", shifty.shift_next,"exchange with next tag"),
+    awful.key({modkey           }, "r", shifty.search_tag_interactive, "beta: search tagname"),
 
     awful.key({modkey, "Control"}, ",",
               function()
@@ -584,20 +561,20 @@ globalkeys = awful.util.table.join(
                   t = shifty.tagtoscr(s, t)
                   awful.tag.viewonly(t)
               end,"send tag to next screen"),
-    awful.key({modkey},          ".", shifty.add,"create new tag"),
     awful.key({modkey},          "p", shifty.rename,"rename tag"),
-    -- Circumvent for when you don't want your window manager in your way:
-    awful.key({modkey, "Shift"}, ".", 
+    awful.key({modkey},          ".", shifty.add,"create new tag"),
+    awful.key({modkey, "Shift"}, ".",
     function()
-        shifty.add({name = 'emerg'})
-    end,"create new tag called emerg"),
+        shifty.add({name = '   '})
+    end,"create new 'spacer' tag"),
 
 
 
 
     keydoc.group("client interactions"),
-    awful.key({ modkey, "Shift"   }, "h", function () awful.client.swap.byidx(  1) end,"rotate clients forward"),
-    awful.key({ modkey, "Shift"   }, "s", function () awful.client.swap.byidx( -1) end,"rotate clients backward"),
+    -- skrewz@20160206: hardly ever use these:
+    --awful.key({ modkey, "Shift"   }, "h", function () awful.client.swap.byidx(  1) end,"rotate clients forward"),
+    --awful.key({ modkey, "Shift"   }, "s", function () awful.client.swap.byidx( -1) end,"rotate clients backward"),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,"jump to urgent clients"),
 
     keydoc.group("special keys"),
