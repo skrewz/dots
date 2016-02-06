@@ -282,19 +282,20 @@ bashets.set_script_path("~/.config/awesome/support_scripts/bashets/")
 -- callback reduce the width of the bashet widget.
 
 --bashet_battery = awful.widget.progressbar()
-bashet_battery = awful.widget.graph()
-bashet_battery:set_max_value(100)
-bashet_battery:set_width(20)
-bashet_battery:set_color('blue')
+bashet_battery = wibox.widget.textbox()
+--bashet_battery = awful.widget.graph()
+--bashet_battery:set_max_value(100)
+--bashet_battery:set_width(20)
+--bashet_battery:set_color('blue')
 --bashet_battery:set_vertical(true)
-bashets.register("battery_percentage.bashet.sh", {widget=bashet_battery, separator = ' ', update_time = 60, format='$1',})
+bashets.register("battery_percentage.bashet.sh", {widget=bashet_battery, separator = ' ', update_time = 60, format='$1 $2',})
 
-bashet_ram = awful.widget.progressbar()
-bashet_ram:set_max_value(100)
-bashet_ram:set_width(2)
-bashet_ram:set_color('green')
-bashet_ram:set_vertical(true)
-bashets.register("ram_usage_percentage.bashet.sh", {widget=bashet_ram, separator = ' ', update_time = 10, format='$1',})
+-- bashet_ram = awful.widget.progressbar()
+-- bashet_ram:set_max_value(100)
+-- bashet_ram:set_width(2)
+-- bashet_ram:set_color('green')
+-- bashet_ram:set_vertical(true)
+-- bashets.register("ram_usage_percentage.bashet.sh", {widget=bashet_ram, separator = ' ', update_time = 10, format='$1',})
 
 --bashet_cpu = awful.widget.progressbar()
 bashet_cpu = awful.widget.graph()
@@ -317,7 +318,7 @@ bashets.start()
 -- }}}
 -- {{{ Wibox'es:
 -- Create a textclock widget
-mytextclock = awful.widget.textclock("%a, %Y-%m-%d, W%V, %H:%M:%S",1)
+mytextclock = awful.widget.textclock("%a, %Y-%m-%d %Z, W%V, %H:%M:%S",1)
 
 -- Create a systray
 --3,4mysystray = widget({ type = "systray" })
@@ -426,7 +427,7 @@ for s = 1, screen.count() do
     --left_layout:add(mylauncher)
     left_layout:add(bashet_battery)
     --left_layout:add(bashet_wifi)
-    left_layout:add(bashet_ram)
+    -- left_layout:add(bashet_ram)
     left_layout:add(bashet_cpu)
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
@@ -851,12 +852,12 @@ awful.rules.rules = {
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
-client.add_signal("manage", function (c, startup)
+client.connect_signal("manage", function (c, startup)
     -- Add a titlebar
     -- awful.titlebar.add(c, { modkey = modkey })
 
     -- Enable sloppy focus
-    c:add_signal("mouse::enter", function(c)
+    c:connect_signal("mouse::enter", function(c)
         if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
             and awful.client.focus.filter(c) then
             client.focus = c
@@ -876,8 +877,8 @@ client.add_signal("manage", function (c, startup)
     end
 end)
 
-client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
 -- End
