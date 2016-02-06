@@ -16,10 +16,10 @@ theme.fg_focus      = "#ffffffff"
 theme.fg_urgent     = "#ffffffff"
 theme.fg_minimize   = "#ffffffff"
 
-theme.border_width  = "2"
-theme.border_normal = "#40404001"
-theme.border_focus  = "#a0a0a080"
-theme.border_marked = "#404040ff"
+theme.border_width  = "3"
+theme.border_normal = "#101010"
+theme.border_focus  = "#808080"
+theme.border_marked = "#404040"
 
 -- There are other variable sets
 -- overriding the default one when
