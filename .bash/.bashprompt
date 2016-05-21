@@ -34,6 +34,7 @@ col_underline=$'\e[4m'
 col_invred=$'\e[41m'
 col_red=$'\e[31m'
 col_green=$'\e[32m'
+col_grey=$'\e[30;1m'
 
 if [ "0" != "$UID" ]; then
   col_base=$'\e['"3${basedigit}m"
@@ -204,6 +205,11 @@ function render_battery_when_discharging ()
     fi
   fi
 } # }}}
+function render_any_git_branch ()
+{ # {{{
+  local branchname="$(git branch -q 2>/dev/null | sed -n "s/^\* \(.*\)$/\1/;tp;b;:p p")"
+  [ -z "$branchname" ] || echo -n " \[$col_grey\][\[$col_reset\]\[$col_base\]\[$col_underline\]$branchname\[$col_reset\]\[$col_grey\]]\[$col_reset\]"
+} # }}}
 bashprompt_last_command_ran_at_epoch="$(date +%s)"
 function update_bashprompt_last_command_ran_at_epoch ()
 { # {{{
@@ -252,7 +258,7 @@ fi
 float_functions_and_intervals=(\
   [render_floating_uptime]="1"  \
 )
-functions_to_render_prompt+=( render_name render_hostname render_time render_pwd render_battery_when_discharging render_retval )
+functions_to_render_prompt+=( render_name render_hostname render_time render_pwd render_battery_when_discharging render_any_git_branch render_retval )
 functions_to_call_post_prompt=( update_bashprompt_last_command_ran_at_epoch )
 
 function skrewz_get_cursor_position ()
