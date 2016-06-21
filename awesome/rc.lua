@@ -13,7 +13,7 @@ local scratch = require("scratch")
 local keydoc = require("keydoc")
 local wibox = require("wibox")
 
-local bashets  = require("bashets")
+local vicious  = require("vicious")
 
 -- shifty - dynamic tagging library
 local shifty = require("shifty")
@@ -31,24 +31,18 @@ require("debian.menu")
 
 -- {{{ shifty.config configuration
 shifty.config.tags = { -- {{{
-    media = {
-        layout      = awful.layout.suit.tile,
-        mwfact      = 0.65,
-        ncols       = 2,
-        init        = true,
-    },
-    browsdump = {
-        layout      = awful.layout.suit.tile,
-        mwfact      = 0.65,
-        ncols       = 2,
-        init        = true,
-    },
-    netw = {
-        layout      = awful.layout.suit.tile,
-        mwfact      = 0.65,
-        ncols       = 2,
-        init        = true,
-    },
+--  media = {
+--      layout      = awful.layout.suit.tile,
+--      mwfact      = 0.65,
+--      ncols       = 2,
+--      init        = true,
+--  },
+--  netw = {
+--      layout      = awful.layout.suit.tile,
+--      mwfact      = 0.65,
+--      ncols       = 2,
+--      init        = true,
+--  },
 --    w1 = {
 --        mwfact    = 0.60,
 --        init      = true,
@@ -74,6 +68,10 @@ shifty.config.tags = { -- {{{
 --        layout   = awful.layout.suit.tile,
 --    },
 } -- }}}
+
+-- skrewz@20160304: using a different approach:
+--shifty.config.tags = shifty.load_saved_tag_names();
+shifty.restore_saved_tag_names();
 
 -- SHIFTY: application matching rules
 -- order here matters, early rules will be applied first
@@ -160,7 +158,7 @@ shifty.config.tags = { -- {{{
 shifty.config.defaults = {
     layout = awful.layout.suit.tile,
     ncol = 2,
-    mwfact = 0.30,
+    mwfact = 0.33,
     persist = true,
     floatBars = true,
     guess_name = true,
@@ -259,69 +257,42 @@ lain_cpu_widget = lain.widgets.cpu({
     end
 })
 --]]
+-- https://github.com/copycat-killer/lain/wiki/bat :
+lain_bat_widget = lain.widgets.bat(
+)
 -- }}}
 
--- {{{ helper wibox widgets 
+-- {{{ helper wibox widgets
 spacer_widget =  wibox.widget.textbox()
 --3,4spacer_widget = widget({ type = "textbox"})
 --3.5spacer_widget:set_text(' ')
 spacer_widget.text = ''
 -- }}}
 
--- {{{ bashets: 
--- See: http://awesome.naquadah.org/wiki/Bashets and clone https://gitorious.org/bashets
 
--- Scripts in here, where possible, will use a 0-100 scale:
-bashets.set_script_path("~/.config/awesome/support_scripts/bashets/")
+-- Textual memory output:
+vicious_memwidget = wibox.widget.textbox ()
+vicious.register(vicious_memwidget, vicious.widgets.mem, "😊 $1 ☹ $5",5)
 
--- http://awesome.naquadah.org/wiki/Widgets_in_awesome says this is >3.5:
---bashet_battery = wibox.widget.textbox()
---bashet_battery = widget({ type = "textbox", name = "bashet_battery" })
---bashet_battery = widget({ type = "progressbar", name = "bashet_battery" })
+-- cpu utilization graph:
+vicious_cpuwidget = awful.widget.graph()
+vicious_cpuwidget:set_background_color("#000000")
+vicious_cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 20 }, stops = { { 0, "#ff0000" },  {0.2, "#ff6666"}, { 1, "#ffffff" } }})
+vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 0.25)
+
+-- wlan0 rate graph:
+vicious_netwidget = awful.widget.graph()
+vicious_netwidget:set_background_color("#000000")
+vicious_netwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 20 }, stops = { { 0, "#0000ff" }, { 0.2, "#8888ff" }, { 1, "#ffffff" } }})
+vicious.register(vicious_netwidget, vicious.widgets.net, function (w,a)
+  -- Dividing through with a "realistic maximal speed"
+  return 100*((a['{wlan0 down_kb}']+a['{wlan0 up_kb}'])/2500) + 100*((a['{wlan0 down_kb}']+a['{wlan0 up_kb}'])/2500)
+end, 1)
 
 
--- FIXME: Set up callbacks for bashets that don't neccesarily output anything
--- interesting. (battery that's full/absent, wifi that's absent), and let the
--- callback reduce the width of the bashet widget.
-
---bashet_battery = awful.widget.progressbar()
-bashet_battery = wibox.widget.textbox()
---bashet_battery = awful.widget.graph()
---bashet_battery:set_max_value(100)
---bashet_battery:set_width(20)
---bashet_battery:set_color('blue')
---bashet_battery:set_vertical(true)
-bashets.register("battery_percentage.bashet.sh", {widget=bashet_battery, separator = ' ', update_time = 60, format='$1 $2',})
-
--- bashet_ram = awful.widget.progressbar()
--- bashet_ram:set_max_value(100)
--- bashet_ram:set_width(2)
--- bashet_ram:set_color('green')
--- bashet_ram:set_vertical(true)
--- bashets.register("ram_usage_percentage.bashet.sh", {widget=bashet_ram, separator = ' ', update_time = 10, format='$1',})
-
---bashet_cpu = awful.widget.progressbar()
-bashet_cpu = awful.widget.graph()
-bashet_cpu:set_max_value(100)
-bashet_cpu:set_width(20)
-bashet_cpu:set_color('red')
---bashet_cpu:set_vertical(true)
-bashets.register("cpu_usage_percentage.bashet.sh", {widget=bashet_cpu, separator = ' ', update_time = 2, format='$1',})
-
---bashet_wifi = awful.widget.progressbar()
--- bashet_wifi = awful.widget.graph()
--- bashet_wifi:set_max_value(100)
--- bashet_wifi:set_width(20)
--- bashet_wifi:set_color('darkgrey')
---bashet_wifi:set_vertical(true)
--- bashets.register("wifi_signal_usable_percentage.bashet.sh", {widget=bashet_wifi, separator = ' ', update_time = 6, format='$1',})
-
--- Needs to go after all bashet initialization:
-bashets.start()
--- }}}
 -- {{{ Wibox'es:
 -- Create a textclock widget
-mytextclock = awful.widget.textclock("%a, %Y-%m-%d %Z, W%V, %H:%M:%S",1)
+mytextclock = awful.widget.textclock("%a %H:%M\n%Y-%m-%d",1)
 
 -- Create a systray
 --3,4mysystray = widget({ type = "systray" })
@@ -368,6 +339,14 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+-- cf. http://stackoverflow.com/a/31299971
+local awful_widget_common = require("awful.widget.common")
+function list_update(w, buttons, label, data, objects)
+    -- call default widget drawing function
+    awful_widget_common.list_update(w, buttons, label, data, objects)
+    -- set widget size
+    w:set_max_widget_size(16)
+end
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -382,6 +361,16 @@ for s = 1, screen.count() do
     -- Create a taglist widget
     --3.4mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
+
+    mytaglist[s] = awful.widget.taglist(
+      s,
+      awful.widget.taglist.filter.all,
+      mytaglist.buttons,
+      nil,
+      list_update,
+      wibox.layout.flex.vertical()
+      )
+      --base_widget=wibox.layout.fixed.horizontal}
 
     -- Create a tasklist widget
     --mytasklist[s] = awful.widget.tasklist(function(c)
@@ -402,16 +391,12 @@ for s = 1, screen.count() do
     --}
     --awful.wibox.align(my_left_wibox[s],'center')
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = "17" })
+    mywibox[s] = awful.wibox({ position = "left", screen = s, width = "100" })
     --my_bottomwibox[s] = awful.wibox({ position = "bottom", screen = s, height = "32" })
     -- Add widgets to the wibox - order matters
     --3.4mywibox[s].widgets = {
     --3.4    {
     --3.4        --mylauncher,
-    --3.4        s = 1 and bashet_battery or nil,
-    --3.4        s = 1 and bashet_ram or nil,
-    --3.4        s = 1 and bashet_cpu or nil,
-    --3.4        s = 1 and bashet_wifi or nil,
     --3.4        spacer_widget,
     --3.4        mytaglist[s],
     --3.4        mypromptbox[s],
@@ -426,28 +411,34 @@ for s = 1, screen.count() do
     --3.4}
 
     -- Widgets that are aligned to the left
-    local left_layout = wibox.layout.fixed.horizontal()
-    --left_layout:add(mylauncher)
-    --left_layout:add(lain_cpu_widget)
-    left_layout:add(bashet_battery)
-    --left_layout:add(bashet_wifi)
-    -- left_layout:add(bashet_ram)
-    left_layout:add(bashet_cpu)
-    left_layout:add(mytaglist[s])
-    left_layout:add(mypromptbox[s])
+    local top_layout = wibox.layout.fixed.vertical()
+    --top_layout:add(mylauncher)
+    --top_layout:add(lain_cpu_widget)
+    top_layout:add(lain_bat_widget)
+    top_layout:add(vicious_memwidget)
+    top_layout:add(vicious_netwidget)
+    top_layout:add(vicious_cpuwidget)
+    top_layout:add(mytaglist[s])
 
     -- Widgets that are aligned to the right
-    local right_layout = wibox.layout.fixed.horizontal()
-    if s == 1 then right_layout:add(wibox.widget.systray()) end
-    --right_layout:add(memwidget)
-    --right_layout:add(batwidget)
-    right_layout:add(mytextclock)
-    right_layout:add(mylayoutbox[s])
+    local bottom_layout = wibox.layout.fixed.vertical()
+    bottom_layout:add(mypromptbox[s])
+    if s == 1 then bottom_layout:add(wibox.widget.systray()) end
+    --bottom_layout:add(memwidget)
+    --bottom_layout:add(batwidget)
+    bottom_layout:add(mytextclock)
+    -- skrewz@20160207: This currently is a bit big:
+    --bottom_layout:add(mylayoutbox[s])
 
-    local layout = wibox.layout.align.horizontal()
-    layout:set_left(left_layout)
+    -- http://awesome.naquadah.org/doc/api/modules/wibox.layout.align.html :
+    -- Returns a new vertical align layout. An align layout can display up to
+    -- three widgets. The widget set via :set_top() is top-aligned.
+    -- :set_bottom() sets a widget which will be bottom-aligned. The remaining
+    -- space between those two will be given to the widget set via :set_middle().
+    local layout = wibox.layout.align.vertical()
+    layout:set_top(top_layout)
     layout:set_middle(mytasklist[s])
-    layout:set_right(right_layout)
+    layout:set_bottom(bottom_layout)
 
     mywibox[s]:set_widget(layout)
 end
@@ -460,25 +451,6 @@ root.buttons(awful.util.table.join(
     awful.button({ }, 5, awful.tag.viewprev)
 ))
 -- }}}
-
--- yank of shifty.name2tags:
-function fuzzy_name2tags (user_input,scr)
-    local ret = {}
-    local a, b = 1, scr or screen.count()
-
-    for s = a, b do
-        for i, t in ipairs(awful.tag.gettags(s)) do
-            if string.find(t.name,user_input) then
-                table.insert(ret, t)
-            end
-        end
-    end
-    if #ret > 0 then return ret end
-end
-function fuzzy_name2tag (user_input,scr,idx)
-    local ts = fuzzy_name2tags(user_input,scr)
-    if ts then return ts[idx or 1] end
-end
 
 -- {{{ Key bindings
 -- Go to http://awesome.naquadah.org/doc/api/index.html for a bit of documentation.
@@ -498,20 +470,20 @@ globalkeys = awful.util.table.join(
       naughty.notify({ title = " Increased: master width factor", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
     end,"increase master width factor"),
     awful.key({ modkey, "Shift"   }, "b",     function ()
-      awful.tag.incnmaster( 1)
-      naughty.notify({ title = "Increased: number of master windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
-    end,"increase number of master windows"),
-    awful.key({ modkey, "Shift"   }, "m",     function ()
       awful.tag.incnmaster(-1)
       naughty.notify({ title = "Decreased: number of master windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+    end,"increase number of master windows"),
+    awful.key({ modkey, "Shift"   }, "m",     function ()
+      awful.tag.incnmaster(1)
+      naughty.notify({ title = "Increased: number of master windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
     end,"decrease number of master windows"),
     awful.key({ modkey, "Control" }, "b",     function ()
-      awful.tag.incncol( 1)
-      naughty.notify({ title = "Increased: number of column windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
-    end,"increase number of column windows"),
-    awful.key({ modkey, "Control" }, "m",     function ()
       awful.tag.incncol(-1)
       naughty.notify({ title = "Decreased: number of column windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+    end,"increase number of column windows"),
+    awful.key({ modkey, "Control" }, "m",     function ()
+      awful.tag.incncol(1)
+      naughty.notify({ title = "Increased: number of column windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
     end,"decrease number of column windows"),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end,"cycle through layouts"),
     -- Directional focus with right hand of dvorak layout:
@@ -565,7 +537,7 @@ globalkeys = awful.util.table.join(
     awful.key({modkey},          ".", shifty.add,"create new tag"),
     awful.key({modkey, "Shift"}, ".",
     function()
-        shifty.add({name = '   '})
+        shifty.add({name = '━━━━━━━━━━━━━━━'})
     end,"create new 'spacer' tag"),
 
 
@@ -581,9 +553,10 @@ globalkeys = awful.util.table.join(
     awful.key({                   }, "#9", function () awful.util.spawn("xscreensaver-command -lock") end,"lock with xscreensaver"),
     awful.key({ modkey            }, "#9", function () awful.util.spawn("xtrlock") end,"lock with xtrlock"),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
-    awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"enable mute"),
-    awful.key({                   }, "#123", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end,"increase volume"),
+    --awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"enable mute"),
+    awful.key({                   }, "#121", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --mute") end,"mute sound"),
     awful.key({                   }, "#122", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --decrease") end,"decrease volume"),
+    awful.key({                   }, "#123", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end,"increase volume"),
     awful.key({                   }, "#232", function () awful.util.spawn("xbacklight -dec 10"); end,"decrease backlight"),
     awful.key({                   }, "#233", function () awful.util.spawn("xbacklight -inc 10"); end,"increase backlight"),
     awful.key({ modkey, "Shift"   }, "F11", function () awful.util.spawn("xmodmap .config/Xmodmap.us") end,"xmodmap: us qwerty"),
@@ -591,8 +564,8 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     keydoc.group("spawn commands"),
-    awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/s-scratch-left","center", "left",0.4, 0.80, true,1) end,"drop left-in scratch pad"),
-    awful.key({ modkey,           }, "j", function () scratch.drop(".config/awesome/support_scripts/s-scratch-right","center", "right",0.4, 0.80, true,1) end,"drop right-in scratch pad"),
+    awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/s-scratch-left","center", "left",0.5, 0.80, true,1) end,"drop left-in scratch pad"),
+    awful.key({ modkey,           }, "j", function () scratch.drop(".config/awesome/support_scripts/s-scratch-right","bottom", "right",0.4, 0.80, true,1) end,"drop right-in scratch pad"),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
     awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh") end,"spawn browser"),
     awful.key({ modkey, "Control" }, "r", awesome.restart,"restart awesome (Xephyr?)")
@@ -627,8 +600,8 @@ clientkeys = awful.util.table.join(
       "type = " .. tostring(c.type) .. "\n" ..
       "instance = " .. tostring(c.instance) .. "\n" ..
       ".", timeout = 10 })
-    end,"toggle on-top for client"),
-    awful.key({ modkey, "Shift"   }, "w", function (c) 
+    end,"notify of window info"),
+    awful.key({ modkey, "Shift"   }, "w", function (c)
       -- Attempt at getting initial sizing for this one too:
       --  naughty.notify({ title = "Debug", text = "Now: size_hints=" .. c.size_hints.user_position .. ".", timeout = 2 })
       if c.sticky == true then
@@ -712,7 +685,7 @@ clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "u
 --                   end))
 -- end
 
--- Shifty: 
+-- Shifty:
 globalkeys = awful.util.table.join(globalkeys,keydoc.group("extra tag manipulation"))
 for i=1,9 do
     globalkeys = awful.util.table.join(
@@ -854,8 +827,17 @@ client.connect_signal("manage", function (c, startup)
     end
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c)
+  c.border_color = beautiful.border_focus
+  -- skrewz@20160207: debugging where the initial frame color goes:
+  --naughty.notify({ title = "Window ID", text = "focus hook: "..  " = " .. c.class .. "\n" .. "window id = " .. c.window .. "\n" .. "border color: " ..c.border_color })
+
+end)
+client.connect_signal("unfocus", function(c)
+  c.border_color = beautiful.border_normal
+  -- skrewz@20160207: debugging where the initial frame color goes:
+  --naughty.notify({ title = "Window ID", text = "unfocus hook: "..  " = " .. c.class .. "\n" .. "window id = " .. c.window .. "\n" .. "border color: " ..c.border_color })
+end)
 -- }}}
 
 -- End
