@@ -15,7 +15,7 @@ xkb_symbols "basic" {
 
     key <AC03> { [e          , E          , F5              , cent            ] };
     key <AC04> { [u          , U          , F6                                ] };
-    key <AC05> { [i          , I          , insert          , insert          ] };
+    key <AC05> { [i          , I          , Insert          , Insert          ] };
     key <AC06> { [d          , D          , eth             , ETH             ] };
     key <AC10> { [s          , S          , ssharp                            ] };
 
