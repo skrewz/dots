@@ -10,14 +10,10 @@
 # Can't let domains slip into github'ed stuff, so working around:
 sha1of_domain="$(hostname --domain | sha1sum | cut -d\  -f1)"
 
-if grep -qF $'7ad2097bf738491a6f32bd8bfd754f9a2ccb7490\n109232fc14b9343ee992ed025da46d0ad8ca1018' <<< "$sha1of_domain"; then
-  basedigit=5
-elif grep -qF $'f788a971e2a58b4559dbeb8b6028c588f173cb6f\nead5a4d48fbef658ecbd0130a8833255f91f3fc4' <<< "$sha1of_domain"; then
-  basedigit=2
-elif [ -n "$(hostname --domain)" ]; then
+if [ -n "$(hostname --domain)" ]; then
   basedigit=6 # Somewhere else where the machines know of their domains.
 else
-  basedigit=1
+  basedigit=3
 fi
 # root_basedigit probably should be 1 (red):
 root_basedigit=1
