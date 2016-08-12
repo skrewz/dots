@@ -48,9 +48,20 @@ URxvt.urgentOnBell: true
 !URxvt.italicFont:-*-terminus-medium-o-*-*-12-*-*-*-*-*-*-*
 !URxvt.boldItalicFont:-*-terminus-bold-o-*-*-12-*-*-*-*-*-*-*
 
-URxvt.font:          -*-clean-medium-r-*-*-12-*-*-*-*-*-*-*
-URxvt.boldFont:      -*-clean-bold-r-*-*-12-*-*-*-*-*-*-*
-URxvt.italicFont:    -*-clean-medium-i-*-*-12-*-*-*-*-*-*-*
+!URxvt.font:          -*-clean-medium-r-*-*-14-*-*-*-*-*-*-*
+!URxvt.boldFont:      -*-clean-bold-r-*-*-14-*-*-*-*-*-*-*
+!URxvt.italicFont:    -*-clean-medium-i-*-*-14-*-*-*-*-*-*-*
+
+Xft.antialias:  1
+Xft.dpi:        100
+Xft.hinting:    1
+!Xft.hintstyle:  hintslight
+Xft.rgba:       rgb
+
+URxvt.font:          xft:Hack:size=10:antialias=true
+URxvt.boldFont:      xft:Hack:bold:size=10:antialias=true
+URxvt.italicFont:    xft:Hack:italic:size=10:antialias=true
+URxvt.letterSpace: -1
 
 !URxvt.boldItalicFont:-*-clean-bold-i-*-*-12-*-*-*-*-*-*-*
 ! Font-change bindings:
