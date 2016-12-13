@@ -220,11 +220,17 @@ function s-iostat ()
   done
 } # }}}
 
+function s-mac-generate ()
+{ # {{{
+  # libvirt likes its mac with a 0x52 leading octet (?)
+  head -c 5 /dev/urandom | xxd -ps | sed -re 's/(..)/:&/g' -e 's/^:/52:/'
+} # }}}
+
 alias rootify="echo 'skrewz-alias: Becoming root through [some complicated bash logic]...' >&2; sudo -i su -l -c 'bash --rcfile $HOME/.bashrc-when-sudo-su-ing'"
 
 #alias taillogs="echo \"skrewz-alias: Running tail -Fs.3 /var/log/{httpd/*/*_log.\$(date +%Y-%m-%d),services/trace.\$(date +%Y-%m-%d).log}:\" >&2; sudo tail -n2 -Fs.3 /var/log/{httpd/*/*_log.\$(date +%Y-%m-%d),services/trace.\$(date +%Y-%m-%d).log}"
 
-alias htop="timeout 24h htop -d 10"
+alias htop="timeout 24h htop -d 2"
 alias g="git"
 alias gd="git diff"
 # (Who calls `gs` from the CLI anyway?)
@@ -341,6 +347,11 @@ function s-today-notes ()
   vim ~/notes/$(date +%F).notes
 } # }}}
 
+function s-ip-get-public ()
+{ # {{{
+  echo "Good candidates for what the current public ipv4 is:"
+  wget -qO- minip.dk | egrep -o "([0-9]{1,3}\.){3}[0-9]{1,3}" | sort -u
+} # }}}
 
 alias ls='ls $LS_OPTIONS'
 alias ll='ls $LS_OPTIONS -lA --full-time'
@@ -349,7 +360,43 @@ alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
+alias s-mutt="TERM=rxvt-256color mutt"
 
+function s-taillogs ()
+{ # {{{
+  local -a colours=( $'\e[31;1m' $'\e[32;1m' $'\e[33;1m' $'\e[34;1m' $'\e[35;1m' $'\e[36;1m' )
+  local -a logfiles=( "/var/log/syslog" "/var/log/messages" )
+
+  echo  "Warning: this function ain't finished. It's leaving nasty jobbitses around after it itself is gone."
+  echo "Do you still, you know... want to use it?"
+  echo -n "Enter to proceed, SIGINT otherwise:"
+  read _
+
+  if [ "root" != "$(whoami)" ]; then
+    echo "You're not root. No log-tailing for you." >&2
+    return 0
+  fi
+  for key in "${!logfiles[@]}"; do
+    if [ ! -r "${logfiles[$key]}" ]; then
+      echo "s-taillogs: Not using logfile \"${logfiles[$key]}\" as it's not readable."
+      unset logfiles["$key"]
+    fi
+  done
+
+  i=0
+  local -a pids=()
+  for file in "${logfiles[@]}"; do
+    echo "s-taillogs: Will be tailing logfile \"$file\"."
+    (tail -Fn0 -s0.4 "$file" | sed -u "s/^.*$/$(printf "%-12s" "$(basename "$file")"): ${colours[$i]}&"$'\e[0m/' ) &
+    pids+=( "$!" )
+    ((i++)) || true
+  done
+
+  trap 'for pid in "${pids[@]}"; do echo killing pid $pid; kill $pid; done; exit 0' SIGINT
+  wait "${pids[@]}"
+  trap - SIGINT
+  sudo tail -Fn0 "${logfiles[@]}"
+} # }}}
 
 
 if [ -e ~/.bash_aliases_local ]; then
