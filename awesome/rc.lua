@@ -1,6 +1,7 @@
 -- vim: fdm=marker fml=1
 -- Standard awesome library
 local awful = require("awful")
+awful.remote = require("awful.remote")
 awful.autofocus = require("awful.autofocus")
 awful.rules = require("awful.rules")
 -- Theme handling library
@@ -251,21 +252,19 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 
 -- lain widgets {{{
 --[[
-lain_cpu_widget = lain.widgets.cpu({
+lain_cpu_widget = lain.widget.cpu({
     settings = function()
         widget:set_markup("Cpu " .. cpu_now.usage)
     end
 })
---]]
 -- https://github.com/copycat-killer/lain/wiki/bat :
-lain_bat_widget = lain.widgets.bat(
+lain_bat_widget = lain.widget.bat(
 )
+--]]
 -- }}}
 
 -- {{{ helper wibox widgets
 spacer_widget =  wibox.widget.textbox()
---3,4spacer_widget = widget({ type = "textbox"})
---3.5spacer_widget:set_text(' ')
 spacer_widget.text = ''
 -- }}}
 
@@ -275,13 +274,13 @@ vicious_memwidget = wibox.widget.textbox ()
 vicious.register(vicious_memwidget, vicious.widgets.mem, "😊 $1 ☹ $5",5)
 
 -- cpu utilization graph:
-vicious_cpuwidget = awful.widget.graph()
+vicious_cpuwidget = wibox.widget.graph()
 vicious_cpuwidget:set_background_color("#000000")
 vicious_cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 20 }, stops = { { 0, "#ff0000" },  {0.2, "#ff6666"}, { 1, "#ffffff" } }})
 vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 0.25)
 
 -- wlan0 rate graph:
-vicious_netwidget = awful.widget.graph()
+vicious_netwidget = wibox.widget.graph()
 vicious_netwidget:set_background_color("#000000")
 vicious_netwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 20 }, stops = { { 0, "#0000ff" }, { 0.2, "#8888ff" }, { 1, "#ffffff" } }})
 vicious.register(vicious_netwidget, vicious.widgets.net, function (w,a)
@@ -292,10 +291,9 @@ end, 1)
 
 -- {{{ Wibox'es:
 -- Create a textclock widget
-mytextclock = awful.widget.textclock("%a %H:%M\n%Y-%m-%d",1)
+mytextclock = wibox.widget.textclock("%a %H:%M\n%Y-%m-%d",1)
 
 -- Create a systray
---3,4mysystray = widget({ type = "systray" })
 mysystray = wibox.widget.systray()
 
 -- Create a wibox for each screen and add it
@@ -347,22 +345,23 @@ function list_update(w, buttons, label, data, objects)
     -- set widget size
     w:set_max_widget_size(16)
 end
-for s = 1, screen.count() do
+
+awful.screen.connect_for_each_screen(function(s)
     -- Create a promptbox for each screen
-    mypromptbox[s] = awful.widget.prompt()
+    --skrewz@20170207: s.mypromptbox = awful.widget.prompt()
+    s.mypromptbox = wibox.widget.textbox()
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
-    mylayoutbox[s] = awful.widget.layoutbox(s)
-    mylayoutbox[s]:buttons(awful.util.table.join(
+    s.mylayoutbox = awful.widget.layoutbox(s)
+    s.mylayoutbox:buttons(awful.util.table.join(
                            awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
                            awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
                            awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
     -- Create a taglist widget
-    --3.4mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
-    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
+    --s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
 
-    mytaglist[s] = awful.widget.taglist(
+    s.mytaglist = awful.widget.taglist(
       s,
       awful.widget.taglist.filter.all,
       mytaglist.buttons,
@@ -373,62 +372,47 @@ for s = 1, screen.count() do
       --base_widget=wibox.layout.fixed.horizontal}
 
     -- Create a tasklist widget
-    --mytasklist[s] = awful.widget.tasklist(function(c)
+    --s.mytasklist = awful.widget.tasklist(function(c)
     --                                          return awful.widget.tasklist.label.currenttags(c, s)
     --                                      end, mytasklist.buttons)
 
-    --my_left_wibox[s] = awful.wibox({ position = "left", screen = s, width = "64"})
+    --s.my_left_wibox = awful.wibox({ position = "left", screen = s, width = "64"})
     -- Widgets that are aligned up and down
     --local leftbar_layout = wibox.layout.fixed.vertical()
-    --leftbar_layout:add(mytaglist[s])
-    --my_left_wibox[s].widgets = {
+    --leftbar_layout:add(s.mytaglist)
+    --s.my_left_wibox.widgets = {
     --  {
     --    spacer_widget,
-    --    mytaglist[s],
+    --    s.mytaglist,
     --    spacer_widget,
     --    layout = awful.widget.layout.horizontal.leftright
     --  }
     --}
-    --awful.wibox.align(my_left_wibox[s],'center')
+    --awful.wibox.align(s.my_left_wibox,'center')
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "left", screen = s, width = "100" })
-    --my_bottomwibox[s] = awful.wibox({ position = "bottom", screen = s, height = "32" })
+    s.mywibox = awful.wibar({ position = "left", screen = s, width = "100" })
+    --s.my_bottomwibox = awful.wibox({ position = "bottom", screen = s, height = "32" })
     -- Add widgets to the wibox - order matters
-    --3.4mywibox[s].widgets = {
-    --3.4    {
-    --3.4        --mylauncher,
-    --3.4        spacer_widget,
-    --3.4        mytaglist[s],
-    --3.4        mypromptbox[s],
-    --3.4        --3.4layout = awful.widget.layout.horizontal.leftright
-    --3.4        layout = awful.widget.layout.horizontal.leftright
-    --3.4    },
-    --3.4    mylayoutbox[s],
-    --3.4    mytextclock,
-    --3.4    s == 1 and mysystray or nil,
-    --3.4    --mytasklist[s],
-    --3.4    layout = awful.widget.layout.horizontal.rightleft
-    --3.4}
 
     -- Widgets that are aligned to the left
     local top_layout = wibox.layout.fixed.vertical()
     --top_layout:add(mylauncher)
     --top_layout:add(lain_cpu_widget)
-    top_layout:add(lain_bat_widget)
+    --top_layout:add(lain_bat_widget)
     top_layout:add(vicious_memwidget)
     top_layout:add(vicious_netwidget)
     top_layout:add(vicious_cpuwidget)
-    top_layout:add(mytaglist[s])
+    top_layout:add(s.mytaglist)
 
     -- Widgets that are aligned to the right
     local bottom_layout = wibox.layout.fixed.vertical()
-    bottom_layout:add(mypromptbox[s])
+    bottom_layout:add(s.mypromptbox)
     if s == 1 then bottom_layout:add(wibox.widget.systray()) end
     --bottom_layout:add(memwidget)
     --bottom_layout:add(batwidget)
     bottom_layout:add(mytextclock)
     -- skrewz@20160207: This currently is a bit big:
-    --bottom_layout:add(mylayoutbox[s])
+    --bottom_layout:add(s.mylayoutbox)
 
     -- http://awesome.naquadah.org/doc/api/modules/wibox.layout.align.html :
     -- Returns a new vertical align layout. An align layout can display up to
@@ -437,11 +421,12 @@ for s = 1, screen.count() do
     -- space between those two will be given to the widget set via :set_middle().
     local layout = wibox.layout.align.vertical()
     layout:set_top(top_layout)
-    layout:set_middle(mytasklist[s])
+    layout:set_middle(s.mytasklist)
     layout:set_bottom(bottom_layout)
 
-    mywibox[s]:set_widget(layout)
+    s.mywibox:set_widget(layout)
 end
+)
 -- }}}
 
 -- {{{ Mouse bindings
