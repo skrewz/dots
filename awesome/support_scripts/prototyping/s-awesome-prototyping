@@ -90,7 +90,7 @@ while [ "0" != "$#" ]; do
   case "$1" in
     --help)
       echo "(no automatic parsing of \$options here, yet. These are a good starting point, though:)"
-      for keys in "${!options[@]}"; do
+      for key in "${!options[@]}"; do
         echo "--$key: ${options[$key]##.*##}"
       done | column -t
       ;;
