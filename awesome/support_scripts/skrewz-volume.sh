@@ -20,6 +20,8 @@ while [ "0" != "$#" ]; do
   case "$1" in
     -v|--verbose)
       verbosemode="yea" ;;
+    --mute)
+      adjustment="mute" ;;
     --increase)
       adjustment="+${percent_adjustment}%" ;;
     --decrease)
@@ -39,7 +41,12 @@ fi
 
 running_sink="$(awk '/RUNNING$/ {print $2}' <<< "$pactl_list_short_sinks")"
 if [ -n "$running_sink" ]; then
-  pactl -- set-sink-volume "$running_sink" "$adjustment"
+  if [[ "mute" == "$adjustment" ]]; then
+    pactl -- set-sink-mute "$running_sink" 1
+  else
+    pactl -- set-sink-volume "$running_sink" "$adjustment"
+    pactl -- set-sink-mute "$running_sink" 0
+  fi
 else
   echo "No running sinks. No-op'ing out." >&2
   exit 0
