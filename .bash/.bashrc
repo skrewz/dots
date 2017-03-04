@@ -67,10 +67,15 @@ function print_bash_bt ()
 }
 
 export -f print_bash_bt
+export PYTHONSTARTUP=~/.pystartup
 
 
+if [ "rxvt-unicode-256color" = "$TERM" ]; then
+  export TERM="rxvt-256color"
+fi
 
 
+trap 'source ~/.bash_colors_autogen' USR1
 
 # Change the window title of X terminals 
 if egrep -q "^.*(xterm|rxvt).*$" <<< "$TERM"; then
@@ -86,7 +91,7 @@ fi
 
 # Alias ssh-add to be timeout'ing out-of-hours on the following day. Kind of
 # convenient when you know it works this way.
-alias s-ssh-add='/usr/bin/ssh-add -t $(($(date --date "$(date --date tomorrow +%Y-%m-%d) 6:00:00" +%s) - $(date +%s))) $HOME/.ssh/id_rsa_private_use $HOME/.ssh/id_rsa_work'
+alias s-ssh-add='/usr/bin/ssh-add -t $(($(date --date "$(date --date tomorrow +%Y-%m-%d) 6:00:00" +%s) - $(date +%s))) $HOME/.ssh/id_rsa_private_use'
 alias ssh-add='echo "ssh-add (alias): spawning s-ssh-add instead." >&2; s-ssh-add'
 
 
@@ -122,6 +127,7 @@ for path in \
   $HOME/sdks/arm-cs-tools/bin \
   $HOME/repos/projects/shoutcast_ripperscripts \
   $HOME/repos/projects/bin-of-bins/* \
+  $HOME/repos/*/bin \
   $HOME/bin; do
   [ ! -d "$path" ] || PATH="$PATH:$path"
 done
