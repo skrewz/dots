@@ -1,4 +1,3 @@
-syntax on
 colorscheme delek
 syntax on
 set nocompatible
@@ -10,12 +9,21 @@ set so=10
 set hlsearch
 set incsearch
 
-set cursorline
-hi CursorLine term=bold cterm=bold
+set cursorline cursorcolumn
+"highlight CursorLine   term=bold ctermbg=black cterm=none
+"highlight CursorColumn term=bold ctermbg=black cterm=none
+highlight CursorLine   term=none ctermbg=none cterm=bold
+highlight CursorColumn term=none ctermbg=none cterm=bold
 " Autoread is tremendously useful for long-running vim sessions on VCS'ed data
 set autoread
 
-set listchars=tab:>~,trail:.,extends:>
+" listchars-highlight Bad Spacing (but in a whitespace-preserving way:)
+set listchars=tab:\ \ ,trail:\ ,extends:·
+highlight SpecialKey ctermbg=red
+
+" skrewz@20150118: Not needed, turns ``bottom overflow'' $colour.
+" highlight NonText    ctermbg=green
+
 set list
 set modeline
 set number
@@ -38,9 +46,13 @@ set viewdir=~/.vim_local/views/
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
+" Set up ColorColumn when typing email:
+autocmd FileType mail setlocal colorcolumn=85
+highlight ColorColumn ctermfg=red
+
 " Setting up Vundle: {{{
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim 
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Makes vundle handle itself:
@@ -48,6 +60,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'Valloric/YouCompleteMe'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -103,16 +116,17 @@ nmap <Leader>s <Plug>(easymotion-sn)
 xmap <Leader>s <Plug>(easymotion-sn)
 omap <Leader>z <Plug>(easymotion-sn)
 
-silent !mkdir -p ~/.vim_local/spell > /dev/null 2>&1
+silent !mkdir -p ~/.vim_synced/spell > /dev/null 2>&1
 silent !mkdir -p ~/.vim_local/swapfiles > /dev/null 2>&1
 set dir=~/.vim_local/swapfiles
 
 " spelling settings
-setglobal spelllang=en_uk
-setglobal nospell 
+setglobal spelllang=en
+" setglobal nospell 
 let g:tex_comment_nospell= 1
 
-execute "set spellfile=~/.vim_local/spell/wordlist.".&g:spelllang.".add"
+execute "set spellfile=~/.vim_synced/spell/wordlist.".&g:spelllang.".utf-8.add"
+" set spellfile=~/.vim_synced/spell/wordlist.en.utf-8.add
 
 
 
@@ -153,7 +167,7 @@ let g:fuf_modesDisable = []
 " <C-j> - opens in a split window.
 " <C-k> - opens in a vertical-split window.
 " <C-]> - opens in a new tab page.
-noremap <C-f>f :FufMruFileInCwd<Enter>
+noremap <C-f>f :FufMruFile<Enter>
 noremap <C-f>F :FufFile<Enter>
 
 map <f1> vG$!~/bin/ol2sanity.pl<cr>
@@ -166,6 +180,7 @@ function! GetDate(format)
   " Append space + result to current line without moving cursor.
   call setline(line('.'), getline('.') . ' ' . result)
 endfunction
+
 
 " Make the gnupg plugin prefer armored and symmetrically encrypted files:
 
