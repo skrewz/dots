@@ -34,6 +34,9 @@ set softtabstop=2
 set sw=2
 set tabstop=8 " Conventional, see :help 30.5
 
+" Daring, could be useful?
+" autocmd BufRead,BufWritePre *.sh normal gg=G
+
 set expandtab " Nobody likes tab characters.
 
 silent !mkdir -p ~/.vim_local > /dev/null 2>&1
@@ -61,6 +64,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'tpope/vim-fugitive'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
