@@ -91,7 +91,7 @@ fi
 
 # Alias ssh-add to be timeout'ing out-of-hours on the following day. Kind of
 # convenient when you know it works this way.
-alias s-ssh-add='/usr/bin/ssh-add -t $(($(date --date "$(date --date tomorrow +%Y-%m-%d) 6:00:00" +%s) - $(date +%s))) $HOME/.ssh/id_rsa_private_use'
+alias s-ssh-add='/usr/bin/ssh-add -t $(($(date --date "$(date --date tomorrow +%Y-%m-%d) 6:00:00" +%s) - $(date +%s))) $HOME/.ssh/id_rsa'
 alias ssh-add='echo "ssh-add (alias): spawning s-ssh-add instead." >&2; s-ssh-add'
 
 
@@ -128,10 +128,22 @@ for path in \
   $HOME/repos/projects/shoutcast_ripperscripts \
   $HOME/repos/projects/bin-of-bins/* \
   $HOME/repos/*/bin \
+  $HOME/node_modules/.bin/ \
   $HOME/bin; do
   [ ! -d "$path" ] || PATH="$PATH:$path"
 done
 
+if [ -e ~/.rbenv ] && which rbenv &> /dev/null; then
+  eval "$(rbenv init -)"
+fi
+
+if [ -f ~/.mavenrc ]; then
+  source ~/.mavenrc
+fi
+
+
+export GPG_TTY=$(tty)
+export AWS_EMAIL="abrein@tradeshift.com"
 
 # Treat screen sessions as login profiles.
 #if [[ "$TERM" =~ screen ]] && [ -f ~/.bash_profile ]; then
@@ -140,3 +152,7 @@ done
 
 # E.g. ls /tmp/notexist* doesn't expand to "/tmp/notexist*", but to nothing:
 #shopt -s nullglob
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
