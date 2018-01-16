@@ -220,6 +220,12 @@ function s-iostat ()
   done
 } # }}}
 
+function s-notetoself ()
+{ # {{{
+  echo "note to self: $1" >> ~/s-notetoself.log
+} # }}}
+
+
 function s-mac-generate ()
 { # {{{
   # libvirt likes its mac with a 0x52 leading octet (?)
@@ -242,9 +248,9 @@ alias dn="dirname"
 alias bn="basename"
 alias wh="which"
 
-function cdl()
+function c()
 {
-  cd "$1"
+  [ -d "$1" ] && cd "$1" || cd "$(dirname "$1")"
   ls -ghA --color | (head -n10; lines="$(wc -l)"; echo $'\n'"[ $lines more...]")
 }
 
