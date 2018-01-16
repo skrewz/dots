@@ -124,6 +124,8 @@ export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
 # alias mv='mv -i'
 
 for path in \
+  /opt/repos/s-monitoring/bin/ \
+  /opt/repos/s-gitglue/bin/ \
   $HOME/sdks/arm-cs-tools/bin \
   $HOME/repos/projects/shoutcast_ripperscripts \
   $HOME/repos/projects/bin-of-bins/* \

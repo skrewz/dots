@@ -142,6 +142,23 @@ function s-mlgrep ()
   eval "parallel --gnu --pipe --block 1 --recstart \"$delim\" \"egrep --colour=always -C9999999 $@\"" 2> >(grep --line-buffered -vF "parallel: Warning: A full record was not matched in a block.")
 } # }}}
 
+function s-apt-fullupgrade()
+{ # {{{
+
+  echo "=> Running \`apt update\`..."
+  apt update
+  echo "=> Running \`apt full-upgrade\` (a 'y' keypress will be needed)..."
+  DEBIAN_FRONTEND=noninteractive apt full-upgrade
+  echo "=> Running \`apt autoremove\`"
+  DEBIAN_FRONTEND=noninteractive apt autoremove
+
+  i=0
+  while [ -n "$(deborphan)" ] && ((i++ < 10)); do
+    echo "=> Running \`apt remove \$(deborphan)\`"
+    DEBIAN_FRONTEND=noninteractive apt remove $(deborphan)
+  done
+} # }}}
+
 
 function s-hex-to-binary-and-decimal ()
 { # {{{
