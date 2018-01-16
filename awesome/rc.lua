@@ -19,13 +19,15 @@ local vicious  = require("vicious")
 -- shifty - dynamic tagging library
 local shifty = require("shifty")
 
-local lain = require("lain")
+local localopts = require("localopts")
+
+--local lain = require("lain")
 
 -- useful for debugging, marks the beginning of rc.lua exec
 print("Entered rc.lua: " .. os.time())
 
 -- Load Debian menu entries
-require("debian.menu")
+-- require("debian.menu")
 
 
 
@@ -241,7 +243,7 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
+                                    --{ "Debian", debian.menu.Debian_menu.Debian },
                                     { "open terminal", terminal }
                                   }
                         })
@@ -285,13 +287,15 @@ vicious_netwidget:set_background_color("#000000")
 vicious_netwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 20 }, stops = { { 0, "#0000ff" }, { 0.2, "#8888ff" }, { 1, "#ffffff" } }})
 vicious.register(vicious_netwidget, vicious.widgets.net, function (w,a)
   -- Dividing through with a "realistic maximal speed"
-  return 100*((a['{wlan0 down_kb}']+a['{wlan0 up_kb}'])/2500) + 100*((a['{wlan0 down_kb}']+a['{wlan0 up_kb}'])/2500)
+  return 100*((a['{'..localopts.wifi_interface..' down_kb}']+a['{'..localopts.wifi_interface..' up_kb}'])/2500) + 100*((a['{'..localopts.wifi_interface..' down_kb}']+a['{'..localopts.wifi_interface..' up_kb}'])/2500)
 end, 1)
 
 
 -- {{{ Wibox'es:
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock("%a %H:%M\n%Y-%m-%d",1)
+my_home_textclock = wibox.widget.textclock("%a %H:%M:%S\n%Y-%m-%d",10,"Europe/Copenhagen")
+my_apac_textclock = wibox.widget.textclock("SZ %a %H:%M",1,"Asia/Shanghai")
+my_us_textclock   = wibox.widget.textclock("CA %a %H:%M",1,"America/Los_Angeles")
 
 -- Create a systray
 mysystray = wibox.widget.systray()
@@ -407,10 +411,13 @@ awful.screen.connect_for_each_screen(function(s)
     -- Widgets that are aligned to the right
     local bottom_layout = wibox.layout.fixed.vertical()
     bottom_layout:add(s.mypromptbox)
-    if s == 1 then bottom_layout:add(wibox.widget.systray()) end
+    --if s == 1 then bottom_layout:add(wibox.widget.systray()) end
+    bottom_layout:add(wibox.widget.systray())
     --bottom_layout:add(memwidget)
     --bottom_layout:add(batwidget)
-    bottom_layout:add(mytextclock)
+    bottom_layout:add(my_us_textclock)
+    bottom_layout:add(my_apac_textclock)
+    bottom_layout:add(my_home_textclock)
     -- skrewz@20160207: This currently is a bit big:
     --bottom_layout:add(s.mylayoutbox)
 
@@ -626,14 +633,12 @@ clientkeys = awful.util.table.join(
 --end
 
 globalkeys = awful.util.table.join(globalkeys,keydoc.group("screen manipulation"))
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(2) end,"focus screen 1"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,2) end,"move to screen 1"))
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(1) end,"focus screen 2"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,1) end,"move to screen 2"))
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "e", function ()           awful.screen.focus(3) end,"focus screen 3"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,3) end,"move to screen 3"))
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "u", function ()           awful.screen.focus(4) end,"focus screen 4"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "u", function (c) awful.client.movetoscreen(c,4) end,"move to screen 4"))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(localopts.left_screen) end,"focus screen 1"))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,localopts.left_screen) end,"move to screen 1"))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(localopts.middle_screen) end,"focus screen 2"))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,localopts.middle_screen) end,"move to screen 2"))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "e", function ()           awful.screen.focus(localopts.right_screen) end,"focus screen 3"))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,localopts.right_screen) end,"move to screen 3"))
 
 -- {{{ Shifty keys
 
