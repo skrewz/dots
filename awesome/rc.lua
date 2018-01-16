@@ -11,7 +11,7 @@ local naughty   = require("naughty")
 
 local scratch = require("scratch")
 
-local keydoc = require("keydoc")
+--local keydoc = require("keydoc")
 local wibox = require("wibox")
 
 local vicious  = require("vicious")
@@ -276,17 +276,48 @@ vicious.register(vicious_memwidget, vicious.widgets.mem, "😊 $1 ☹ $5",5)
 -- cpu utilization graph:
 vicious_cpuwidget = wibox.widget.graph()
 vicious_cpuwidget:set_background_color("#000000")
-vicious_cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 20 }, stops = { { 0, "#ff0000" },  {0.2, "#ff6666"}, { 1, "#ffffff" } }})
-vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 0.25)
+vicious_cpuwidget:set_height(10)
+vicious_cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 10 }, stops = { { 0, "#ff0000" },  { 1, "#000000" } }})
+vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 1.0)
 
 -- wlan0 rate graph:
 vicious_netwidget = wibox.widget.graph()
 vicious_netwidget:set_background_color("#000000")
-vicious_netwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 20 }, stops = { { 0, "#0000ff" }, { 0.2, "#8888ff" }, { 1, "#ffffff" } }})
+vicious_netwidget:set_height(10)
+vicious_netwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 10 }, stops = { { 0, "#ffffff" }, { 0.3, "#000080" }, { 1, "#000080" } }})
 vicious.register(vicious_netwidget, vicious.widgets.net, function (w,a)
   -- Dividing through with a "realistic maximal speed"
   return 100*((a['{wlan0 down_kb}']+a['{wlan0 up_kb}'])/2500) + 100*((a['{wlan0 down_kb}']+a['{wlan0 up_kb}'])/2500)
 end, 1)
+
+
+-- cpufreq rate graph:
+
+function report_cpufreq_avg ()
+  local total_mhz = 0
+  local total_cores = 0
+  for l in io.lines('/proc/cpuinfo') do
+    if string.find(l,'cpu MHz') then
+      total_cores = total_cores + 1
+      total_mhz = total_mhz + tonumber(string.match(l,'%d+.%d+'))
+    end
+  end
+  local retval = ((total_mhz / total_cores) - 800) / (1800-800)
+  --print ("avg: " .. total_mhz/total_cores .. "; returning: " .. retval)
+  return retval
+end
+vicious_cpufreq_widget = wibox.widget.graph()
+vicious_cpufreq_widget:set_height(10)
+vicious_cpufreq_widget:set_background_color("#000000")
+vicious_cpufreq_widget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 10 }, stops = { { 0, "#ff0000" },  {0.5, "#ff0050"}, { 1, "#000050" } }})
+
+-- using trick from https://github.com/Mic92/vicious 's stacked graph example:
+unused_ctext = wibox.widget.textbox()
+vicious.register(unused_ctext, vicious.widgets.cpu, function (w,a)
+  vicious_cpufreq_widget:add_value(report_cpufreq_avg(),1)
+  return ''
+  --return (report_cpufreq_avg() )
+end,1.0)
 
 
 -- {{{ Wibox'es:
@@ -401,13 +432,14 @@ awful.screen.connect_for_each_screen(function(s)
     --top_layout:add(lain_bat_widget)
     top_layout:add(vicious_memwidget)
     top_layout:add(vicious_netwidget)
+    top_layout:add(vicious_cpufreq_widget)
     top_layout:add(vicious_cpuwidget)
     top_layout:add(s.mytaglist)
 
     -- Widgets that are aligned to the right
     local bottom_layout = wibox.layout.fixed.vertical()
     bottom_layout:add(s.mypromptbox)
-    if s == 1 then bottom_layout:add(wibox.widget.systray()) end
+    bottom_layout:add(wibox.widget.systray())
     --bottom_layout:add(memwidget)
     --bottom_layout:add(batwidget)
     bottom_layout:add(mytextclock)
@@ -440,11 +472,11 @@ root.buttons(awful.util.table.join(
 -- {{{ Key bindings
 -- Go to http://awesome.naquadah.org/doc/api/index.html for a bit of documentation.
 globalkeys = awful.util.table.join(
-    keydoc.group("layout manipulation"),
+    --keydoc.group("layout manipulation"),
     --awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ,"view previous tag"),
     --awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ,"view previous tag"),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,"view previously selected tag"),
-    awful.key({ modkey,           }, "F2", keydoc.display,"display this keydoc"),
+    --awful.key({ modkey,           }, "F2", keydoc.display,"display this keydoc"),
     -- keydoc.group("awesome keys"),
     awful.key({ modkey,           }, "b",     function ()
       awful.tag.incmwfact(-0.05)
@@ -472,7 +504,7 @@ globalkeys = awful.util.table.join(
     end,"decrease number of column windows"),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end,"cycle through layouts"),
     -- Directional focus with right hand of dvorak layout:
-    keydoc.group("directional focus keymaps"),
+    --keydoc.group("directional focus keymaps"),
     awful.key({ modkey,           }, "h",
         function ()
             awful.client.focus.bydirection('left')
@@ -500,7 +532,7 @@ globalkeys = awful.util.table.join(
 
 
     -- Shifty: keybindings specific to shifty
-    keydoc.group("tag interaction"),
+    --keydoc.group("tag interaction"),
     awful.key({modkey, "Shift"},   "c", shifty.del,"delete current tag"),
     awful.key({modkey, "Shift"},   "g", shifty.send_prev,"move client to next tag"),
     awful.key({modkey, "Shift"},   "l", shifty.send_next,"move client to previous tag"),
@@ -528,13 +560,13 @@ globalkeys = awful.util.table.join(
 
 
 
-    keydoc.group("client interactions"),
+    --keydoc.group("client interactions"),
     -- skrewz@20160206: hardly ever use these:
     --awful.key({ modkey, "Shift"   }, "h", function () awful.client.swap.byidx(  1) end,"rotate clients forward"),
     --awful.key({ modkey, "Shift"   }, "s", function () awful.client.swap.byidx( -1) end,"rotate clients backward"),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,"jump to urgent clients"),
 
-    keydoc.group("special keys"),
+    --keydoc.group("special keys"),
     awful.key({                   }, "#9", function () awful.util.spawn("xscreensaver-command -lock") end,"lock with xscreensaver"),
     awful.key({ modkey            }, "#9", function () awful.util.spawn("xtrlock") end,"lock with xtrlock"),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
@@ -548,7 +580,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "F12", function () awful.util.spawn("xmodmap .config/Xmodmap.skrewzdvorak") end,"xmodmap: skrewz-dvorak"),
 
     -- Standard program
-    keydoc.group("spawn commands"),
+    --keydoc.group("spawn commands"),
     awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/s-scratch-left","center", "left",0.5, 0.80, true,1) end,"drop left-in scratch pad"),
     awful.key({ modkey,           }, "j", function () scratch.drop(".config/awesome/support_scripts/s-scratch-right","bottom", "right",0.4, 0.80, true,1) end,"drop right-in scratch pad"),
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
@@ -571,7 +603,7 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
-    keydoc.group("further client interactions"),
+    --keydoc.group("further client interactions"),
     awful.key({ modkey,           }, "c",      function (c) c:kill()                         end,"kill client"),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,"toggle floating for client"),
     -- awful.key({ modkey, "Shift"   }, "Return", awful.client.setmaster                           ,"make client master"),
@@ -625,7 +657,7 @@ clientkeys = awful.util.table.join(
 --    )
 --end
 
-globalkeys = awful.util.table.join(globalkeys,keydoc.group("screen manipulation"))
+--globalkeys = awful.util.table.join(globalkeys,keydoc.group("screen manipulation"))
 globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(2) end,"focus screen 1"))
 clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,2) end,"move to screen 1"))
 globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(1) end,"focus screen 2"))
@@ -671,7 +703,7 @@ clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "u
 -- end
 
 -- Shifty:
-globalkeys = awful.util.table.join(globalkeys,keydoc.group("extra tag manipulation"))
+--globalkeys = awful.util.table.join(globalkeys,keydoc.group("extra tag manipulation"))
 for i=1,9 do
     globalkeys = awful.util.table.join(
                         globalkeys,
