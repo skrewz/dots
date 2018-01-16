@@ -17,6 +17,18 @@ highlight CursorColumn term=none ctermbg=none cterm=bold
 " Autoread is tremendously useful for long-running vim sessions on VCS'ed data
 set autoread
 
+" http://vim.wikia.com/wiki/Configuring_the_cursor
+if &term =~ "xterm\\|rxvt"
+  " use a red cursor in insert mode
+  let &t_SI = "\<Esc>]12;white\x7"
+  " use a red cursor otherwise
+  let &t_EI = "\<Esc>]12;grey\x7"
+  silent !echo -ne "\033]12;grey\007"
+  " reset cursor when vim exits
+  autocmd VimLeave * silent !echo -ne "\033]112\007"
+  " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
+endif
+
 " listchars-highlight Bad Spacing (but in a whitespace-preserving way:)
 set listchars=tab:\ \ ,trail:\ ,extends:·
 highlight SpecialKey ctermbg=red
@@ -56,11 +68,15 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Makes vundle handle itself:
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
+
+Plugin 'tomlion/vim-solidity'
+Plugin 'hashivim/vim-terraform.git'
+Plugin 'puppetlabs/puppet-syntax-vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -99,6 +115,11 @@ filetype plugin indent on    " required
 
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup=1
+
+" For Terraform:
+let g:terraform_align=1
+autocmd FileType terraform setlocal commentstring=#%s
+
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black    ctermbg=234
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=235
 
@@ -119,6 +140,7 @@ omap <Leader>z <Plug>(easymotion-sn)
 silent !mkdir -p ~/.vim_synced/spell > /dev/null 2>&1
 silent !mkdir -p ~/.vim_local/swapfiles > /dev/null 2>&1
 set dir=~/.vim_local/swapfiles
+
 
 " spelling settings
 setglobal spelllang=en
