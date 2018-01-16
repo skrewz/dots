@@ -30,6 +30,7 @@ URxvt.modifier:mod1
 !URxvt.borderLess:true
 URxvt.perl-ext-common: default,matcher
 URxvt.urlLauncher: chromium
+URxvt.cursorColor: #666
 URxvt.matcher.button: 1
 URxvt.keysym.S-Prior: \033[5;2~
 URxvt.keysym.S-Next: \033[6;2~
