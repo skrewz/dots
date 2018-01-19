@@ -300,11 +300,19 @@ function report_cpufreq_avg ()
   local total_cores = 0
   for l in io.lines('/proc/cpuinfo') do
     if string.find(l,'cpu MHz') then
+      local otherfile = io.open('/sys/devices/system/cpu/cpu'..total_cores..'/cpufreq/scaling_cur_freq')
+      if otherfile ~= nil then
+        ol = otherfile:read("*a")
+        io.close(otherfile)
+        total_mhz = total_mhz + tonumber(ol)
+      else
+        total_mhz = total_mhz + tonumber(string.match(l,'%d+.%d+'))
+      end
       total_cores = total_cores + 1
-      total_mhz = total_mhz + tonumber(string.match(l,'%d+.%d+'))
     end
   end
-  local retval = ((total_mhz / total_cores) - 800) / (1800-800)
+  -- not an exact calculation:
+  local retval = (((total_mhz / total_cores) / 1000) - 800) / 2900
   --print ("avg: " .. total_mhz/total_cores .. "; returning: " .. retval)
   return retval
 end
@@ -664,13 +672,19 @@ clientkeys = awful.util.table.join(
 --    )
 --end
 
-globalkeys = awful.util.table.join(globalkeys,keydoc.group("screen manipulation"))
+--globalkeys = awful.util.table.join(globalkeys,keydoc.group("screen manipulation"))
+-- https://awesomewm.org/doc/api/classes/screen.html screen.geometry might be useful for this:
 globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(localopts.left_screen) end,"focus screen 1"))
 clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,localopts.left_screen) end,"move to screen 1"))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "a", function (c) awful.screen.focused().selected_tag.screen = localopts.left_screen end,"move tag to screen 1"))
+
 globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(localopts.middle_screen) end,"focus screen 2"))
 clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,localopts.middle_screen) end,"move to screen 2"))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "o", function (c) awful.screen.focused().selected_tag.screen = localopts.middle_screen end,"move tag to screen 2"))
+
 globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "e", function ()           awful.screen.focus(localopts.right_screen) end,"focus screen 3"))
 clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,localopts.right_screen) end,"move to screen 3"))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "e", function (c) awful.screen.focused().selected_tag.screen = localopts.right_screen end,"move tag to screen 3"))
 
 -- {{{ Shifty keys
 
