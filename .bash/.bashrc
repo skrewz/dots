@@ -51,6 +51,8 @@ fi
 
 # And I'm turning it off.
 stty -ixon > /dev/null 2>&1
+# Prefer readline bindings for word-rubout
+stty werase ^=
 
 
 function print_bash_bt ()
