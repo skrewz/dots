@@ -582,7 +582,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,"jump to urgent clients"),
 
     --keydoc.group("special keys"),
-    awful.key({                   }, "KP_End", function () awful.util.spawn("xscreensaver-command -lock") end,"lock with xscreensaver"),
+    awful.key({                   }, "KP_End", function () awful.util.spawn("i3lock --dpms --color 008000") end,"lock with i3lock"),
     awful.key({ modkey            }, "KP_End", function () awful.util.spawn("xtrlock") end,"lock with xtrlock"),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
     --awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"enable mute"),
@@ -591,8 +591,7 @@ globalkeys = awful.util.table.join(
     awful.key({                   }, "#123", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end,"increase volume"),
     awful.key({                   }, "#232", function () awful.util.spawn("xbacklight -dec 10"); end,"decrease backlight"),
     awful.key({                   }, "#233", function () awful.util.spawn("xbacklight -inc 10"); end,"increase backlight"),
-    awful.key({ modkey, "Shift"   }, "F11", function () awful.util.spawn("xmodmap .config/Xmodmap.us") end,"xmodmap: us qwerty"),
-    awful.key({ modkey, "Shift"   }, "F12", function () awful.util.spawn("xmodmap .config/Xmodmap.skrewzdvorak") end,"xmodmap: skrewz-dvorak"),
+    awful.key({ modkey,           }, "F12", function () awful.util.spawn(".config/awesome/support_scripts/s-screen-setup") end),
 
     -- Standard program
     --keydoc.group("spawn commands"),
