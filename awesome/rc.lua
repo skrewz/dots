@@ -582,8 +582,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,"jump to urgent clients"),
 
     --keydoc.group("special keys"),
-    awful.key({                   }, "#9", function () awful.util.spawn("xscreensaver-command -lock") end,"lock with xscreensaver"),
-    awful.key({ modkey            }, "#9", function () awful.util.spawn("xtrlock") end,"lock with xtrlock"),
+    awful.key({                   }, "KP_End", function () awful.util.spawn("xscreensaver-command -lock") end,"lock with xscreensaver"),
+    awful.key({ modkey            }, "KP_End", function () awful.util.spawn("xtrlock") end,"lock with xtrlock"),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
     --awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"enable mute"),
     awful.key({                   }, "#121", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --mute") end,"mute sound"),
@@ -651,8 +651,8 @@ clientkeys = awful.util.table.join(
     end,"minimal-omnipresent-mode for client"),
     --awful.key({ modkey,           }, "n",      function (c) c.minimized = not c.minimized    end,"minimze client"),
     awful.key({ modkey,           }, "f", function (c)
-      c.maximized_horizontal = not c.maximized_horizontal
-      c.maximized_vertical   = not c.maximized_vertical
+        c.maximized = not c.maximized
+	c:raise()
     end, "toggle fullscreen for client")
 )
 
