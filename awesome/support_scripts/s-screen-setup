@@ -1,14 +1,43 @@
 #!/bin/bash
 
+function get_output_for_edid_line ()
+{
+    xrandroutput="$(cat)"
+    if [ "1" != "$(echo "$xrandroutput" | grep "$1" | wc -l)" ]; then
+        #echo "Not unique: $1, aborting:" >&2
+        echo "$xrandroutput" | grep "$1" >&2
+        exit 1
+    fi
+    echo "$xrandroutput" | grep -B 999 "$1" | grep "connected" | tail -1 | egrep -o "^[^ ]+"
+}
+
+xrandroutput="$(xrandr --verbose)"
+declare -A display
+display['pos_0_screen_0']="$(echo "$xrandroutput" | get_output_for_edid_line "00483958533230363834310a202000e4")" # 1
+
+disconnected_but_used_displays="$(sed -nre 's/^([^ ]+) disconnected [0-9]+x[0-9]+[+][0-9]+[+][0-9]+ .*$/\1/;T;p' <<< "$xrandroutput")"
+
 if xrandr | grep -q 'DP-1-8 connected' && xrandr | grep -q 'DP-1-1 connected'; then
   xrandr --output DP-1-1  --mode 2560x1440 --pos 0x0             --rotate left \
          --output DP-1-8  --mode 2560x1440 --pos 1440x0          --rotate right \
          --output eDP-1   --mode 1920x1080 --pos $((1440*2))x0   --rotate normal
-else
+elif xrandr | grep -q 'DP-1-8'; then
   xrandr --output DP-1-1  --off \
          --output DP-1-8  --off \
          --output eDP-1   --mode 1920x1080 --pos 0x0   --rotate normal
+elif [ -n "${display['pos_0_screen_0']}" ]; then
+  xrandr --output "${display['pos_0_screen_0']}" --mode 2048x1152 --pos 0x0 \
+         --output LVDS-1   --auto --pos 2048x1152   --rotate normal
+elif [ -n "$disconnected_but_used_displays" ]; then
+  cmd='xrandr '
+  for display in $disconnected_but_used_displays; do
+    cmd="${cmd}--output $display --off "
+  done
+  notify-send -u "low" -t 2000 "Will run: \`$cmd\` now..."
+  eval "$cmd"
+else
+  notify-send -u "critical" -t 10000 "No display configuration needed" "Hence, nothing configured"
 fi
 
-feh --bg-fill persistent/black-and-white-lights-abstract-curves.jpg
+feh --bg-fill ~/persistent/background.png
 #xrandr --output eDP-1   --mode 1920x1080 --right-of DP-3
