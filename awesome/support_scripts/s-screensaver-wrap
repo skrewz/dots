@@ -1,0 +1,25 @@
+#!/bin/bash
+
+while [ "0" != "$#" ]; do
+  case "$1" in
+    --start-in-background)
+      xset s 120
+      xss-lock -- $0 --lock-because-timeout & disown
+      ;;
+    --lock-now)
+      notify-send -u "low" -t 1000 "Will lock momentarily..."
+      #import -window root - | convert -  -blur 10x10 -colorspace Gray +level-colors green, /tmp/blurredbg.png
+      import -window root - | convert -  -blur 10x10 +level-colors ,darkgreen /tmp/blurredbg.png
+      i3lock --show-failed-attempts --image /tmp/blurredbg.png & disown
+      ;;
+    --lock-because-timeout)
+      import -window root - | convert -  -blur 10x10 +level-colors ,firebrick /tmp/blurredbg.png
+      i3lock --show-failed-attempts --image /tmp/blurredbg.png
+      ;;
+    *)
+      echo "Unrecogized option: \"$1\". Aborting."
+      exit 1
+      ;;
+  esac
+  shift
+done

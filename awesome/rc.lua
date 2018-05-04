@@ -582,7 +582,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,"jump to urgent clients"),
 
     --keydoc.group("special keys"),
-    awful.key({                   }, "KP_End", function () awful.util.spawn("i3lock --dpms --color 008000 --image persistent/background.png --show-failed-attempts") end,"lock with i3lock"),
+    awful.key({                   }, "KP_End", function () awful.util.spawn(".config/awesome/support_scripts/s-screensaver-wrap --lock-now") end,"standard lock"),
     awful.key({ modkey            }, "KP_End", function () awful.util.spawn("xtrlock") end,"lock with xtrlock"),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
     --awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"enable mute"),
