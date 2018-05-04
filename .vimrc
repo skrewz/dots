@@ -12,8 +12,8 @@ set incsearch
 set cursorline cursorcolumn
 "highlight CursorLine   term=bold ctermbg=black cterm=none
 "highlight CursorColumn term=bold ctermbg=black cterm=none
-highlight CursorLine   term=none ctermbg=none cterm=bold
-highlight CursorColumn term=none ctermbg=none cterm=bold
+highlight CursorLine   term=none ctermbg=233 cterm=bold
+highlight CursorColumn term=none ctermbg=233 cterm=none
 " Autoread is tremendously useful for long-running vim sessions on VCS'ed data
 set autoread
 
@@ -43,7 +43,7 @@ set number
 set scroll=10
 set shiftwidth=4
 set softtabstop=2
-set sw=2
+autocmd FileType sh,python  setlocal shiftwidth=2
 set tabstop=8 " Conventional, see :help 30.5
 
 " Daring, could be useful?
@@ -80,6 +80,7 @@ Plugin 'tomlion/vim-solidity'
 Plugin 'hashivim/vim-terraform.git'
 Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'kien/rainbow_parentheses.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -123,9 +124,43 @@ let g:indent_guides_enable_on_vim_startup=1
 let g:terraform_align=1
 autocmd FileType terraform setlocal commentstring=#%s
 
+
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black    ctermbg=234
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=235
 
+" https://stackoverflow.com/a/1676672 :
+" Commenting blocks of code.
+autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+autocmd FileType conf,fstab       let b:comment_leader = '# '
+autocmd FileType tex              let b:comment_leader = '% '
+autocmd FileType mail             let b:comment_leader = '> '
+autocmd FileType vim              let b:comment_leader = '" '
+noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
+" Rainbow Parentheses configuration:
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['brown',       'firebrick3'],
+    \ ['red' ,        'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['gray',        'firebrick3'],
+    \ ]
 
 " Easymotion configuration
 " See :h easymotion.txt
@@ -192,7 +227,7 @@ let g:fuf_modesDisable = []
 " <C-j> - opens in a split window.
 " <C-k> - opens in a vertical-split window.
 " <C-]> - opens in a new tab page.
-noremap <C-f>f :FufMruFile<Enter>
+noremap <C-f>f :FufMruFileInCwd<Enter>
 noremap <C-f>F :FufFile<Enter>
 
 map <f1> vG$!~/bin/ol2sanity.pl<cr>
