@@ -157,6 +157,32 @@ function s-apt-fullupgrade()
     echo "=> Running \`apt remove \$(deborphan)\`"
     DEBIAN_FRONTEND=noninteractive apt remove $(deborphan)
   done
+
+  echo ""
+  kern_output="$(apt list --installed 'linux-image-[0-9]*' 2>/dev/null | grep ^linux-image)"
+  if [ "1" != "$(wc -l <<< "$kern_output")" ]; then
+    echo "Looks like there are duplicate kernels:"
+    echo "$kern_output"
+  else
+    echo "✓ Seem to be duplicate-kernel clean."
+  fi
+
+  if [ -x /opt/repos/s-monitoring/snippets/s-mon-kernel-checks ]; then
+    echo ""
+    if ! /opt/repos/s-monitoring/snippets/s-mon-kernel-checks --check if-newer-installed &>/dev/null; then
+      timeout=120
+      echo "System needs a reboot:"
+      /opt/repos/s-monitoring/snippets/s-mon-kernel-checks --check if-newer-installed
+      read -p "(timeout $timeout) enter anything to reboot now: " -t $timeout answer
+      if [ -n "$answer" ]; then
+        reboot
+      fi
+    else
+      echo "✓ System does not need a reboot:"
+      /opt/repos/s-monitoring/snippets/s-mon-kernel-checks --check if-newer-installed
+    fi
+
+  fi
 } # }}}
 
 
@@ -242,7 +268,6 @@ function s-notetoself ()
   echo "note to self: $1" >> ~/s-notetoself.log
 } # }}}
 
-
 function s-mac-generate ()
 { # {{{
   # libvirt likes its mac with a 0x52 leading octet (?)
@@ -255,6 +280,9 @@ alias rootify="echo 'skrewz-alias: Becoming root through [some complicated bash 
 
 alias htop="timeout 24h htop -d 2"
 alias g="git"
+# https://superuser.com/a/599832
+# (kind of sub-optimal.)
+alias tmux="tmux -2"
 alias gd="git diff"
 # (Who calls `gs` from the CLI anyway?)
 alias gs="git status"
@@ -390,11 +418,6 @@ function s-taillogs ()
   local -a colours=( $'\e[31;1m' $'\e[32;1m' $'\e[33;1m' $'\e[34;1m' $'\e[35;1m' $'\e[36;1m' )
   local -a logfiles=( "/var/log/syslog" "/var/log/messages" )
 
-  echo  "Warning: this function ain't finished. It's leaving nasty jobbitses around after it itself is gone."
-  echo "Do you still, you know... want to use it?"
-  echo -n "Enter to proceed, SIGINT otherwise:"
-  read _
-
   if [ "root" != "$(whoami)" ]; then
     echo "You're not root. No log-tailing for you." >&2
     return 0
@@ -406,18 +429,10 @@ function s-taillogs ()
     fi
   done
 
-  i=0
-  local -a pids=()
-  for file in "${logfiles[@]}"; do
-    echo "s-taillogs: Will be tailing logfile \"$file\"."
-    (tail -Fn0 -s0.4 "$file" | sed -u "s/^.*$/$(printf "%-12s" "$(basename "$file")"): ${colours[$i]}&"$'\e[0m/' ) &
-    pids+=( "$!" )
-    ((i++)) || true
-  done
-
-  trap 'for pid in "${pids[@]}"; do echo killing pid $pid; kill $pid; done; exit 0' SIGINT
-  wait "${pids[@]}"
-  trap - SIGINT
+  local hosthash="$(hostname -s | sha256sum | awk '{print $1}')"
+  if [ "0b33aa044f61731ccab223ba1db2bf162c2f4354fdbd63957f29f3c0b9643ef0" = "$hosthash" ]; then
+    logfiles+=( /var/log/nginx/*.log)
+  fi
   sudo tail -Fn0 "${logfiles[@]}"
 } # }}}
 
