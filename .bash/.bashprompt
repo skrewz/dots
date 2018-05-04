@@ -269,7 +269,7 @@ fi
 float_functions_and_intervals=(\
   [render_floating_uptime]="1"  \
 )
-functions_to_render_prompt+=( render_no_ssh_profiles render_name render_hostname render_time render_pwd render_battery_when_discharging render_any_git_branch render_git_modifications render_retval )
+functions_to_render_prompt+=( render_name render_hostname render_time render_pwd render_battery_when_discharging render_any_git_branch render_git_modifications render_retval )
 functions_to_call_post_prompt=( update_bashprompt_last_command_ran_at_epoch )
 
 function skrewz_get_cursor_position ()
