@@ -1,4 +1,4 @@
-colorscheme delek
+colorscheme skrewzscheme
 syntax on
 set nocompatible
 set foldmethod=syntax
