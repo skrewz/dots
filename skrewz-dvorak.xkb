@@ -54,6 +54,8 @@ xkb_symbols "basic" {
     key <AD12> { [asciitilde , asciicircum, dead_diaeresis  , dead_caron      ] };
     //            ^^ ~         ^^ ^         ^^ ě or ǒ         ^^^ ě or ǒ
 
+    // Bind to something meaningless (so that awesome can refer to it by name):
+    key <ESC> { [KP_End                                                       ] };
     // TODO: There's gotta be some meat on these binds...:
     key <CAPS> { [Escape                                                      ] };
     key <SPCE> { [space      , space      , space           , space           ] };
