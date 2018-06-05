@@ -7,14 +7,15 @@ while [ "0" != "$#" ]; do
       xss-lock -- $0 --lock-because-timeout & disown
       ;;
     --lock-now)
+      # TODO: Could do some capture-foreground-lock-re-lock-with-bg hacksery?
       notify-send -u "low" -t 1000 "Will lock momentarily..."
       #import -window root - | convert -  -blur 10x10 -colorspace Gray +level-colors green, /tmp/blurredbg.png
-      import -window root - | convert -  -blur 10x10 +level-colors ,darkgreen /tmp/blurredbg.png
-      i3lock --show-failed-attempts --image /tmp/blurredbg.png & disown
+      import -window root -resize 25% bmp:- | convert bmp:- -resize 400% -blur 10x10 +level-colors ,darkgreen -quality 05 /tmp/blurredbg.png
+      i3lock --nofork --show-failed-attempts --image /tmp/blurredbg.png
       ;;
     --lock-because-timeout)
-      import -window root - | convert -  -blur 10x10 +level-colors ,firebrick /tmp/blurredbg.png
-      i3lock --show-failed-attempts --image /tmp/blurredbg.png
+      import -window root jpg:- | convert - -resize 25% -blur 10x10 +level-colors ,firebrick /tmp/blurredbg.jpg
+      i3lock --show-failed-attempts --image /tmp/blurredbg.jpg
       ;;
     *)
       echo "Unrecogized option: \"$1\". Aborting."
