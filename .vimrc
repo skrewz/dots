@@ -81,6 +81,7 @@ Plugin 'hashivim/vim-terraform.git'
 Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'leafgarland/typescript-vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
