@@ -145,6 +145,9 @@ if [ -f ~/.mavenrc ]; then
   source ~/.mavenrc
 fi
 
+# https://github.com/junegunn/fzf :
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --margin 0,0,0,5%'
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export GPG_TTY=$(tty)
 export AWS_EMAIL="abrein@tradeshift.com"
