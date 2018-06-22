@@ -17,6 +17,13 @@ highlight CursorColumn term=none ctermbg=233 cterm=none
 " Autoread is tremendously useful for long-running vim sessions on VCS'ed data
 set autoread
 
+" https://github.com/scrooloose/nerdtree :
+let NERDTreeWinSize=40
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" vim Dvorak user:
+let NERDTreeMapOpenInTab='\t'
+
 " http://vim.wikia.com/wiki/Configuring_the_cursor
 if &term =~ "xterm\\|rxvt"
   " use a red cursor in insert mode
@@ -28,6 +35,9 @@ if &term =~ "xterm\\|rxvt"
   autocmd VimLeave * silent !echo -ne "\033]112\007"
   " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
 endif
+
+
+
 
 " listchars-highlight Bad Spacing (but in a whitespace-preserving way:)
 set listchars=tab:\ \ ,trail:\ ,extends:·
@@ -51,15 +61,21 @@ set tabstop=8 " Conventional, see :help 30.5
 
 set expandtab " Nobody likes tab characters.
 
+" TODO: use this approach: https://vi.stackexchange.com/a/53
 silent !mkdir -p ~/.vim_local > /dev/null 2>&1
 
 
 " Remember view upon enter/leave. In particular folds.
 " http://vim.wikia.com/wiki/VimTip991 + http://stackoverflow.com/a/1549318
-silent !mkdir -p ~/.vim_local/views > /dev/null 2>&1
+silent !mkdir -p ~/.vim_local/undodir ~/.vim_local/views > /dev/null 2>&1
 set viewdir=~/.vim_local/views/
 autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+autocmd BufWinEnter *.* silent! loadview
+
+if has('persistent_undo')
+    set undodir=~/.vim_local/undodir/
+    set undofile
+endif
 
 " Set up ColorColumn when typing email:
 autocmd FileType mail setlocal colorcolumn=85
@@ -82,6 +98,8 @@ Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'mbbill/undotree'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -221,15 +239,20 @@ endif
 " Fuzzyfinder
 " http://www.vim.org/scripts/script.php?script_id=1984
 let g:fuf_modesDisable = []
-" noremap <C-b> :FufBuffer<Enter>
+" default; allows you to C-j or C-] one's way to 
+let g:fuf_reuseWindow = 1
 " Mind you: You can open a selected item in various ways:
 "
 " <CR>  - opens in a previous window.
 " <C-j> - opens in a split window.
 " <C-k> - opens in a vertical-split window.
 " <C-]> - opens in a new tab page.
+
 noremap <C-f>f :FufMruFileInCwd<Enter>
 noremap <C-f>F :FufFile<Enter>
+noremap <C-f>b :FufBuffer<Enter>
+noremap <C-f>n :NERDTreeToggle<Enter>
+noremap <C-f>u :UndotreeToggle<Enter>
 
 map <f1> vG$!~/bin/ol2sanity.pl<cr>
 
