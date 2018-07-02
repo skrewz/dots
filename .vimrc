@@ -5,6 +5,7 @@ set foldmethod=syntax
 set foldminlines=10
 " Extra space when scrolling:
 set so=10
+set switchbuf=useopen,usetab
 
 set hlsearch
 set incsearch
