@@ -99,7 +99,6 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'leafgarland/typescript-vim'
-Plugin 'leafgarland/typescript-vim'
 Plugin 'mbbill/undotree'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
