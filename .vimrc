@@ -96,6 +96,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'tomlion/vim-solidity'
 Plugin 'hashivim/vim-terraform.git'
 Plugin 'puppetlabs/puppet-syntax-vim'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'leafgarland/typescript-vim'
@@ -271,5 +272,17 @@ let g:GPGPreferArmor = 1
 
 let g:syntastic_puppet_lint_disable = 1
 let g:syntastic_puppet_validate_disable = 1
+
+" syntastic configuration:
+
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+" syntastic per-filetype checkers:
+let g:syntastic_typescript_checkers = ['tslint']
 
 " vim: fdm=marker fml=1
