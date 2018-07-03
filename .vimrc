@@ -50,11 +50,10 @@ highlight SpecialKey ctermbg=red
 set list
 set modeline
 set number
-" set relativenumber
+set hidden
 set scroll=10
-set shiftwidth=4
+set shiftwidth=2
 set softtabstop=2
-autocmd FileType sh,python  setlocal shiftwidth=2
 set tabstop=8 " Conventional, see :help 30.5
 
 " Daring, could be useful?
