@@ -107,6 +107,7 @@ Plugin 'Shougo/deoplete.nvim'
 "Plugin 'roxma/nvim-yarp'
 "Plugin 'roxma/vim-hug-neovim-rpc'
 Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'sirtaj/vim-openscad'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
