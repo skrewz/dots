@@ -100,6 +100,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'mbbill/undotree'
+" https://github.com/Shougo/deoplete.nvim#install
+Plugin 'Shougo/deoplete.nvim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -138,6 +140,28 @@ filetype plugin indent on    " required
 
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup=1
+
+" deoplete configuration (https://github.com/Shougo/deoplete.nvim#configuration)
+let g:deoplete#enable_at_startup = 1
+" https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv suggests:
+" (made with `cd ~/.config/nvim; virtualenv -p python3 py3venv; source $HOME/.config/nvim/py3venv/bin/activate; pip3 install neovim`).
+let g:python3_host_prog = '/home/skrewz/.config/nvim/py3venv/bin/python3'
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+" Yanked off:
+" https://github.com/garybernhardt/dotfiles/blob/99b7d2537ad98dd7a9d3c82b8775f0de1718b356/.vimrc#L166-L180.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-p><Paste>
 
 " For Terraform:
 let g:terraform_align=1
