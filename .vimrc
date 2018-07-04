@@ -99,12 +99,14 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'pangloss/vim-javascript'
 Plugin 'mbbill/undotree'
 " https://github.com/Shougo/deoplete.nvim#install
 Plugin 'Shougo/deoplete.nvim'
 " not relevant on nvim:
 "Plugin 'roxma/nvim-yarp'
 "Plugin 'roxma/vim-hug-neovim-rpc'
+Plugin 'ludovicchabant/vim-gutentags'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
