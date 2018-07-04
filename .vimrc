@@ -102,6 +102,9 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'mbbill/undotree'
 " https://github.com/Shougo/deoplete.nvim#install
 Plugin 'Shougo/deoplete.nvim'
+" not relevant on nvim:
+"Plugin 'roxma/nvim-yarp'
+"Plugin 'roxma/vim-hug-neovim-rpc'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -277,6 +280,9 @@ noremap <C-f>F :FufFile<Enter>
 noremap <C-f>b :FufBuffer<Enter>
 noremap <C-f>n :NERDTreeToggle<Enter>
 noremap <C-f>u :UndotreeToggle<Enter>
+noremap <C-f>c :Gcommit<Enter>
+noremap <C-f>s :Gstatus<Enter>
+noremap <C-f>d :Gvdiff<Enter>
 
 map <f1> vG$!~/bin/ol2sanity.pl<cr>
 
