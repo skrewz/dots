@@ -26,6 +26,7 @@ export prompt_color=3
 #col_bold="$(tput smso)"
 col_reset=$'\e[0m'
 col_bold=$'\e[1m'
+col_blinking=$'\e[5m'
 col_underline=$'\e[4m'
 col_invred=$'\e[41m'
 col_red=$'\e[31m'
@@ -205,7 +206,7 @@ function render_any_git_branch ()
 { # {{{
   local branchname="$(git branch -q 2>/dev/null | sed -n "s/^\* \(.*\)$/\1/;tp;b;:p p")"
   if [ -n "$branchname" ]; then
-    echo -n " \[$col_grey\][\[$col_reset\]\[$col_underline\]\[$([ "master" = "$branchname" ] && echo -n "$col_red" || echo -n "$col_base")\]$branchname\[$col_reset\]\[$col_grey\]]\[$col_reset\]"
+    echo -n " \[$col_grey\][\[$col_reset\]\[$col_underline\]\[$([ "master" = "$branchname" ] && echo -n "$col_red$col_blinking" || echo -n "$col_base")\]$branchname\[$col_reset\]\[$col_grey\]]\[$col_reset\]"
   fi
 } # }}}
 function render_git_modifications ()
