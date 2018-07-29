@@ -283,6 +283,7 @@ noremap <C-f>F :FufFile<Enter>
 noremap <C-f>b :FufBuffer<Enter>
 noremap <C-f>n :NERDTreeToggle<Enter>
 noremap <C-f>u :UndotreeToggle<Enter>
+" Consider: https://www.reddit.com/r/vim/comments/21f4gm/best_workflow_when_using_fugitive/
 noremap <C-f>c :Gcommit<Enter>
 noremap <C-f>s :Gstatus<Enter>
 noremap <C-f>d :Gvdiff<Enter>
