@@ -217,9 +217,6 @@ map \ <Plug>(easymotion-prefix)
 " nmap s         <Plug>(easymotion-s2)
 " xmap s         <Plug>(easymotion-s2)
 " omap z         <Plug>(easymotion-s2)
-nmap <Leader>s <Plug>(easymotion-sn)
-xmap <Leader>s <Plug>(easymotion-sn)
-omap <Leader>z <Plug>(easymotion-sn)
 
 silent !mkdir -p ~/.vim_synced/spell > /dev/null 2>&1
 silent !mkdir -p ~/.vim_local/swapfiles > /dev/null 2>&1
@@ -280,9 +277,13 @@ noremap <Leader>F :FufFile<Enter>
 noremap <Leader>b :FufBuffer<Enter>
 noremap <Leader>u :UndotreeToggle<Enter>
 " Consider: https://www.reddit.com/r/vim/comments/21f4gm/best_workflow_when_using_fugitive/
-noremap <Leader>c :Gcommit<Enter>
-noremap <Leader>s :Gstatus<Enter>
-noremap <Leader>d :Gvdiff<Enter>
+noremap <Leader>gc :Gcommit<Enter>
+noremap <Leader>gs :Gstatus<Enter>
+noremap <Leader>gd :Gvdiff<Enter>
+
+nmap <Leader>s <Plug>(easymotion-sn)
+xmap <Leader>s <Plug>(easymotion-sn)
+omap <Leader>s <Plug>(easymotion-sn)
 
 " netrw config:
 " buggy tree list style surrounding symlinks:
