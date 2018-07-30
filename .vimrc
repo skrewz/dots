@@ -18,13 +18,6 @@ highlight CursorColumn term=none ctermbg=233 cterm=none
 " Autoread is tremendously useful for long-running vim sessions on VCS'ed data
 set autoread
 
-" https://github.com/scrooloose/nerdtree :
-let NERDTreeWinSize=40
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" vim Dvorak user:
-let NERDTreeMapOpenInTab='\t'
-
 " http://vim.wikia.com/wiki/Configuring_the_cursor
 if &term =~ "xterm\\|rxvt"
   " use a red cursor in insert mode
@@ -89,7 +82,7 @@ call vundle#begin()
 " Makes vundle handle itself:
 Plugin 'vim-airline/vim-airline'
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
+" Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'nathanaelkane/vim-indent-guides'
 " Plugin 'Valloric/YouCompleteMe'
@@ -98,6 +91,7 @@ Plugin 'hashivim/vim-terraform.git'
 Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-vinegar'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'pangloss/vim-javascript'
@@ -288,6 +282,27 @@ noremap <C-f>u :UndotreeToggle<Enter>
 noremap <C-f>c :Gcommit<Enter>
 noremap <C-f>s :Gstatus<Enter>
 noremap <C-f>d :Gvdiff<Enter>
+
+" netrw config:
+" buggy tree list style surrounding symlinks:
+" https://github.com/vim/vim/issues/2386
+
+let g:netrw_liststyle = 3
+" See https://vi.stackexchange.com/a/4563
+" (Possibly overconfigured; but leaving it in, as a Dvorak user may need to
+" revisit re-mapping features.)
+function! s:ConfigureNetrw()
+  let prior = maparg("t", "n")
+  hi Normal ctermbg=none
+  if prior != "j"
+    nnoremap <buffer> t j
+  endif
+endfunction
+
+augroup netrw_configuration
+  autocmd!
+  autocmd FileType netrw call s:ConfigureNetrw()
+augroup end
 
 map <f1> vG$!~/bin/ol2sanity.pl<cr>
 
