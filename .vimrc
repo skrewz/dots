@@ -278,7 +278,6 @@ let g:fuf_reuseWindow = 1
 noremap <Leader>f :FufMruFileInCwd<Enter>
 noremap <Leader>F :FufFile<Enter>
 noremap <Leader>b :FufBuffer<Enter>
-noremap <Leader>n :NERDTreeToggle<Enter>
 noremap <Leader>u :UndotreeToggle<Enter>
 " Consider: https://www.reddit.com/r/vim/comments/21f4gm/best_workflow_when_using_fugitive/
 noremap <Leader>c :Gcommit<Enter>
