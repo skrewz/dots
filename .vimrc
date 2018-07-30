@@ -10,6 +10,8 @@ set switchbuf=useopen,usetab
 set hlsearch
 set incsearch
 
+let mapleader = " "
+
 set cursorline cursorcolumn
 "highlight CursorLine   term=bold ctermbg=black cterm=none
 "highlight CursorColumn term=bold ctermbg=black cterm=none
@@ -273,15 +275,15 @@ let g:fuf_reuseWindow = 1
 " <C-k> - opens in a vertical-split window.
 " <C-]> - opens in a new tab page.
 
-noremap <C-f>f :FufMruFileInCwd<Enter>
-noremap <C-f>F :FufFile<Enter>
-noremap <C-f>b :FufBuffer<Enter>
-noremap <C-f>n :NERDTreeToggle<Enter>
-noremap <C-f>u :UndotreeToggle<Enter>
+noremap <Leader>f :FufMruFileInCwd<Enter>
+noremap <Leader>F :FufFile<Enter>
+noremap <Leader>b :FufBuffer<Enter>
+noremap <Leader>n :NERDTreeToggle<Enter>
+noremap <Leader>u :UndotreeToggle<Enter>
 " Consider: https://www.reddit.com/r/vim/comments/21f4gm/best_workflow_when_using_fugitive/
-noremap <C-f>c :Gcommit<Enter>
-noremap <C-f>s :Gstatus<Enter>
-noremap <C-f>d :Gvdiff<Enter>
+noremap <Leader>c :Gcommit<Enter>
+noremap <Leader>s :Gstatus<Enter>
+noremap <Leader>d :Gvdiff<Enter>
 
 " netrw config:
 " buggy tree list style surrounding symlinks:
