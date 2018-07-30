@@ -244,9 +244,7 @@ if ! filereadable($HOME . "/.vim/dont_do_dvorak_binds")
 
   noremap h h
   noremap t j
-  noremap <S-t> 10j
   noremap n k
-  noremap <S-n> 10k
   noremap s l
 
   " Using the arrow keys to move between windows seems like a reasonable choice
