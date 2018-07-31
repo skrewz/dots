@@ -56,13 +56,14 @@ set tabstop=8 " Conventional, see :help 30.5
 
 set expandtab " Nobody likes tab characters.
 
+" Configuration of temporary/synced vim dirs:
 " TODO: use this approach: https://vi.stackexchange.com/a/53
-silent !mkdir -p ~/.vim_local > /dev/null 2>&1
-
+silent !mkdir -p ~/.vim_synced/spell > /dev/null 2>&1
+silent !mkdir -p ~/.vim_local/swapfiles ~/.vim_local/undodir ~/.vim_local/views > /dev/null 2>&1
+set dir=~/.vim_local/swapfiles
 
 " Remember view upon enter/leave. In particular folds.
 " http://vim.wikia.com/wiki/VimTip991 + http://stackoverflow.com/a/1549318
-silent !mkdir -p ~/.vim_local/undodir ~/.vim_local/views > /dev/null 2>&1
 set viewdir=~/.vim_local/views/
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent! loadview
@@ -209,9 +210,6 @@ map \ <Plug>(easymotion-prefix)
 " xmap s         <Plug>(easymotion-s2)
 " omap z         <Plug>(easymotion-s2)
 
-silent !mkdir -p ~/.vim_synced/spell > /dev/null 2>&1
-silent !mkdir -p ~/.vim_local/swapfiles > /dev/null 2>&1
-set dir=~/.vim_local/swapfiles
 
 
 " spelling settings
