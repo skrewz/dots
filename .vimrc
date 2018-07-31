@@ -212,15 +212,12 @@ let g:rbpt_colorpairs = [
     \ ]
 
 " }}}
-" Easymotion configuration
+
+" Easymotion configuration: {{{
 " See :h easymotion.txt
 let g:EasyMotion_smartcase = 1
-" \ may be the default, but now it's conjiggered too:
-map \ <Plug>(easymotion-prefix)
 
-" nmap s         <Plug>(easymotion-s2)
-" xmap s         <Plug>(easymotion-s2)
-" omap z         <Plug>(easymotion-s2)
+" }}}
 
 
 
