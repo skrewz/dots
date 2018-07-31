@@ -77,6 +77,13 @@ endif
 autocmd FileType mail setlocal colorcolumn=85
 highlight ColorColumn ctermfg=red
 
+
+" python3 configuration: {{{
+" https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv suggests:
+" (made with `cd ~/.config/nvim; virtualenv -p python3 py3venv; source $HOME/.config/nvim/py3venv/bin/activate; pip3 install neovim`).
+let g:python3_host_prog = '/home/skrewz/.config/nvim/py3venv/bin/python3'
+" }}}
+
 " Setting up Vundle: {{{
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -149,9 +156,10 @@ let g:indent_guides_enable_on_vim_startup=1
 
 " deoplete configuration (https://github.com/Shougo/deoplete.nvim#configuration)
 let g:deoplete#enable_at_startup = 1
-" https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv suggests:
-" (made with `cd ~/.config/nvim; virtualenv -p python3 py3venv; source $HOME/.config/nvim/py3venv/bin/activate; pip3 install neovim`).
-let g:python3_host_prog = '/home/skrewz/.config/nvim/py3venv/bin/python3'
+
+" }}}
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
