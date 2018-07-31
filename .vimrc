@@ -148,12 +148,16 @@ filetype plugin indent on    " required
 
 " }}}
 
-" Indent guides configuration:
+" Indent guides configuration: {{{
 " :help indent_guides_auto_colors  for a start.
 
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup=1
 
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black    ctermbg=234
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=235
+
+" }}}
 " deoplete configuration (https://github.com/Shougo/deoplete.nvim#configuration)
 let g:deoplete#enable_at_startup = 1
 
@@ -180,10 +184,6 @@ inoremap <s-tab> <c-p><Paste>
 " For Terraform:
 let g:terraform_align=1
 autocmd FileType terraform setlocal commentstring=#%s
-
-
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black    ctermbg=234
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=235
 
 " Rainbow Parentheses configuration:
 
