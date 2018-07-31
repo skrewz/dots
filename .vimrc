@@ -59,7 +59,7 @@ set expandtab " Nobody likes tab characters.
 " Configuration of temporary/synced vim dirs:
 " TODO: use this approach: https://vi.stackexchange.com/a/53
 silent !mkdir -p ~/.vim_synced/spell > /dev/null 2>&1
-silent !mkdir -p ~/.vim_local/swapfiles ~/.vim_local/undodir ~/.vim_local/views > /dev/null 2>&1
+silent !mkdir -p ~/.vim_local/swapfiles ~/.vim_local/tagfiles ~/.vim_local/undodir ~/.vim_local/views > /dev/null 2>&1
 set dir=~/.vim_local/swapfiles
 
 " Remember view upon enter/leave. In particular folds.
@@ -217,6 +217,10 @@ let g:rbpt_colorpairs = [
 " See :h easymotion.txt
 let g:EasyMotion_smartcase = 1
 
+" }}}
+
+" vim-gutentags configuration: {{{
+let g:gutentags_cache_dir = '~/.vim_local/tagfiles'
 " }}}
 
 
