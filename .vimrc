@@ -183,9 +183,10 @@ endfunction
 inoremap <expr> <tab> InsertTabWrapper()
 inoremap <s-tab> <c-p><Paste>
 
-" For Terraform:
+" vim-terraform configuration: {{{
 let g:terraform_align=1
 autocmd FileType terraform setlocal commentstring=#%s
+" }}}
 
 " Rainbow Parentheses configuration: {{{
 
