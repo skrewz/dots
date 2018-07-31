@@ -158,7 +158,9 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black    ctermbg=234
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=235
 
 " }}}
-" deoplete configuration (https://github.com/Shougo/deoplete.nvim#configuration)
+
+" deoplete configuration: {{{
+" (https://github.com/Shougo/deoplete.nvim#configuration)
 let g:deoplete#enable_at_startup = 1
 
 " }}}
