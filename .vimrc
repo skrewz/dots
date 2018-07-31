@@ -187,7 +187,7 @@ inoremap <s-tab> <c-p><Paste>
 let g:terraform_align=1
 autocmd FileType terraform setlocal commentstring=#%s
 
-" Rainbow Parentheses configuration:
+" Rainbow Parentheses configuration: {{{
 
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
@@ -210,6 +210,7 @@ let g:rbpt_colorpairs = [
     \ ['gray',        'firebrick3'],
     \ ]
 
+" }}}
 " Easymotion configuration
 " See :h easymotion.txt
 let g:EasyMotion_smartcase = 1
