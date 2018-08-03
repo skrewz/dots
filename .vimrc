@@ -277,9 +277,11 @@ noremap <Leader>F :FufFile<Enter>
 noremap <Leader>b :FufBuffer<Enter>
 noremap <Leader>u :UndotreeToggle<Enter>
 " Consider: https://www.reddit.com/r/vim/comments/21f4gm/best_workflow_when_using_fugitive/
-noremap <Leader>gc :Gcommit<Enter>
+noremap <Leader>gc :Gcommit -v<Enter>
 noremap <Leader>gs :Gstatus<Enter>
 noremap <Leader>gd :Gvdiff<Enter>
+
+noremap <Leader>m <C-W>\|<C-W>_
 
 nmap <Leader>s <Plug>(easymotion-sn)
 xmap <Leader>s <Plug>(easymotion-sn)
