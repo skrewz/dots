@@ -592,6 +592,7 @@ globalkeys = awful.util.table.join(
     awful.key({                   }, "#232", function () awful.util.spawn("xbacklight -dec 10"); end,"decrease backlight"),
     awful.key({                   }, "#233", function () awful.util.spawn("xbacklight -inc 10"); end,"increase backlight"),
     awful.key({ modkey,           }, "F7",   function () awful.util.spawn(".config/awesome/support_scripts/s-screenshot-capture") end),
+    awful.key({ modkey, "Shift"   }, "F7",   function () awful.util.spawn(".config/awesome/support_scripts/s-screenshot-capture --block") end),
     awful.key({ modkey,           }, "F12", function () awful.util.spawn(".config/awesome/support_scripts/s-screen-setup") end),
 
     -- Standard program
