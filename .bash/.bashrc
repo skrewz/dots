@@ -4,7 +4,7 @@
 export PS1='\h:\w\$ '
 umask 0002
 #export TERM=rxvt
-export EDITOR=vim
+export EDITOR=nvim
 export HISTSIZE=100000
 
 skrewz_sends_mails_to="skrewz@skrewz.net"
@@ -108,7 +108,7 @@ if [ -e "$(dirname "${BASH_SOURCE[0]}")/all_bash_aliases.sh" ]; then
 fi
 # Using vim as a pager:
 export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
-  vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
+  nvim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
   -c 'set nonumber' \
   -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
   -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
