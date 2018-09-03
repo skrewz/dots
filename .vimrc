@@ -75,7 +75,7 @@ endif
 
 " Set up ColorColumn when typing email:
 autocmd FileType mail setlocal colorcolumn=85
-highlight ColorColumn ctermfg=red
+highlight ColorColumn ctermbg=52
 
 
 " python3 configuration: {{{
