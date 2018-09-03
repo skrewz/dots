@@ -27,9 +27,9 @@ if [ -n "${display['pos_1_screen_left']:-}" ] &&
    [ -n "${display['pos_1_screen_right']:-}" ]; then
   notify-send -u "low" -t 2000 "Considering this position 1"
   sleep 2
-  xrandr --output "${display['pos_1_screen_left']:-}"   --mode 2560x1440 --pos 0x0             --rotate left \
-         --output "${display['pos_1_screen_middle']:-}" --mode 2560x1440 --pos 1440x0          --rotate right \
-         --output "${display['pos_1_screen_right']:-}"  --mode 1920x1080 --pos $((1440*2))x$((2560*1/3))   --rotate normal
+  xrandr --output "${display['pos_1_screen_left']:-}"   --mode 2560x1440 --crtc 2 --pos 0x0             --rotate left \
+         --output "${display['pos_1_screen_middle']:-}" --mode 2560x1440 --crtc 1 --pos 1440x0          --rotate right \
+         --output "${display['pos_1_screen_right']:-}"  --mode 1920x1080 --crtc 0 --pos $((1440*2))x$((2560*1/3))   --rotate normal
 elif [ -n "${display['pos_1_screen_right']:-}" ]; then
   xrandr --output "${display['pos_1_screen_left']:-}"   --off \
          --output "${display['pos_1_screen_middle']:-}" --off  \
