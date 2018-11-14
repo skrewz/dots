@@ -77,6 +77,8 @@ endif
 autocmd FileType mail setlocal colorcolumn=85
 highlight ColorColumn ctermbg=52
 
+" spelling in git commits:
+autocmd FileType gitcommit setlocal spell
 
 " python3 configuration: {{{
 " https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv suggests:
