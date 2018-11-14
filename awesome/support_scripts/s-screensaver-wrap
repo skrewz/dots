@@ -11,10 +11,12 @@ while [ "0" != "$#" ]; do
       notify-send -u "low" -t 1000 "Will lock momentarily..."
       import -window root -resize 25% bmp:- | convert bmp:- -resize 400% -blur 10x10 +level-colors ,darkgreen -quality 05 /tmp/blurredbg.png
       i3lock --nofork --show-failed-attempts --image /tmp/blurredbg.png
+      rm /tmp/blurredbg.png
       ;;
     --lock-because-timeout)
       import -window root -resize 25% bmp:- | convert bmp:- -resize 400% -blur 10x10 +level-colors ,firebrick -quality 05 /tmp/blurredbg.png
       i3lock --show-failed-attempts --image /tmp/blurredbg.png
+      rm /tmp/blurredbg.png
       ;;
     *)
       echo "Unrecogized option: \"$1\". Aborting."
