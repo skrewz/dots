@@ -52,5 +52,8 @@ if [ -n "$disconnected_but_used_displays" ]; then
   eval "$cmd"
 fi
 
-feh --bg-fill ~/persistent/background.png
+convert xc:black /tmp/black.png
+feh --bg-fill /tmp/black.png
+rm /tmp/black.png
+#feh --bg-fill /tmp/background.png
 #xrandr --output eDP-1   --mode 1920x1080 --right-of DP-3
