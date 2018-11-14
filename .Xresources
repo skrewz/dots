@@ -6,7 +6,7 @@
 URxvt.background:rgba:0000/0000/0000/B000
 URxvt.foreground:rgba:FFFF/FFFF/FFFF/FFFF
 URxvt.depth:32
-URxvt.fading:30
+URxvt.fading:0
 URxvt.iso14755: true
 URxvt.iso14755_52: false
 
