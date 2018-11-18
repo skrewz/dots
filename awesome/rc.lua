@@ -378,8 +378,8 @@ mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
-                    awful.button({ }, 1, awful.tag.viewonly),
-                    awful.button({ modkey }, 1, awful.client.movetotag),
+                    awful.button({ }, 1, function(t) t:view_only() end),
+                    awful.button({ modkey }, 1, function (t) client.focus:move_to_tag(t) end),
 
                     awful.button({ modkey }, 3, awful.client.toggletag),
                     awful.button({ }, 4, awful.tag.viewnext),
@@ -389,7 +389,7 @@ mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
                      awful.button({ }, 1, function (c)
                                               if not c:isvisible() then
-                                                  awful.tag.viewonly(c:tags()[1])
+                                                  c:tags()[1]:view_only()
                                               end
                                               client.focus = c
                                               c:raise()
@@ -597,7 +597,7 @@ globalkeys = awful.util.table.join(
                   local s = awful.util.cycle(screen.count(), t.screen + 1)
                   awful.tag.history.restore()
                   t = shifty.tagtoscr(s, t)
-                  awful.tag.viewonly(t)
+                  t:view_only()
               end),
     awful.key({modkey},          "p", shifty.rename),
     awful.key({modkey},          ".", shifty.add),
@@ -616,25 +616,25 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 
     --keydoc.group("special keys"),
-    awful.key({                   }, "KP_End", function () awful.util.spawn(".config/awesome/support_scripts/s-screensaver-wrap --lock-now") end),
-    awful.key({ modkey            }, "KP_End", function () awful.util.spawn("xtrlock") end),
+    awful.key({                   }, "KP_End", function () awful.spawn(".config/awesome/support_scripts/s-screensaver-wrap --lock-now") end),
+    awful.key({ modkey            }, "KP_End", function () awful.spawn("xtrlock") end),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
-    --awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"enable mute"),
-    awful.key({                   }, "#121", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --mute") end),
-    awful.key({                   }, "#122", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --decrease") end),
-    awful.key({                   }, "#123", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end),
-    awful.key({                   }, "#232", function () awful.util.spawn("xbacklight -dec 10"); end),
-    awful.key({                   }, "#233", function () awful.util.spawn("xbacklight -inc 10"); end),
-    awful.key({ modkey,           }, "F7",   function () awful.util.spawn(".config/awesome/support_scripts/s-screenshot-capture") end),
-    awful.key({ modkey, "Shift"   }, "F7",   function () awful.util.spawn(".config/awesome/support_scripts/s-screenshot-capture --block") end),
-    awful.key({ modkey,           }, "F12", function () awful.util.spawn(".config/awesome/support_scripts/s-screen-setup") end),
+    --awful.key({                   }, "#121", function () awful.spawn("amixer set Master mute") end,"enable mute"),
+    awful.key({                   }, "#121", function () awful.spawn(".config/awesome/support_scripts/skrewz-volume.sh --mute") end),
+    awful.key({                   }, "#122", function () awful.spawn(".config/awesome/support_scripts/skrewz-volume.sh --decrease") end),
+    awful.key({                   }, "#123", function () awful.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end),
+    awful.key({                   }, "#232", function () awful.spawn("xbacklight -dec 10"); end),
+    awful.key({                   }, "#233", function () awful.spawn("xbacklight -inc 10"); end),
+    awful.key({ modkey,           }, "F7",   function () awful.spawn(".config/awesome/support_scripts/s-screenshot-capture") end),
+    awful.key({ modkey, "Shift"   }, "F7",   function () awful.spawn(".config/awesome/support_scripts/s-screenshot-capture --block") end),
+    awful.key({ modkey,           }, "F12", function () awful.spawn(".config/awesome/support_scripts/s-screen-setup") end),
 
     -- Standard program
     --keydoc.group("spawn commands"),
     awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/s-scratch-left","center", "left",0.5, 0.80, true,1) end),
     awful.key({ modkey,           }, "j", function () scratch.drop(".config/awesome/support_scripts/s-scratch-right","bottom", "right",0.4, 0.80, true,1) end),
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-    awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh") end),
+    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end),
+    awful.key({ modkey,           }, "BackSpace", function () awful.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh") end),
     awful.key({ modkey, "Control" }, "r", awesome.restart)
     -- awful.key({ modkey, "Shift"   }, "q", awesome.quit), -- Don't want this. :S
 
