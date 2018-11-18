@@ -308,6 +308,7 @@ omap <Leader>s <Plug>(easymotion-sn)
 " https://github.com/vim/vim/issues/2386
 
 let g:netrw_liststyle = 3
+let g:netrw_keepdir = 0
 " See https://vi.stackexchange.com/a/4563
 " (Possibly overconfigured; but leaving it in, as a Dvorak user may need to
 " revisit re-mapping features.)
