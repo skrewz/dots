@@ -48,6 +48,8 @@ if [ -n "$skrewz_sends_mails_to" -a "$skrewz_sends_mails_as" ]; then
 
     (echo -e "From: $from <$skrewz_sends_mails_as>\nSubject: $subject\n\n"; cat "$tempfile") |
     $sendmail -F "$from" -f "$skrewz_sends_mails_as" "$skrewz_sends_mails_to"
+    # Beep (i.e. cause an urgent hint in a terminal emulator.)
+    echo $'\007'
     rm "$tempfile"
   } # }}}
 fi
@@ -287,6 +289,7 @@ alias gd="git diff"
 # (Who calls `gs` from the CLI anyway?)
 alias gs="git status"
 alias gp="git pull && git status"
+alias gcd='cd "$(git rev-parse --show-toplevel)"'
 
 # keystrokes matter:
 alias dn="dirname"
@@ -412,6 +415,7 @@ alias egrep="egrep --color=auto"
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 alias s-mutt="TERM=rxvt-256color mutt"
+alias pcat="pygmentize -f terminal256 -O style=native -g"
 
 function s-taillogs ()
 { # {{{
