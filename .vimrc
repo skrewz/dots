@@ -74,6 +74,17 @@ if has('persistent_undo')
     set undofile
 endif
 
+"au FileType python python
+"    \ set tabstop=4
+"    \ set softtabstop=4
+"    \ set shiftwidth=4
+"    \ set textwidth=79
+"    \ set expandtab
+"    \ set autoindent
+"    \ set fileformat=unix
+
+"autocmd FileType python setlocal colorcolumn=79
+
 " Set up ColorColumn when typing email:
 autocmd FileType mail setlocal colorcolumn=85
 highlight ColorColumn ctermbg=52
@@ -341,5 +352,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 " syntastic per-filetype checkers:
 let g:syntastic_typescript_checkers = ['tslint']
+
+let g:syntastic_python_checkers = ['flake8']
 
 " vim: fdm=marker fml=1
