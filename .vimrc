@@ -94,6 +94,7 @@ call vundle#begin()
 
 " Makes vundle handle itself:
 Plugin 'vim-airline/vim-airline'
+" Plugin 'chriskempson/tomorrow-theme'
 Plugin 'VundleVim/Vundle.vim'
 " Plugin 'scrooloose/nerdtree'
 Plugin 'Lokaltog/vim-easymotion'
