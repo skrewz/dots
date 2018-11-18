@@ -36,7 +36,7 @@ elif [ -n "${display['pos_1_screen_right']:-}" ]; then
          --output "${display['pos_1_screen_right']:-}"  --mode 1920x1080 --pos 0x0   --rotate normal
 elif [ -n "${display['pos_0_screen_0']:-}" ]; then
   notify-send -u "low" -t 2000 "Considering this position 0"
-  xrandr --output "${display['pos_0_screen_0']}" --mode 2048x1152 --pos 0x0 \
+  xrandr --output "${display['pos_0_screen_0']}" --mode 2048x1152 --pos 0x0        --rotate normal \
          --output LVDS-1                                   --auto --pos 224x1152   --rotate normal
 else
   notify-send -u "critical" -t 10000 "No display configuration needed" "Hence, nothing configured"
