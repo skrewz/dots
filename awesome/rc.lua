@@ -8,7 +8,9 @@ awful.rules = require("awful.rules")
 local beautiful = require("beautiful")
 -- Notification library
 local naughty   = require("naughty")
-
+local gears = require("gears")
+local http = require("socket.http")
+local socket = require("socket")
 local scratch = require("scratch")
 
 --local keydoc = require("keydoc")
@@ -293,6 +295,35 @@ vicious.register(vicious_netwidget, vicious.widgets.net, function (w,a)
 end, 1)
 
 
+function report_cv_skrewz_net_latency ()
+  local before = socket.gettime()
+  http.request{
+    url = 'http://ping.skrewz.net',
+    redirect = False,
+  }
+  local after = socket.gettime()
+  local passed_s = tonumber(string.format("%.3f",after-before))
+  return passed_s
+end
+vicious_rtt_widget = wibox.widget.graph()
+vicious_rtt_widget:set_height(10)
+vicious_rtt_widget:set_background_color("#000000")
+vicious_rtt_widget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 10 }, stops = { { 0, "#ff0000" },  {0.5, "#808000"}, { 1, "#002000" } }})
+
+-- using trick from https://github.com/Mic92/vicious 's stacked graph example:
+-- (but, really, just shoehorning this thing)
+unused_ctext_rtt = wibox.widget.textbox()
+vicious.register(unused_ctext_rtt, vicious.widgets.cpu, function (w,a)
+return ''
+end,1.0)
+
+local test_rtt_tmr
+test_rtt_tmr = gears.timer({timeout = 2.00})
+test_rtt_tmr:connect_signal("timeout", function()
+  vicious_rtt_widget:add_value(report_cv_skrewz_net_latency(),1)
+end)
+test_rtt_tmr:start()
+
 -- cpufreq rate graph:
 
 function report_cpufreq_avg ()
@@ -444,6 +475,7 @@ awful.screen.connect_for_each_screen(function(s)
     --top_layout:add(lain_bat_widget)
     top_layout:add(vicious_memwidget)
     top_layout:add(vicious_netwidget)
+    top_layout:add(vicious_rtt_widget)
     top_layout:add(vicious_cpufreq_widget)
     top_layout:add(vicious_cpuwidget)
     top_layout:add(s.mytaglist)
