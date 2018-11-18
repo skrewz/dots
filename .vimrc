@@ -32,6 +32,7 @@ if &term =~ "xterm\\|rxvt"
   " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
 endif
 
+autocmd VimEnter,Colorscheme * highlight SignColumn ctermbg=234
 
 
 
