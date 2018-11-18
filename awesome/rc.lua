@@ -520,35 +520,34 @@ root.buttons(awful.util.table.join(
 -- Go to http://awesome.naquadah.org/doc/api/index.html for a bit of documentation.
 globalkeys = awful.util.table.join(
     --keydoc.group("layout manipulation"),
-    --awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ,"view previous tag"),
-    --awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ,"view previous tag"),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore,"view previously selected tag"),
-    --awful.key({ modkey,           }, "F2", keydoc.display,"display this keydoc"),
+    --awful.key({ modkey,           }, "Left",   awful.tag.viewprev),
+    --awful.key({ modkey,           }, "Right",  awful.tag.viewnext),
+    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
     -- keydoc.group("awesome keys"),
     awful.key({ modkey,           }, "b",     function ()
       awful.tag.incmwfact(-0.05)
       naughty.notify({ title = "Decreased:  master width factor", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
-    end,"decrease master width factor"),
+    end),
     awful.key({ modkey,           }, "m",     function ()
       awful.tag.incmwfact( 0.05)
-      naughty.notify({ title = " Increased: master width factor", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
-    end,"increase master width factor"),
+      naughty.notify({ title = "Increased: master width factor", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+    end),
     awful.key({ modkey, "Shift"   }, "b",     function ()
       awful.tag.incnmaster(-1)
       naughty.notify({ title = "Decreased: number of master windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
-    end,"increase number of master windows"),
+    end),
     awful.key({ modkey, "Shift"   }, "m",     function ()
       awful.tag.incnmaster(1)
       naughty.notify({ title = "Increased: number of master windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
-    end,"decrease number of master windows"),
+    end),
     awful.key({ modkey, "Control" }, "b",     function ()
       awful.tag.incncol(-1)
       naughty.notify({ title = "Decreased: number of column windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
-    end,"increase number of column windows"),
+    end),
     awful.key({ modkey, "Control" }, "m",     function ()
       awful.tag.incncol(1)
       naughty.notify({ title = "Increased: number of column windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
-    end,"decrease number of column windows"),
+    end),
     awful.key({ modkey,           }, "space", function ()
       awful.layout.inc(layouts,  1)
       naughty.notify({ title = "Changed layout", text = "Now: " .. awful.layout.getname(awful.layout.get(awful.screen.focused())), timeout = 1 })
@@ -559,38 +558,38 @@ globalkeys = awful.util.table.join(
         function ()
             awful.client.focus.bydirection('left')
             if client.focus then client.focus:raise() end
-        end,"focus directionally left"),
+        end),
     awful.key({ modkey,           }, "t",
         function ()
             awful.client.focus.bydirection('down')
             if client.focus then client.focus:raise() end
-        end,"focus directionally down"),
+        end),
     awful.key({ modkey,           }, "n",
         function ()
             awful.client.focus.bydirection('up')
             if client.focus then client.focus:raise() end
-        end,"focus directionally up"),
+        end),
     awful.key({ modkey,           }, "s",
         function ()
             awful.client.focus.bydirection('right')
             if client.focus then client.focus:raise() end
-        end,"focus directionally right"),
+        end),
 
     --keydoc.group("scratch controls"),
-    -- awful.key({ modkey,           }, "q", function () scratch.pad.toggle() end,"toggle scratch pad"),
-    -- awful.key({ modkey,           }, "q", function () scratch.drop("urxvt","top", "center",1, 0.40, true, 1) end,"toggle scratch drop-from-top"),
+    -- awful.key({ modkey,           }, "q", function () scratch.pad.toggle() end),
+    -- awful.key({ modkey,           }, "q", function () scratch.drop("urxvt","top", "center",1, 0.40, true, 1) end),
 
 
     -- Shifty: keybindings specific to shifty
     --keydoc.group("tag interaction"),
-    awful.key({modkey, "Shift"},   "c", shifty.del,"delete current tag"),
-    awful.key({modkey, "Shift"},   "g", shifty.send_prev,"move client to next tag"),
-    awful.key({modkey, "Shift"},   "l", shifty.send_next,"move client to previous tag"),
-    awful.key({modkey},            "g", awful.tag.viewprev,"view previous tag"),
-    awful.key({modkey},            "l", awful.tag.viewnext,"view next tag"),
-    awful.key({modkey, "Control"}, "g", shifty.shift_prev,"exchange with previous tag"),
-    awful.key({modkey, "Control"}, "l", shifty.shift_next,"exchange with next tag"),
-    awful.key({modkey           }, "r", shifty.search_tag_interactive, "beta: search tagname"),
+    awful.key({modkey, "Shift"},   "c", shifty.del),
+    awful.key({modkey, "Shift"},   "g", shifty.send_prev),
+    awful.key({modkey, "Shift"},   "l", shifty.send_next),
+    awful.key({modkey},            "g", awful.tag.viewprev),
+    awful.key({modkey},            "l", awful.tag.viewnext),
+    awful.key({modkey, "Control"}, "g", shifty.shift_prev),
+    awful.key({modkey, "Control"}, "l", shifty.shift_next),
+    awful.key({modkey           }, "r", shifty.search_tag_interactive),
 
     awful.key({modkey, "Control"}, ",",
               function()
@@ -599,44 +598,44 @@ globalkeys = awful.util.table.join(
                   awful.tag.history.restore()
                   t = shifty.tagtoscr(s, t)
                   awful.tag.viewonly(t)
-              end,"send tag to next screen"),
-    awful.key({modkey},          "p", shifty.rename,"rename tag"),
-    awful.key({modkey},          ".", shifty.add,"create new tag"),
+              end),
+    awful.key({modkey},          "p", shifty.rename),
+    awful.key({modkey},          ".", shifty.add),
     awful.key({modkey, "Shift"}, ".",
     function()
         shifty.add({name = '━━━━━━━━━━━━━━━'})
-    end,"create new 'spacer' tag"),
+    end),
 
 
 
 
     --keydoc.group("client interactions"),
     -- skrewz@20160206: hardly ever use these:
-    --awful.key({ modkey, "Shift"   }, "h", function () awful.client.swap.byidx(  1) end,"rotate clients forward"),
-    --awful.key({ modkey, "Shift"   }, "s", function () awful.client.swap.byidx( -1) end,"rotate clients backward"),
-    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,"jump to urgent clients"),
+    --awful.key({ modkey, "Shift"   }, "h", function () awful.client.swap.byidx(  1) end),
+    --awful.key({ modkey, "Shift"   }, "s", function () awful.client.swap.byidx( -1) end),
+    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 
     --keydoc.group("special keys"),
-    awful.key({                   }, "KP_End", function () awful.util.spawn(".config/awesome/support_scripts/s-screensaver-wrap --lock-now") end,"standard lock"),
-    awful.key({ modkey            }, "KP_End", function () awful.util.spawn("xtrlock") end,"lock with xtrlock"),
+    awful.key({                   }, "KP_End", function () awful.util.spawn(".config/awesome/support_scripts/s-screensaver-wrap --lock-now") end),
+    awful.key({ modkey            }, "KP_End", function () awful.util.spawn("xtrlock") end),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
     --awful.key({                   }, "#121", function () awful.util.spawn("amixer set Master mute") end,"enable mute"),
-    awful.key({                   }, "#121", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --mute") end,"mute sound"),
-    awful.key({                   }, "#122", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --decrease") end,"decrease volume"),
-    awful.key({                   }, "#123", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end,"increase volume"),
-    awful.key({                   }, "#232", function () awful.util.spawn("xbacklight -dec 10"); end,"decrease backlight"),
-    awful.key({                   }, "#233", function () awful.util.spawn("xbacklight -inc 10"); end,"increase backlight"),
+    awful.key({                   }, "#121", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --mute") end),
+    awful.key({                   }, "#122", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --decrease") end),
+    awful.key({                   }, "#123", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end),
+    awful.key({                   }, "#232", function () awful.util.spawn("xbacklight -dec 10"); end),
+    awful.key({                   }, "#233", function () awful.util.spawn("xbacklight -inc 10"); end),
     awful.key({ modkey,           }, "F7",   function () awful.util.spawn(".config/awesome/support_scripts/s-screenshot-capture") end),
     awful.key({ modkey, "Shift"   }, "F7",   function () awful.util.spawn(".config/awesome/support_scripts/s-screenshot-capture --block") end),
     awful.key({ modkey,           }, "F12", function () awful.util.spawn(".config/awesome/support_scripts/s-screen-setup") end),
 
     -- Standard program
     --keydoc.group("spawn commands"),
-    awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/s-scratch-left","center", "left",0.5, 0.80, true,1) end,"drop left-in scratch pad"),
-    awful.key({ modkey,           }, "j", function () scratch.drop(".config/awesome/support_scripts/s-scratch-right","bottom", "right",0.4, 0.80, true,1) end,"drop right-in scratch pad"),
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,"spawn terminal"),
-    awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh") end,"spawn browser"),
-    awful.key({ modkey, "Control" }, "r", awesome.restart,"restart awesome (Xephyr?)")
+    awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/s-scratch-left","center", "left",0.5, 0.80, true,1) end),
+    awful.key({ modkey,           }, "j", function () scratch.drop(".config/awesome/support_scripts/s-scratch-right","bottom", "right",0.4, 0.80, true,1) end),
+    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+    awful.key({ modkey,           }, "BackSpace", function () awful.util.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh") end),
+    awful.key({ modkey, "Control" }, "r", awesome.restart)
     -- awful.key({ modkey, "Shift"   }, "q", awesome.quit), -- Don't want this. :S
 
 
@@ -656,10 +655,10 @@ globalkeys = awful.util.table.join(
 clientkeys = awful.util.table.join(
     --keydoc.group("further client interactions"),
     awful.key({ modkey,           }, "c",      function (c) c:kill()                         end,"kill client"),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,"toggle floating for client"),
-    -- awful.key({ modkey, "Shift"   }, "Return", awful.client.setmaster                           ,"make client master"),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,"swap client with master"),
-    awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end,"redraw current client"),
+    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle),
+    -- awful.key({ modkey, "Shift"   }, "Return", awful.client.setmaster),
+    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
+    awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
     awful.key({ modkey,           }, "w",      function (c)
       naughty.notify({ title = "Window ID", text = "Client: "..
       "class = " .. c.class .. "\n" ..
@@ -668,7 +667,7 @@ clientkeys = awful.util.table.join(
       "type = " .. tostring(c.type) .. "\n" ..
       "instance = " .. tostring(c.instance) .. "\n" ..
       ".", timeout = 10 })
-    end,"notify of window info"),
+    end),
     awful.key({ modkey, "Shift"   }, "w", function (c)
       -- Attempt at getting initial sizing for this one too:
       --  naughty.notify({ title = "Debug", text = "Now: size_hints=" .. c.size_hints.user_position .. ".", timeout = 2 })
@@ -685,11 +684,11 @@ clientkeys = awful.util.table.join(
       end
       naughty.notify({ title = "Omni+mini+sticky", text = "For this client: " .. tostring(c.sticky) .. ".", timeout = 2 })
     end,"minimal-omnipresent-mode for client"),
-    --awful.key({ modkey,           }, "n",      function (c) c.minimized = not c.minimized    end,"minimze client"),
+    --awful.key({ modkey,           }, "n",      function (c) c.minimized = not c.minimized    end),
     awful.key({ modkey,           }, "f", function (c)
         c.maximized = not c.maximized
 	c:raise()
-    end, "toggle fullscreen for client")
+    end)
 )
 
 -- }}}
@@ -710,17 +709,17 @@ clientkeys = awful.util.table.join(
 
 --globalkeys = awful.util.table.join(globalkeys,keydoc.group("screen manipulation"))
 -- https://awesomewm.org/doc/api/classes/screen.html screen.geometry might be useful for this:
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(localopts.left_screen) end,"focus screen 1"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,localopts.left_screen) end,"move to screen 1"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "a", function (c) awful.screen.focused().selected_tag.screen = localopts.left_screen end,"move tag to screen 1"))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(localopts.left_screen) end))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,localopts.left_screen) end))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "a", function (c) awful.screen.focused().selected_tag.screen = localopts.left_screen end))
 
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(localopts.middle_screen) end,"focus screen 2"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,localopts.middle_screen) end,"move to screen 2"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "o", function (c) awful.screen.focused().selected_tag.screen = localopts.middle_screen end,"move tag to screen 2"))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(localopts.middle_screen) end))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,localopts.middle_screen) end))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "o", function (c) awful.screen.focused().selected_tag.screen = localopts.middle_screen end))
 
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "e", function ()           awful.screen.focus(localopts.right_screen) end,"focus screen 3"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,localopts.right_screen) end,"move to screen 3"))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "e", function (c) awful.screen.focused().selected_tag.screen = localopts.right_screen end,"move tag to screen 3"))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "e", function ()           awful.screen.focus(localopts.right_screen) end))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,localopts.right_screen) end))
+clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "e", function (c) awful.screen.focused().selected_tag.screen = localopts.right_screen end))
 
 -- {{{ Shifty keys
 
