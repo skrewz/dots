@@ -288,7 +288,7 @@ let g:fuf_reuseWindow = 1
 " <C-k> - opens in a vertical-split window.
 " <C-]> - opens in a new tab page.
 
-noremap <Leader>f :FufMruFileInCwd<Enter>
+noremap <Leader>f :FufMruFile<Enter>
 noremap <Leader>F :FufFile<Enter>
 noremap <Leader>b :FufBuffer<Enter>
 noremap <Leader>u :UndotreeToggle<Enter>
