@@ -162,7 +162,7 @@ shifty.restore_saved_tag_names();
 --  * all other parameters (e.g. layout, mwfact) follow awesome's tag API
 shifty.config.defaults = {
     layout = awful.layout.suit.tile,
-    ncol = 2,
+    ncol = 1,
     mwfact = 0.33,
     persist = true,
     floatBars = true,
@@ -549,7 +549,10 @@ globalkeys = awful.util.table.join(
       awful.tag.incncol(1)
       naughty.notify({ title = "Increased: number of column windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
     end,"decrease number of column windows"),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end,"cycle through layouts"),
+    awful.key({ modkey,           }, "space", function ()
+      awful.layout.inc(layouts,  1)
+      naughty.notify({ title = "Changed layout", text = "Now: " .. awful.layout.getname(awful.layout.get(awful.screen.focused())), timeout = 1 })
+    end),
     -- Directional focus with right hand of dvorak layout:
     --keydoc.group("directional focus keymaps"),
     awful.key({ modkey,           }, "h",
