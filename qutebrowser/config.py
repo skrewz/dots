@@ -5,8 +5,8 @@ config = config  # noqa: F821 pylint: disable=E0602,C0103
 config.load_autoconfig()
 config.set('url.searchengines', {
     "DEFAULT": "https://duckduckgo.com/?q={}", 
-    "wk": "https://www.wiktionary.org/search-redirect.php?family=wiktionary&language=en&search={}&go=Go",
-    "wp": "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go"
+    "wk": "https://en.wiktionary.org/wiki/Special:Search?search={}&go=Go",
+    "wp": "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go",
 })
 
 # Privacy centric stuff:
