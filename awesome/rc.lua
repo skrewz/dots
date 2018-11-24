@@ -516,6 +516,15 @@ root.buttons(awful.util.table.join(
 ))
 -- }}}
 
+local function generate_tag_layout_info ()
+  local t = awful.screen.focused().selected_tag
+  return "Now: \n\n" ..
+    "layout      " .. awful.layout.getname(awful.layout.get(awful.screen.focused())) .. "\n" ..
+    "mwfact      " .. t.master_width_factor .. "\n" ..
+    "mwnmaster   " .. t.master_count .. "\n" ..
+    "ncol        " .. t.column_count
+end
+
 -- {{{ Key bindings
 -- Go to http://awesome.naquadah.org/doc/api/index.html for a bit of documentation.
 globalkeys = awful.util.table.join(
@@ -526,31 +535,31 @@ globalkeys = awful.util.table.join(
     -- keydoc.group("awesome keys"),
     awful.key({ modkey,           }, "b",     function ()
       awful.tag.incmwfact(-0.05)
-      naughty.notify({ title = "Decreased:  master width factor", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+      naughty.notify({ title = "Decreased:  master width factor", text = generate_tag_layout_info() , timeout = 1 })
     end),
     awful.key({ modkey,           }, "m",     function ()
       awful.tag.incmwfact( 0.05)
-      naughty.notify({ title = "Increased: master width factor", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+      naughty.notify({ title = "Increased: master width factor", text = generate_tag_layout_info(), timeout = 1 })
     end),
     awful.key({ modkey, "Shift"   }, "b",     function ()
       awful.tag.incnmaster(-1)
-      naughty.notify({ title = "Decreased: number of master windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+      naughty.notify({ title = "Decreased: number of master windows", text = generate_tag_layout_info(), timeout = 1 })
     end),
     awful.key({ modkey, "Shift"   }, "m",     function ()
       awful.tag.incnmaster(1)
-      naughty.notify({ title = "Increased: number of master windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+      naughty.notify({ title = "Increased: number of master windows", text = generate_tag_layout_info(), timeout = 1 })
     end),
     awful.key({ modkey, "Control" }, "b",     function ()
       awful.tag.incncol(-1)
-      naughty.notify({ title = "Decreased: number of column windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+      naughty.notify({ title = "Decreased: number of column windows", text = generate_tag_layout_info(), timeout = 1 })
     end),
     awful.key({ modkey, "Control" }, "m",     function ()
       awful.tag.incncol(1)
-      naughty.notify({ title = "Increased: number of column windows", text = "Now: mwfact=" .. awful.tag.getmwfact() .. ", mwnmaster=" .. awful.tag.getnmaster() .. ", ncol=" .. awful.tag.getncol(), timeout = 1 })
+      naughty.notify({ title = "Increased: number of column windows", text = generate_tag_layout_info(), timeout = 1 })
     end),
     awful.key({ modkey,           }, "space", function ()
       awful.layout.inc(layouts,  1)
-      naughty.notify({ title = "Changed layout", text = "Now: " .. awful.layout.getname(awful.layout.get(awful.screen.focused())), timeout = 1 })
+      naughty.notify({ title = "Changed layout", text = generate_tag_layout_info(), timeout = 1 })
     end),
     -- Directional focus with right hand of dvorak layout:
     --keydoc.group("directional focus keymaps"),
