@@ -114,7 +114,8 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'tomlion/vim-solidity'
 Plugin 'hashivim/vim-terraform.git'
 Plugin 'puppetlabs/puppet-syntax-vim'
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
+Plugin 'w0rp/ale'
 Plugin 'tpope/vim-git'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-vinegar'
@@ -354,6 +355,7 @@ let g:syntastic_check_on_open = 1
 " syntastic per-filetype checkers:
 let g:syntastic_typescript_checkers = ['tslint']
 
+let g:syntastic_lua_checkers = ['luacheck']
 let g:syntastic_python_checkers = ['flake8']
 
 " vim: fdm=marker fml=1
