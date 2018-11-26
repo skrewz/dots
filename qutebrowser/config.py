@@ -1,4 +1,5 @@
 # pylint: disable=C0111
+from os.path import expanduser
 c = c  # noqa: F821 pylint: disable=E0602,C0103
 config = config  # noqa: F821 pylint: disable=E0602,C0103
 
@@ -34,6 +35,15 @@ config.bind('S', 'forward')
 # Dvorak binds necessitate rebinding search traversal keys:
 config.bind('m', 'search-next')
 config.bind('M', 'search-prev')
+
+# Set hints chars for Dvorak users:
+#config.set('hints.mode',"char")
+#config.set('hints.chars',"huetonaspgid")
+# Trying hint mode with Dvorak-friendly word list:
+config.set('hints.mode',"word")
+home = expanduser("~")
+config.set('hints.dictionary',home+"/.config/qutebrowser/words")
+
 
 config.bind('<Ctrl-l>', 'spawn --userscript qute-pass')
 
