@@ -35,7 +35,16 @@ config.bind('S', 'forward')
 config.bind('m', 'search-next')
 config.bind('M', 'search-prev')
 
+# Convenience binds
 config.bind('<Ctrl-l>', 'spawn --userscript qute-pass')
+config.bind(',v', 'spawn mpv {url}')
 
 config.bind(',<Left>', 'set tabs.position left')
 config.bind(',<Up>'  , 'set tabs.position top')
+
+# colours:
+
+
+# Private is the default; highlight whenever non-private
+config.bind('colors.statusbar.private.bg','black')
+config.bind('colors.statusbar.normal.bg','red')
