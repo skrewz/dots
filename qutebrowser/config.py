@@ -35,6 +35,14 @@ config.bind('S', 'forward')
 config.bind('m', 'search-next')
 config.bind('M', 'search-prev')
 
+# Set hints chars for Dvorak users:
+#config.set('hints.mode',"char")
+#config.set('hints.chars',"huetonaspgid")
+# Trying hint mode with Dvorak-friendly word list:
+config.set('hints.mode',"word")
+config.set('hints.dictionary',str(config.configdir / 'words'))
+
+
 # Convenience binds
 config.bind('<Ctrl-l>', 'spawn --userscript qute-pass')
 config.bind(',v', 'spawn mpv {url}')

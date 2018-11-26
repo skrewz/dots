@@ -699,6 +699,9 @@ local globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "BackSpace", function ()
       awful.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh")
     end),
+    awful.key({ modkey, "Shift"   }, "BackSpace", function ()
+      awful.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh --non-private")
+    end),
     awful.key({ modkey, "Control" }, "r", awesome.restart)
     -- awful.key({ modkey, "Shift"   }, "q", awesome.quit), -- Don't want this. :S
 
