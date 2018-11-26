@@ -649,6 +649,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/s-scratch-left","center", "left",0.5, 0.80, true,1) end),
     awful.key({ modkey,           }, "j", function () scratch.drop(".config/awesome/support_scripts/s-scratch-right","bottom", "right",0.4, 0.80, true,1) end),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end),
+    awful.key({ modkey, "Shift"   }, "BackSpace", function () awful.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh --non-private") end),
     awful.key({ modkey,           }, "BackSpace", function () awful.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh") end),
     awful.key({ modkey, "Control" }, "r", awesome.restart)
     -- awful.key({ modkey, "Shift"   }, "q", awesome.quit), -- Don't want this. :S
