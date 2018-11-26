@@ -179,16 +179,16 @@ beautiful.init(awful.util.getdir("config") .. "/themes/skrewzawesometheme/theme.
 --beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
-editor = os.getenv("EDITOR") or "editor"
-editor_cmd = terminal .. " -e " .. editor
+local terminal = "urxvt"
+local editor = os.getenv("EDITOR") or "editor"
+local editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
+local modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 --layouts =
@@ -206,7 +206,7 @@ modkey = "Mod4"
 --    awful.layout.suit.max.fullscreen,
 --    awful.layout.suit.magnifier
 --}
-layouts =
+local layouts =
 {
     --awful.layout.suit.tile,
     --awful.layout.suit.tile.left,
@@ -226,25 +226,25 @@ layouts =
 
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
-tags = {}
+--local tags = {}
 -- for s = 1, screen.count() do
 --    -- Each screen has its own tag table.
 --    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
 -- end
 --tags[1] = awful.tag({ '1 (media)', '2 (mail)', 3, 4, 5, 6, 7, '8 (dump)', 9 }, 1, layouts[1])
-tags[1] = awful.tag({ }, 1, layouts[1])
+--tags[1] = awful.tag({ }, 1, layouts[1])
 -- }}}
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
-myawesomemenu = {
+local myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
    { "restart", awesome.restart },
    { "quit", awesome.quit }
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+local mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     --{ "Debian", debian.menu.Debian_menu.Debian },
                                     { "open terminal", terminal }
                                   }
@@ -268,34 +268,46 @@ lain_bat_widget = lain.widget.bat(
 -- }}}
 
 -- {{{ helper wibox widgets
-spacer_widget =  wibox.widget.textbox()
+local spacer_widget =  wibox.widget.textbox()
 spacer_widget.text = ''
 -- }}}
 
 
 -- Textual memory output:
-vicious_memwidget = wibox.widget.textbox ()
+local vicious_memwidget = wibox.widget.textbox ()
 vicious.register(vicious_memwidget, vicious.widgets.mem, "😊 $1 ☹ $5",5)
 
 -- cpu utilization graph:
-vicious_cpuwidget = wibox.widget.graph()
+local vicious_cpuwidget = wibox.widget.graph()
 vicious_cpuwidget:set_background_color("#000000")
 vicious_cpuwidget:set_height(10)
-vicious_cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 10 }, stops = { { 0, "#ff0000" },  { 1, "#000000" } }})
+vicious_cpuwidget:set_color({
+  type = "linear",
+  from = { 0, 0 },
+  to = { 0, 10 },
+  stops = { { 0, "#ff0000" },  { 1, "#000000" } }
+})
 vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 1.0)
 
 -- wlan0 rate graph:
-vicious_netwidget = wibox.widget.graph()
+local vicious_netwidget = wibox.widget.graph()
 vicious_netwidget:set_background_color("#000000")
 vicious_netwidget:set_height(10)
-vicious_netwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 10 }, stops = { { 0, "#ffffff" }, { 0.3, "#000080" }, { 1, "#000080" } }})
-vicious.register(vicious_netwidget, vicious.widgets.net, function (w,a)
+vicious_netwidget:set_color({
+  type = "linear",
+  from = { 0, 0 },
+  to = { 0, 10 },
+  stops = { { 0, "#ffffff" }, { 0.3, "#000080" }, { 1, "#000080" } }
+})
+local function report_wifi_throughput (a)
+  local intf = localopts.wifi_interface
   -- Dividing through with a "realistic maximal speed"
-  return 100*((a['{'..localopts.wifi_interface..' down_kb}']+a['{'..localopts.wifi_interface..' up_kb}'])/2500) + 100*((a['{'..localopts.wifi_interface..' down_kb}']+a['{'..localopts.wifi_interface..' up_kb}'])/2500)
-end, 1)
+  return 100*( a['{'..intf..' down_kb}']+a['{'..intf..' up_kb}']) /2500
+end
 
+vicious.register(vicious_netwidget, vicious.widgets.net, function (_,a) return report_wifi_throughput(a) end, 1)
 
-function report_cv_skrewz_net_latency ()
+local function report_cv_skrewz_net_latency ()
   local before = socket.gettime()
   http.request{
     url = 'http://ping.skrewz.net',
@@ -305,16 +317,21 @@ function report_cv_skrewz_net_latency ()
   local passed_s = tonumber(string.format("%.3f",after-before))
   return passed_s
 end
-vicious_rtt_widget = wibox.widget.graph()
+local vicious_rtt_widget = wibox.widget.graph()
 vicious_rtt_widget:set_height(10)
 vicious_rtt_widget:set_background_color("#000000")
-vicious_rtt_widget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 10 }, stops = { { 0, "#ff0000" },  {0.5, "#808000"}, { 1, "#002000" } }})
+vicious_rtt_widget:set_color({
+  type = "linear",
+  from = { 0, 0 },
+  to = { 0, 10 },
+  stops = { { 0, "#ff0000" },  {0.5, "#808000"}, { 1, "#002000" } }
+})
 
 -- using trick from https://github.com/Mic92/vicious 's stacked graph example:
 -- (but, really, just shoehorning this thing)
-unused_ctext_rtt = wibox.widget.textbox()
-vicious.register(unused_ctext_rtt, vicious.widgets.cpu, function (w,a)
-return ''
+local unused_ctext_rtt = wibox.widget.textbox()
+vicious.register(unused_ctext_rtt, vicious.widgets.cpu, function (_,_)
+  return ''
 end,1.0)
 
 local test_rtt_tmr
@@ -326,14 +343,14 @@ test_rtt_tmr:start()
 
 -- cpufreq rate graph:
 
-function report_cpufreq_avg ()
+local function report_cpufreq_avg ()
   local total_mhz = 0
   local total_cores = 0
   for l in io.lines('/proc/cpuinfo') do
     if string.find(l,'cpu MHz') then
       local otherfile = io.open('/sys/devices/system/cpu/cpu'..total_cores..'/cpufreq/scaling_cur_freq')
       if otherfile ~= nil then
-        ol = otherfile:read("*a")
+        local ol = otherfile:read("*a")
         io.close(otherfile)
         total_mhz = total_mhz + tonumber(ol)
       else
@@ -347,14 +364,19 @@ function report_cpufreq_avg ()
   --print ("avg: " .. total_mhz/total_cores .. "; returning: " .. retval)
   return retval
 end
-vicious_cpufreq_widget = wibox.widget.graph()
+local vicious_cpufreq_widget = wibox.widget.graph()
 vicious_cpufreq_widget:set_height(10)
 vicious_cpufreq_widget:set_background_color("#000000")
-vicious_cpufreq_widget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 10 }, stops = { { 0, "#ff0000" },  {0.5, "#ff0050"}, { 1, "#000050" } }})
+vicious_cpufreq_widget:set_color({
+  type = "linear",
+  from = { 0, 0 },
+  to = { 0, 10 },
+  stops = { { 0, "#ff0000" },  {0.5, "#ff0050"}, { 1, "#000050" } }
+})
 
 -- using trick from https://github.com/Mic92/vicious 's stacked graph example:
-unused_ctext = wibox.widget.textbox()
-vicious.register(unused_ctext, vicious.widgets.cpu, function (w,a)
+local unused_ctext = wibox.widget.textbox()
+vicious.register(unused_ctext, vicious.widgets.cpu, function (_,_)
   vicious_cpufreq_widget:add_value(report_cpufreq_avg(),1)
   return ''
   --return (report_cpufreq_avg() )
@@ -363,20 +385,12 @@ end,1.0)
 
 -- {{{ Wibox'es:
 -- Create a textclock widget
-my_home_textclock = wibox.widget.textclock("%a %H:%M:%S\n%Y-%m-%d",10,"Europe/Copenhagen")
-my_apac_textclock = wibox.widget.textclock("SZ %a %H:%M",1,"Asia/Shanghai")
-my_us_textclock   = wibox.widget.textclock("CA %a %H:%M",1,"America/Los_Angeles")
-
--- Create a systray
-mysystray = wibox.widget.systray()
+local my_home_textclock = wibox.widget.textclock("%a %H:%M:%S\n%Y-%m-%d",10,"Europe/Copenhagen")
+local my_apac_textclock = wibox.widget.textclock("SZ %a %H:%M",1,"Asia/Shanghai")
+local my_us_textclock   = wibox.widget.textclock("CA %a %H:%M",1,"America/Los_Angeles")
 
 -- Create a wibox for each screen and add it
-mywibox = {}
-my_bottomwibox = {}
-my_left_wibox = {}
-mypromptbox = {}
-mylayoutbox = {}
-mytaglist = {}
+local mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
                     awful.button({ modkey }, 1, function (t) client.focus:move_to_tag(t) end),
@@ -413,7 +427,7 @@ mytasklist.buttons = awful.util.table.join(
 
 -- cf. http://stackoverflow.com/a/31299971
 local awful_widget_common = require("awful.widget.common")
-function list_update(w, buttons, label, data, objects)
+local function list_update(w, buttons, label, data, objects)
     -- call default widget drawing function
     awful_widget_common.list_update(w, buttons, label, data, objects)
     -- set widget size
@@ -527,7 +541,7 @@ end
 
 -- {{{ Key bindings
 -- Go to http://awesome.naquadah.org/doc/api/index.html for a bit of documentation.
-globalkeys = awful.util.table.join(
+local globalkeys = awful.util.table.join(
     --keydoc.group("layout manipulation"),
     --awful.key({ modkey,           }, "Left",   awful.tag.viewprev),
     --awful.key({ modkey,           }, "Right",  awful.tag.viewnext),
@@ -610,8 +624,7 @@ globalkeys = awful.util.table.join(
               end),
     awful.key({modkey},          "p", shifty.rename),
     awful.key({modkey},          ".", shifty.add),
-    awful.key({modkey, "Shift"}, ".",
-    function()
+    awful.key({modkey, "Shift"}, ".", function()
         shifty.add({name = '━━━━━━━━━━━━━━━'})
     end),
 
@@ -625,37 +638,95 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
 
     --keydoc.group("special keys"),
-    awful.key({                   }, "KP_End", function () awful.spawn(".config/awesome/support_scripts/s-screensaver-wrap --lock-now") end),
+    awful.key({                   }, "KP_End", function ()
+      awful.spawn(".config/awesome/support_scripts/s-screensaver-wrap --lock-now")
+    end),
     awful.key({ modkey            }, "KP_End", function () awful.spawn("xtrlock") end),
     -- These bindings do it for my standard-layout keyboard with multimedia keys.
     --awful.key({                   }, "#121", function () awful.spawn("amixer set Master mute") end,"enable mute"),
-    awful.key({                   }, "#121", function () awful.spawn(".config/awesome/support_scripts/skrewz-volume.sh --mute") end),
-    awful.key({                   }, "#122", function () awful.spawn(".config/awesome/support_scripts/skrewz-volume.sh --decrease") end),
-    awful.key({                   }, "#123", function () awful.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase") end),
-    awful.key({                   }, "#232", function () awful.spawn("xbacklight -dec 10"); end),
-    awful.key({                   }, "#233", function () awful.spawn("xbacklight -inc 10"); end),
-    awful.key({                   }, "XF86AudioPlay",    function () awful.spawn(".config/awesome/support_scripts/s-audio-control --play"); end),
-    awful.key({                   }, "XF86AudioPause",   function () awful.spawn(".config/awesome/support_scripts/s-audio-control --pause"); end),
-    awful.key({                   }, "XF86AudioNext",    function () awful.spawn(".config/awesome/support_scripts/s-audio-control --next"); end),
-    awful.key({                   }, "XF86AudioPrev",    function () awful.spawn(".config/awesome/support_scripts/s-audio-control --prev"); end),
-    awful.key({                   }, "XF86AudioRewind",  function () awful.spawn(".config/awesome/support_scripts/s-audio-control --rewind"); end),
-    awful.key({                   }, "XF86AudioForward", function () awful.spawn(".config/awesome/support_scripts/s-audio-control --forward"); end),
-    awful.key({ modkey,           }, "F7",   function () awful.spawn(".config/awesome/support_scripts/s-screenshot-capture") end),
-    awful.key({ modkey, "Shift"   }, "F7",   function () awful.spawn(".config/awesome/support_scripts/s-screenshot-capture --block") end),
-    awful.key({ modkey,           }, "F12", function () awful.spawn(".config/awesome/support_scripts/s-screen-setup") end),
+    awful.key({                   }, "#121", function ()
+      awful.spawn(".config/awesome/support_scripts/skrewz-volume.sh --mute")
+    end),
+    awful.key({                   }, "#122", function ()
+      awful.spawn(".config/awesome/support_scripts/skrewz-volume.sh --decrease")
+    end),
+    awful.key({                   }, "#123", function ()
+      awful.spawn(".config/awesome/support_scripts/skrewz-volume.sh --increase")
+    end),
+    awful.key({                   }, "#232", function ()
+      awful.spawn("xbacklight -dec 10")
+      end),
+    awful.key({                   }, "#233", function ()
+      awful.spawn("xbacklight -inc 10")
+      end),
+    awful.key({                   }, "XF86AudioPlay",    function ()
+      awful.spawn(".config/awesome/support_scripts/s-audio-control --play")
+      end),
+    awful.key({                   }, "XF86AudioPause",   function ()
+      awful.spawn(".config/awesome/support_scripts/s-audio-control --pause")
+      end),
+    awful.key({                   }, "XF86AudioNext",    function ()
+      awful.spawn(".config/awesome/support_scripts/s-audio-control --next")
+      end),
+    awful.key({                   }, "XF86AudioPrev",    function ()
+      awful.spawn(".config/awesome/support_scripts/s-audio-control --prev")
+      end),
+    awful.key({                   }, "XF86AudioRewind",  function ()
+      awful.spawn(".config/awesome/support_scripts/s-audio-control --rewind")
+      end),
+    awful.key({                   }, "XF86AudioForward", function ()
+      awful.spawn(".config/awesome/support_scripts/s-audio-control --forward")
+      end),
+    awful.key({ modkey,           }, "F7",   function ()
+      awful.spawn(".config/awesome/support_scripts/s-screenshot-capture")
+    end),
+    awful.key({ modkey, "Shift"   }, "F7",   function ()
+      awful.spawn(".config/awesome/support_scripts/s-screenshot-capture --block")
+    end),
+    awful.key({ modkey,           }, "F12", function ()
+      awful.spawn(".config/awesome/support_scripts/s-screen-setup")
+    end),
+
+    awful.key({ modkey, "Ctrl"    },  "a", function ()
+      awful.screen.focused().selected_tag.screen = localopts.left_screen
+    end),
+    awful.key({ modkey, "Ctrl"    },  "o", function ()
+      awful.screen.focused().selected_tag.screen = localopts.middle_screen
+    end),
+    awful.key({ modkey, "Ctrl"    },  "e", function ()
+      awful.screen.focused().selected_tag.screen = localopts.right_screen
+    end),
+
+    awful.key({ modkey            },  "a", function ()
+      awful.screen.focus(localopts.left_screen)
+      if client.focus then client.focus:raise() end
+    end),
+    awful.key({ modkey            },  "o", function ()
+      awful.screen.focus(localopts.middle_screen)
+      if client.focus then client.focus:raise() end
+    end),
+    awful.key({ modkey            },  "e", function ()
+      awful.screen.focus(localopts.right_screen)
+      if client.focus then client.focus:raise() end
+    end),
 
     -- Standard program
     --keydoc.group("spawn commands"),
-    awful.key({ modkey,           }, "q", function () scratch.drop(".config/awesome/support_scripts/s-scratch-left","center", "left",0.5, 0.80, true,1) end),
-    awful.key({ modkey,           }, "j", function () scratch.drop(".config/awesome/support_scripts/s-scratch-right","bottom", "right",0.4, 0.80, true,1) end),
+    awful.key({ modkey,           }, "q", function ()
+      scratch.drop(".config/awesome/support_scripts/s-scratch-left","center", "left",0.5, 0.80, true,1)
+    end),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end),
-    awful.key({ modkey,           }, "BackSpace", function () awful.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh") end),
+    awful.key({ modkey,           }, "BackSpace", function ()
+      awful.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh")
+    end),
     awful.key({ modkey, "Control" }, "r", awesome.restart)
     -- awful.key({ modkey, "Shift"   }, "q", awesome.quit), -- Don't want this. :S
 
 
     -- Prompt
-    --awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end,"prompt for and run command"),
+    --awful.key({ modkey },            "r",     function ()
+    --  mypromptbox[mouse.screen]:run()
+    --end),
 
     --awful.key({ modkey }, "x",
     --          function ()
@@ -667,7 +738,7 @@ globalkeys = awful.util.table.join(
 
 )
 
-clientkeys = awful.util.table.join(
+local clientkeys = awful.util.table.join(
     --keydoc.group("further client interactions"),
     awful.key({ modkey,           }, "c",      function (c) c:kill()                         end,"kill client"),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle),
@@ -683,9 +754,11 @@ clientkeys = awful.util.table.join(
       "instance = " .. tostring(c.instance) .. "\n" ..
       ".", timeout = 10 })
     end),
+    awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,localopts.left_screen) end),
+    awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,localopts.middle_screen) end),
+    awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,localopts.right_screen) end),
     awful.key({ modkey, "Shift"   }, "w", function (c)
       -- Attempt at getting initial sizing for this one too:
-      --  naughty.notify({ title = "Debug", text = "Now: size_hints=" .. c.size_hints.user_position .. ".", timeout = 2 })
       if c.sticky == true then
         c.sticky = false
         c.ontop = false
@@ -697,8 +770,12 @@ clientkeys = awful.util.table.join(
         c.size_hints_honor = true
         awful.client.floating.set(c,true)
       end
-      naughty.notify({ title = "Omni+mini+sticky", text = "For this client: " .. tostring(c.sticky) .. ".", timeout = 2 })
-    end,"minimal-omnipresent-mode for client"),
+      naughty.notify({
+	title = "Omni+mini+sticky",
+	text = "For this client: " .. tostring(c.sticky) .. ".",
+	timeout = 2
+      })
+    end),
     --awful.key({ modkey,           }, "n",      function (c) c.minimized = not c.minimized    end),
     awful.key({ modkey,           }, "f", function (c)
         c.maximized = not c.maximized
@@ -724,17 +801,8 @@ clientkeys = awful.util.table.join(
 
 --globalkeys = awful.util.table.join(globalkeys,keydoc.group("screen manipulation"))
 -- https://awesomewm.org/doc/api/classes/screen.html screen.geometry might be useful for this:
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "a", function ()           awful.screen.focus(localopts.left_screen) end))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,localopts.left_screen) end))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "a", function (c) awful.screen.focused().selected_tag.screen = localopts.left_screen end))
+--
 
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "o", function ()           awful.screen.focus(localopts.middle_screen) end))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,localopts.middle_screen) end))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "o", function (c) awful.screen.focused().selected_tag.screen = localopts.middle_screen end))
-
-globalkeys = awful.util.table.join(globalkeys, awful.key({ modkey },          "e", function ()           awful.screen.focus(localopts.right_screen) end))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,localopts.right_screen) end))
-clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "e", function (c) awful.screen.focused().selected_tag.screen = localopts.right_screen end))
 
 -- {{{ Shifty keys
 
@@ -776,10 +844,9 @@ clientkeys = awful.util.table.join(clientkeys, awful.key({ modkey, "Ctrl" },  "e
 -- }}}
 
 -- mouse binds for clients {{{
-clientbuttons = awful.util.table.join(
+local clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
-    --awful.button({ modkey }, 2 , function () awful.util.spawn("scripts/daily_tasks/open_iceweasel_on_pastebuffer.sh") end),
     awful.button({ modkey }, 3, awful.mouse.client.resize),
     awful.button({ modkey }, 4, function () awful.util.spawn("transset --point --min 0.1 --inc 0.02") end),
     awful.button({ modkey }, 5, function () awful.util.spawn("transset --point --min 0.1 --dec 0.05") end))
