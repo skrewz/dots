@@ -1,5 +1,4 @@
 # pylint: disable=C0111
-from os.path import expanduser
 c = c  # noqa: F821 pylint: disable=E0602,C0103
 config = config  # noqa: F821 pylint: disable=E0602,C0103
 
@@ -41,8 +40,7 @@ config.bind('M', 'search-prev')
 #config.set('hints.chars',"huetonaspgid")
 # Trying hint mode with Dvorak-friendly word list:
 config.set('hints.mode',"word")
-home = expanduser("~")
-config.set('hints.dictionary',home+"/.config/qutebrowser/words")
+config.set('hints.dictionary',str(config.configdir / 'words'))
 
 
 config.bind('<Ctrl-l>', 'spawn --userscript qute-pass')
