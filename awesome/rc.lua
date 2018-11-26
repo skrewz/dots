@@ -311,7 +311,12 @@ local function report_cv_skrewz_net_latency ()
   local before = socket.gettime()
   http.request{
     url = 'http://ping.skrewz.net',
-    redirect = False,
+    redirect = false,
+    create=function()
+      local req_sock = socket.tcp()
+      req_sock:settimeout(2)
+      return req_sock
+    end
   }
   local after = socket.gettime()
   local passed_s = tonumber(string.format("%.3f",after-before))
@@ -399,31 +404,6 @@ mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 4, awful.tag.viewnext),
                     awful.button({ }, 5, awful.tag.viewprev)
                     )
-mytasklist = {}
-mytasklist.buttons = awful.util.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if not c:isvisible() then
-                                                  c:tags()[1]:view_only()
-                                              end
-                                              client.focus = c
-                                              c:raise()
-                                          end),
-                     awful.button({ }, 3, function ()
-                                              if instance then
-                                                  instance:hide()
-                                                  instance = nil
-                                              else
-                                                  instance = awful.menu.clients({ width=250 })
-                                              end
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                              if client.focus then client.focus:raise() end
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                              if client.focus then client.focus:raise() end
-                                          end))
 
 -- cf. http://stackoverflow.com/a/31299971
 local awful_widget_common = require("awful.widget.common")
