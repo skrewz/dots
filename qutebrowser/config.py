@@ -38,6 +38,13 @@ config.bind('S', 'forward')
 config.bind('m', 'search-next')
 config.bind('M', 'search-prev')
 
+config.bind('T', 'set-cmd-text -s :open -rt')
+
+# These sit awkwardly close to each other on Dvorak, and J sits to the left of
+# K. So inverting this default binding:
+config.bind('J', 'tab-prev')
+config.bind('K', 'tab-next')
+
 # Set hints chars for Dvorak users:
 #config.set('hints.mode',"char")
 #config.set('hints.chars',"huetonaspgid")
