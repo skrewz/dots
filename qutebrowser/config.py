@@ -7,6 +7,7 @@ config.set('url.searchengines', {
     "DEFAULT": "https://duckduckgo.com/?q={}", 
     "wk": "https://en.wiktionary.org/wiki/Special:Search?search={}&go=Go",
     "wp": "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go",
+    "youtube": "https://www.youtube.com/results?search_query={}",
 })
 
 # Privacy centric stuff:
