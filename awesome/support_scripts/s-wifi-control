@@ -1,0 +1,24 @@
+#!/bin/bash
+
+resetup_on_osd=""
+while [ "0" != "$#" ]; do
+  case "$1" in
+    --re-setup-on-osd)
+      resetup_on_osd="is what we're doing" ;;
+    *)
+      echo "not understood: $1" >&2
+      exit 1
+  esac
+  shift
+done
+
+
+if [ -n "$resetup_on_osd" ]; then
+  iface="$(/sbin/iwconfig |& awk '/802.11/ {print $1}')"
+  (
+    sudo /sbin/ifdown "$iface" 2>&1
+    sudo /sbin/ifup "$iface" 2>&1
+    echo
+    echo "Done."
+  ) | osd_cat -p top -A right -l 10 -c white
+fi
