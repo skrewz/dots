@@ -18,6 +18,8 @@ config.set('url.searchengines', {
 config.set('content.headers.accept_language','en-US,en;q=0.5')
 config.set('content.headers.custom',{"accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"})
 
+# Background tabs:
+config.set('tabs.background',True)
 
 # /usr/share/qutebrowser/scripts/dictcli.py install en-GB
 config.set('spellcheck.languages',["en-GB","da-DK"])
