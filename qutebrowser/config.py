@@ -45,12 +45,16 @@ config.bind('T', 'set-cmd-text -s :open -rt')
 config.bind('J', 'tab-prev')
 config.bind('K', 'tab-next')
 
+############################################################
+# Hints stuff
+############################################################
+config.set('hints.auto_follow_timeout',100)
 # Set hints chars for Dvorak users:
-#config.set('hints.mode',"char")
-#config.set('hints.chars',"huetonaspgid")
+config.set('hints.mode',"letter")
+config.set('hints.chars',"huetonaspgid")
 # Trying hint mode with Dvorak-friendly word list:
-config.set('hints.mode',"word")
-config.set('hints.dictionary',str(config.configdir / 'words'))
+#config.set('hints.mode',"word")
+#config.set('hints.dictionary',str(config.configdir / 'words'))
 
 
 # Convenience binds
