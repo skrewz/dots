@@ -329,19 +329,35 @@ local rttcommand = [[lua -e '
 ']]
 
 
-local vicious_rtt_widget = wibox.widget.graph()
-vicious_rtt_widget:set_height(10)
-vicious_rtt_widget:set_background_color("#000000")
-vicious_rtt_widget:set_color({
+local rtt_graph_widget = wibox.widget.graph()
+rtt_graph_widget:set_color({
   type = "linear",
   from = { 0, 0 },
   to = { 0, 10 },
   stops = { { 0, "#ff0000" },  {0.5, "#808000"}, { 1, "#002000" } }
 })
+local rtt_text_widget = wibox.widget.textbox()
+rtt_text_widget.align = 'right'
+local rtt_widget_stack = wibox.widget {
+  rtt_graph_widget,
+  rtt_text_widget,
+  layout = wibox.layout.stack
+}
+rtt_graph_widget:set_height(10)
+rtt_graph_widget:set_background_color("#000000")
 
 awful.spawn.with_line_callback(rttcommand, {
   stdout = function(line)
-    vicious_rtt_widget:add_value(tonumber(line),1)
+    local seconds = tonumber(line)
+    local ms = string.format("%d",1000*seconds)
+    rtt_graph_widget:add_value(seconds,1)
+    local color = "111111"
+    if seconds > 0.5 then
+      color = "ff0000"
+    elseif seconds > 0.2 then
+      color = "551111"
+    end
+    rtt_text_widget.markup = '<span foreground="#'..color..'" size="8000">' .. ms .. "ms</span>"
   end
 })
 
@@ -468,7 +484,7 @@ awful.screen.connect_for_each_screen(function(s)
     --top_layout:add(lain_bat_widget)
     top_layout:add(vicious_memwidget)
     top_layout:add(vicious_netwidget)
-    top_layout:add(vicious_rtt_widget)
+    top_layout:add(rtt_widget_stack)
     top_layout:add(vicious_cpufreq_widget)
     top_layout:add(vicious_cpuwidget)
     top_layout:add(s.mytaglist)
