@@ -307,21 +307,28 @@ end
 
 vicious.register(vicious_netwidget, vicious.widgets.net, function (_,a) return report_wifi_throughput(a) end, 1)
 
-local function report_cv_skrewz_net_latency ()
-  local before = socket.gettime()
-  http.request{
-    url = 'http://ping.skrewz.net',
-    redirect = false,
-    create=function()
-      local req_sock = socket.tcp()
-      req_sock:settimeout(2)
-      return req_sock
-    end
-  }
-  local after = socket.gettime()
-  local passed_s = tonumber(string.format("%.3f",after-before))
-  return passed_s
-end
+-- https://awesomewm.org/apidoc/libraries/awful.spawn.html
+local rttcommand = [[lua -e '
+  local socket = require("socket")
+  local http = require("socket.http")
+  socket.http.TIMEOUT = 2
+
+  io.stdout:setvbuf "no"
+  while true do
+    local before = socket.gettime()
+    http.request{
+      url = "http://ping.skrewz.net",
+      -- To avoid DNS lookups:
+      --url = "http://176.9.241.9",
+      --headers = {Host="ping.skrewz.net"},
+      redirect = false,
+    }
+    print (string.format("%.3f",socket.gettime()-before))
+    socket.sleep(2)
+  end
+']]
+
+
 local vicious_rtt_widget = wibox.widget.graph()
 vicious_rtt_widget:set_height(10)
 vicious_rtt_widget:set_background_color("#000000")
@@ -332,19 +339,11 @@ vicious_rtt_widget:set_color({
   stops = { { 0, "#ff0000" },  {0.5, "#808000"}, { 1, "#002000" } }
 })
 
--- using trick from https://github.com/Mic92/vicious 's stacked graph example:
--- (but, really, just shoehorning this thing)
-local unused_ctext_rtt = wibox.widget.textbox()
-vicious.register(unused_ctext_rtt, vicious.widgets.cpu, function (_,_)
-  return ''
-end,1.0)
-
-local test_rtt_tmr
-test_rtt_tmr = gears.timer({timeout = 2.00})
-test_rtt_tmr:connect_signal("timeout", function()
-  vicious_rtt_widget:add_value(report_cv_skrewz_net_latency(),1)
-end)
-test_rtt_tmr:start()
+awful.spawn.with_line_callback(rttcommand, {
+  stdout = function(line)
+    vicious_rtt_widget:add_value(tonumber(line),1)
+  end
+})
 
 -- cpufreq rate graph:
 
