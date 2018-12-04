@@ -9,9 +9,8 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty   = require("naughty")
 local gears = require("gears")
-local http = require("socket.http")
-local socket = require("socket")
 local scratch = require("scratch")
+local s_widgets = require("widgets")
 
 --local keydoc = require("keydoc")
 local wibox = require("wibox")
@@ -307,59 +306,8 @@ end
 
 vicious.register(vicious_netwidget, vicious.widgets.net, function (_,a) return report_wifi_throughput(a) end, 1)
 
--- https://awesomewm.org/apidoc/libraries/awful.spawn.html
-local rttcommand = [[lua -e '
-  local socket = require("socket")
-  local http = require("socket.http")
-  socket.http.TIMEOUT = 2
-
-  io.stdout:setvbuf "no"
-  while true do
-    local before = socket.gettime()
-    http.request{
-      url = "http://ping.skrewz.net",
-      -- To avoid DNS lookups:
-      --url = "http://176.9.241.9",
-      --headers = {Host="ping.skrewz.net"},
-      redirect = false,
-    }
-    print (string.format("%.3f",socket.gettime()-before))
-    socket.sleep(2)
-  end
-']]
 
 
-local rtt_graph_widget = wibox.widget.graph()
-rtt_graph_widget:set_color({
-  type = "linear",
-  from = { 0, 0 },
-  to = { 0, 10 },
-  stops = { { 0, "#ff0000" },  {0.5, "#808000"}, { 1, "#002000" } }
-})
-local rtt_text_widget = wibox.widget.textbox()
-rtt_text_widget.align = 'right'
-local rtt_widget_stack = wibox.widget {
-  rtt_graph_widget,
-  rtt_text_widget,
-  layout = wibox.layout.stack
-}
-rtt_graph_widget:set_height(10)
-rtt_graph_widget:set_background_color("#000000")
-
-awful.spawn.with_line_callback(rttcommand, {
-  stdout = function(line)
-    local seconds = tonumber(line)
-    local ms = string.format("%d",1000*seconds)
-    rtt_graph_widget:add_value(seconds,1)
-    local color = "111111"
-    if seconds > 0.5 then
-      color = "ff0000"
-    elseif seconds > 0.2 then
-      color = "551111"
-    end
-    rtt_text_widget.markup = '<span foreground="#'..color..'" size="8000">' .. ms .. "ms</span>"
-  end
-})
 
 -- cpufreq rate graph:
 
@@ -484,7 +432,7 @@ awful.screen.connect_for_each_screen(function(s)
     --top_layout:add(lain_bat_widget)
     top_layout:add(vicious_memwidget)
     top_layout:add(vicious_netwidget)
-    top_layout:add(rtt_widget_stack)
+    top_layout:add(s_widgets.rtt_widget_stack)
     top_layout:add(vicious_cpufreq_widget)
     top_layout:add(vicious_cpuwidget)
     top_layout:add(s.mytaglist)
