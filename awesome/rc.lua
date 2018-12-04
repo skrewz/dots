@@ -288,23 +288,6 @@ vicious_cpuwidget:set_color({
 })
 vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 1.0)
 
--- wlan0 rate graph:
-local vicious_netwidget = wibox.widget.graph()
-vicious_netwidget:set_background_color("#000000")
-vicious_netwidget:set_height(10)
-vicious_netwidget:set_color({
-  type = "linear",
-  from = { 0, 0 },
-  to = { 0, 10 },
-  stops = { { 0, "#ffffff" }, { 0.3, "#000080" }, { 1, "#000080" } }
-})
-local function report_wifi_throughput (a)
-  local intf = localopts.wifi_interface
-  -- Dividing through with a "realistic maximal speed"
-  return 100*( a['{'..intf..' down_kb}']+a['{'..intf..' up_kb}']) /2500
-end
-
-vicious.register(vicious_netwidget, vicious.widgets.net, function (_,a) return report_wifi_throughput(a) end, 1)
 
 
 
@@ -431,7 +414,7 @@ awful.screen.connect_for_each_screen(function(s)
     --top_layout:add(lain_cpu_widget)
     --top_layout:add(lain_bat_widget)
     top_layout:add(vicious_memwidget)
-    top_layout:add(vicious_netwidget)
+    top_layout:add(s_widgets.net_widget_stack)
     top_layout:add(s_widgets.rtt_widget_stack)
     top_layout:add(vicious_cpufreq_widget)
     top_layout:add(vicious_cpuwidget)

@@ -1,9 +1,12 @@
 local wibox = require("wibox")
 local awful = require("awful")
+local vicious = require("vicious")
+local localopts = require("localopts")
 
 
 local M
 do
+  ---------------- RTT widget ---------------------
   local rtt_graph_widget = wibox.widget.graph()
   rtt_graph_widget:set_color({
     type = "linear",
@@ -56,8 +59,38 @@ do
       rtt_text_widget.markup = '<span foreground="#'..color..'" size="8000">' .. ms .. "ms</span>"
     end
   })
+
+  ---------------- network throughput widget ---------------------
+  --
+  local net_graph_widget = wibox.widget.graph()
+  net_graph_widget:set_color({
+    type = "linear",
+    from = { 0, 0 },
+    to = { 0, 10 },
+    stops = { { 0, "#ffffff" }, { 0.3, "#000080" }, { 1, "#000080" } }
+  })
+  --local net_text_widget = wibox.widget.textbox()
+  --net_text_widget.align = 'right'
+  local net_widget_stack = wibox.widget {
+    net_graph_widget,
+    --net_text_widget,
+    layout = wibox.layout.stack
+  }
+  net_graph_widget:set_height(10)
+  net_graph_widget:set_background_color("#000000")
+
+  -- wlan0 rate graph:
+  local function report_wifi_throughput (a)
+    local intf = localopts.wifi_interface
+    -- Dividing through with a "realistic maximal speed"
+    return 100*( a['{'..intf..' down_kb}']+a['{'..intf..' up_kb}']) /2500
+  end
+
+  vicious.register(net_graph_widget, vicious.widgets.net, function (_,a) return report_wifi_throughput(a) end, 1)
+
   M = {
-    rtt_widget_stack = rtt_widget_stack
+    rtt_widget_stack = rtt_widget_stack,
+    net_widget_stack = net_widget_stack
   }
 end
 return M
