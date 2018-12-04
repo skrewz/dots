@@ -290,50 +290,6 @@ vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 1.0)
 
 
 
-
-
--- cpufreq rate graph:
-
-local function report_cpufreq_avg ()
-  local total_mhz = 0
-  local total_cores = 0
-  for l in io.lines('/proc/cpuinfo') do
-    if string.find(l,'cpu MHz') then
-      local otherfile = io.open('/sys/devices/system/cpu/cpu'..total_cores..'/cpufreq/scaling_cur_freq')
-      if otherfile ~= nil then
-        local ol = otherfile:read("*a")
-        io.close(otherfile)
-        total_mhz = total_mhz + tonumber(ol)
-      else
-        total_mhz = total_mhz + tonumber(string.match(l,'%d+.%d+'))
-      end
-      total_cores = total_cores + 1
-    end
-  end
-  -- not an exact calculation:
-  local retval = (((total_mhz / total_cores) / 1000) - 800) / 2900
-  --print ("avg: " .. total_mhz/total_cores .. "; returning: " .. retval)
-  return retval
-end
-local vicious_cpufreq_widget = wibox.widget.graph()
-vicious_cpufreq_widget:set_height(10)
-vicious_cpufreq_widget:set_background_color("#000000")
-vicious_cpufreq_widget:set_color({
-  type = "linear",
-  from = { 0, 0 },
-  to = { 0, 10 },
-  stops = { { 0, "#ff0000" },  {0.5, "#ff0050"}, { 1, "#000050" } }
-})
-
--- using trick from https://github.com/Mic92/vicious 's stacked graph example:
-local unused_ctext = wibox.widget.textbox()
-vicious.register(unused_ctext, vicious.widgets.cpu, function (_,_)
-  vicious_cpufreq_widget:add_value(report_cpufreq_avg(),1)
-  return ''
-  --return (report_cpufreq_avg() )
-end,1.0)
-
-
 -- {{{ Wibox'es:
 -- Create a textclock widget
 local my_home_textclock = wibox.widget.textclock("%a %H:%M:%S\n%Y-%m-%d",10,"Europe/Copenhagen")
@@ -416,7 +372,7 @@ awful.screen.connect_for_each_screen(function(s)
     top_layout:add(vicious_memwidget)
     top_layout:add(s_widgets.net_widget_stack)
     top_layout:add(s_widgets.rtt_widget_stack)
-    top_layout:add(vicious_cpufreq_widget)
+    top_layout:add(s_widgets.cpufreq_widget_stack)
     top_layout:add(vicious_cpuwidget)
     top_layout:add(s.mytaglist)
 

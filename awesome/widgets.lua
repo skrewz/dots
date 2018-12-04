@@ -1,5 +1,6 @@
 local wibox = require("wibox")
 local awful = require("awful")
+local gears = require("gears")
 local vicious = require("vicious")
 local localopts = require("localopts")
 
@@ -61,7 +62,7 @@ do
   })
 
   ---------------- network throughput widget ---------------------
-  --
+
   local net_graph_widget = wibox.widget.graph()
   net_graph_widget:set_color({
     type = "linear",
@@ -88,9 +89,69 @@ do
 
   vicious.register(net_graph_widget, vicious.widgets.net, function (_,a) return report_wifi_throughput(a) end, 1)
 
+  ---------------- cpu clock widget ---------------------
+
+  local function report_cpufreq_avg ()
+    local total_mhz = 0
+    local total_cores = 0
+    for l in io.lines('/proc/cpuinfo') do
+      if string.find(l,'cpu MHz') then
+        local otherfile = io.open('/sys/devices/system/cpu/cpu'..total_cores..'/cpufreq/scaling_cur_freq')
+        if otherfile ~= nil then
+          local ol = otherfile:read("*a")
+          io.close(otherfile)
+          total_mhz = total_mhz + tonumber(ol)
+        else
+          total_mhz = total_mhz + tonumber(string.match(l,'%d+.%d+'))
+        end
+        total_cores = total_cores + 1
+      end
+    end
+    local retval = math.floor((total_mhz / total_cores) / 1000)
+    return retval
+  end
+
+  local cpufreq_graph_widget = wibox.widget.graph()
+  cpufreq_graph_widget:set_height(10)
+  cpufreq_graph_widget:set_background_color("#000000")
+  -- implicitly this asserts that all cpu's scale equally.
+  local min_freq = tonumber(io.open(
+    '/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq')
+    :read("*a"))/1000
+  local max_freq = tonumber(io.open(
+    '/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq')
+    :read("*a"))/1000
+  cpufreq_graph_widget.min_value = min_freq
+  cpufreq_graph_widget.max_value = max_freq
+  cpufreq_graph_widget:set_color({
+    type = "linear",
+    from = { 0, 0 },
+    to = { 0, 10 },
+    stops = { { 0, "#ff0000" },  {0.5, "#ff0050"}, { 1, "#000050" } }
+  })
+  local cpufreq_text_widget = wibox.widget.textbox()
+  cpufreq_text_widget.align = 'right'
+  local cpufreq_widget_stack = wibox.widget {
+    cpufreq_graph_widget,
+    cpufreq_text_widget,
+    layout = wibox.layout.stack
+  }
+
+  local cpufreq_tmr
+  cpufreq_tmr = gears.timer({timeout = 1.00})
+  cpufreq_tmr:connect_signal("timeout", function()
+    local cpufreq = report_cpufreq_avg()
+
+    cpufreq_graph_widget:add_value(cpufreq,1)
+    local color = "111111"
+    cpufreq_text_widget.markup = '<span foreground="#'..color..'" size="8000">' .. cpufreq .. "MHz</span>"
+  end)
+  cpufreq_tmr:start()
+
   M = {
     rtt_widget_stack = rtt_widget_stack,
-    net_widget_stack = net_widget_stack
+    net_widget_stack = net_widget_stack,
+    cpufreq_widget_stack = cpufreq_widget_stack
   }
 end
 return M
