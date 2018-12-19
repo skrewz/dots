@@ -2,7 +2,7 @@
 
 sock=~/.config/mpv/socket
 
-if [ -S /tmp/mpv.socket ]; then
+if [ -S "$sock" ]; then
   if [ --pause = "$1" ]; then
     echo '{"command": ["cycle", "pause"]}' | socat - $sock
   elif [ --play = "$1" ]; then
