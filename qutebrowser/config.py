@@ -57,6 +57,9 @@ config.set('hints.chars',"huetonaspgid")
 #config.set('hints.mode',"word")
 #config.set('hints.dictionary',str(config.configdir / 'words'))
 
+# Get-rid-of-habit-binds
+config.bind('<Ctrl-f>', 'nop')
+config.bind('<Ctrl-0>', 'nop')
 
 # Convenience binds
 config.bind('<Ctrl-l>', 'spawn --userscript qute-pass')
