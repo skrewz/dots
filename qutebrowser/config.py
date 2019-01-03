@@ -38,6 +38,7 @@ config.bind('S', 'forward')
 config.bind('m', 'search-next')
 config.bind('M', 'search-prev')
 
+config.bind('O', 'set-cmd-text -s :open {url}')
 config.bind('T', 'set-cmd-text -s :open -rt')
 config.bind('pt', 'open -rt {primary}')
 
