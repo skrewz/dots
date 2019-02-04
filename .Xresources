@@ -24,18 +24,26 @@ URxvt.iso14755_52: false
 ! These have nothing to do with transparency:
 URxvt.geometry:80x25
 URxvt.scrollBar:false
+URxvt*scrollTtyKeypress: true
+URxvt*scrollTtyOutput: false
 
 URxvt.saveLines:524288
 URxvt.modifier:mod1
 !URxvt.borderLess:true
 URxvt.perl-ext-common: default,matcher
-URxvt.urlLauncher: chromium
 URxvt.cursorColor: #666
-URxvt.matcher.button: 1
-URxvt.keysym.S-Prior: \033[5;2~
-URxvt.keysym.S-Next: \033[6;2~
+! URxvt.keysym.S-Prior: \033[5;2~
+! URxvt.keysym.S-Next: \033[6;2~
 ! URxvt.keysym.S-Prior: 33[25S
 ! URxvt.keysym.S-Next: 33[25T
+
+URxvt.url-launcher: /home/skrewz/.config/awesome/support_scripts/skrewz-spawn-browser.sh
+URxvt.keysym.M-u:    matcher:next
+URxvt.keysym.M-l:    matcher:list
+URxvt.matcher.button:     1
+URxvt.matcher.pattern.1:  \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
+!URxvt.matcher.pattern.2:  \\B(/\\S+?):(\\d+)(?=:|$)
+!URxvt.matcher.launcher.2: gvim +$2 $1
 
 ! Makes urxvt set the urgent flag in your window manager when a bell
 ! would (otherwise) have been released. Can be quite useful.
