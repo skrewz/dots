@@ -62,7 +62,7 @@ URxvt.urgentOnBell: true
 !URxvt.italicFont:    -*-clean-medium-i-*-*-14-*-*-*-*-*-*-*
 
 Xft.antialias:  1
-Xft.dpi:        100
+Xft.dpi:        150
 Xft.hinting:    1
 !Xft.hintstyle:  hintslight
 Xft.rgba:       rgb

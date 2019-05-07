@@ -1,4 +1,5 @@
 -- vim: fdm=marker fml=1
+-- TODO: import Super+s keybind from /etc/xdg/awesome/rc.lua
 -- Standard awesome library
 local awful = require("awful")
 awful.remote = require("awful.remote")
@@ -360,7 +361,7 @@ awful.screen.connect_for_each_screen(function(s)
     --}
     --awful.wibox.align(s.my_left_wibox,'center')
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "left", screen = s, width = "100" })
+    s.mywibox = awful.wibar({ position = "left", screen = s, width = "130" })
     --s.my_bottomwibox = awful.wibox({ position = "bottom", screen = s, height = "32" })
     -- Add widgets to the wibox - order matters
 
