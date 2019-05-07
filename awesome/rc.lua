@@ -292,9 +292,9 @@ vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 1.0)
 
 -- {{{ Wibox'es:
 -- Create a textclock widget
-local my_home_textclock = wibox.widget.textclock("%a %H:%M:%S\n%Y-%m-%d",10,"Europe/Copenhagen")
-local my_apac_textclock = wibox.widget.textclock("SZ %a %H:%M",1,"Asia/Shanghai")
-local my_us_textclock   = wibox.widget.textclock("CA %a %H:%M",1,"America/Los_Angeles")
+local my_home_textclock = wibox.widget.textclock("%a  %H:%M:%S\n%Y-%m-%d",10,"Australia/Sydney")
+local my_cph_textclock = wibox.widget.textclock("CPH %a %H:%M",1,"Europe/Copenhagen")
+--local my_us_textclock   = wibox.widget.textclock("CA %a %H:%M",1,"America/Los_Angeles")
 
 -- Create a wibox for each screen and add it
 local mytaglist = {}
@@ -383,8 +383,8 @@ awful.screen.connect_for_each_screen(function(s)
     bottom_layout:add(wibox.widget.systray())
     --bottom_layout:add(memwidget)
     --bottom_layout:add(batwidget)
-    bottom_layout:add(my_us_textclock)
-    bottom_layout:add(my_apac_textclock)
+    --bottom_layout:add(my_us_textclock)
+    bottom_layout:add(my_cph_textclock)
     bottom_layout:add(my_home_textclock)
     -- skrewz@20160207: This currently is a bit big:
     --bottom_layout:add(s.mylayoutbox)
