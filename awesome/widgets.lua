@@ -127,7 +127,7 @@ do
     type = "linear",
     from = { 0, 0 },
     to = { 0, 10 },
-    stops = { { 0, "#ff0000" },  {0.5, "#ff0050"}, { 1, "#000050" } }
+    stops = { { 0, "#ff0000" },  {0.7, "#000050"}, { 1, "#000000" } }
   })
   local cpufreq_text_widget = wibox.widget.textbox()
   cpufreq_text_widget.align = 'right'
