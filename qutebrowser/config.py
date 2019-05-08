@@ -63,7 +63,15 @@ config.bind('<Ctrl-f>', 'nop')
 config.bind('<Ctrl-0>', 'nop')
 
 # Convenience binds
-config.bind('<Ctrl-l>', 'spawn --userscript qute-pass')
+config.bind('<Ctrl-l>b', 'spawn --userscript qute-pass')
+config.bind('<Ctrl-l>b', 'spawn --userscript qute-pass', mode='insert')
+config.bind('<Ctrl-l>b', 'spawn --userscript qute-pass', mode='prompt')
+config.bind('<Ctrl-l>u', 'spawn --userscript qute-pass --username-only')
+config.bind('<Ctrl-l>u', 'spawn --userscript qute-pass --username-only', mode='insert')
+config.bind('<Ctrl-l>u', 'spawn --userscript qute-pass --username-only', mode='prompt')
+config.bind('<Ctrl-l>p', 'spawn --userscript qute-pass --password-only')
+config.bind('<Ctrl-l>p', 'spawn --userscript qute-pass --password-only', mode='insert')
+config.bind('<Ctrl-l>p', 'spawn --userscript qute-pass --password-only', mode='prompt')
 config.bind(',v', 'spawn mpv {url}')
 
 config.bind(',<Left>', 'set tabs.position left')
