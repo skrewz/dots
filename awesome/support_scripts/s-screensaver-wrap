@@ -3,15 +3,22 @@
 while [ "0" != "$#" ]; do
   case "$1" in
     --start-in-background)
-      xset s 120
-      xss-lock -- $0 --lock-because-timeout & disown
+      xset s 110 10
+      xss-lock -n "$0 --warn-of-impending-lock" -- $0 --lock-because-timeout & disown
       ;;
     --lock-now)
       # TODO: Could do some capture-foreground-lock-re-lock-with-bg hacksery?
       notify-send -u "low" -t 1000 "Will lock momentarily..."
       import -window root -resize 25% bmp:- | convert bmp:- -resize 400% -blur 10x10 +level-colors ,darkgreen -quality 05 /tmp/blurredbg.png
-      i3lock --nofork --show-failed-attempts --image /tmp/blurredbg.png
+      i3lock --show-failed-attempts --image /tmp/blurredbg.png
       rm /tmp/blurredbg.png
+      # to cause display(s) to come off:
+      sleep 5
+      xset dpms force suspend
+      ;;
+    --warn-of-impending-lock)
+      #notify-send -u "critical" -t 9000 "Will lock in 10 secods..."
+      osd_cat --delay 9 --pos middle --align center <<< "Will lock in 10 secods..."
       ;;
     --lock-because-timeout)
       import -window root -resize 25% bmp:- | convert bmp:- -resize 400% -blur 10x10 +level-colors ,firebrick -quality 05 /tmp/blurredbg.png
