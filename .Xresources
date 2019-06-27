@@ -82,3 +82,44 @@ URxvt.keysym.M-F12: command:\033]710;xft:Hack:size=32:antialias=true\007\033]711
 !URxvt.keysym.M-F10: command:\033]710;-*-terminus-medium-r-*-*-9-*-*-*-*-*-*-u\007\033]711;-*-terminus-bold-r-*-*-9-*-*-*-*-*-*-u\007\033]712;-*-terminus-medium-o-*-*-9-*-*-*-*-*-*-u\007\033]713;-*-terminus-bold-o-*-*-9-*-*-*-*-*-*-u\007
 !URxvt.keysym.M-F11: command:\033]710;-*-terminus-medium-r-*-*-14-*-*-*-*-*-*-u\007\033]711;-*-terminus-bold-r-*-*-14-*-*-*-*-*-*-u\007\033]712;-*-terminus-medium-o-*-*-14-*-*-*-*-*-*-u\007\033]713;-*-terminus-bold-o-*-*-14-*-*-*-*-*-*-u\007
 !URxvt.keysym.M-F12: command:\033]710;-*-terminus-medium-r-*-*-48-*-*-*-*-*-*-u\007\033]711;-*-terminus-bold-r-*-*-48-*-*-*-*-*-*-u\007\033]712;-*-terminus-medium-o-*-*-48-*-*-*-*-*-*-u\007\033]713;-*-terminus-bold-o-*-*-48-*-*-*-*-*-*-u\007
+
+xvkbd.NormalKeys: \
+  F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 BackSpace \n\
+  Escape 1 2 3 4 5 6 7 8 9 0 - = \134 ~ \n\
+  Tab å , . p y f g c r l \042 ~ Delete \n\
+  Control_L a o e u i d h t n s \047 Return \n\
+  Shift_L æ q j k x b m w v z Multi_key Shift_R \n\
+  MainMenu Caps_Lock Alt_L Meta_L space Meta_R Alt_R Left Right Up Down Focus
+
+xvkbd.ShiftKeys: \
+  F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 Delete \n\
+  Escape ! \047 # $ % & / ( ) = ? ` | ~ \n\
+  ISO_Left_Tab Å ; \072 P Y F G R L * ^ = BackSpace \n\
+  Control_L A O E U I D H T N S - Return \n\
+  Shift_L Æ Q J K X B M V W Z Multi_key Shift_R \n\
+  MainMenu Caps_Lock Alt_L Meta_L space Meta_R Alt_R Left Right Up Down Focus
+
+
+xvkbd.KeyLabels: \
+  F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 Backspace \n\
+  Escape 1 2 3 4 5 6 7 8 9 0 - = \134 ~ \n\
+  Tab å , . p y f g c r l \042 ~ Delete \n\
+  Control a o e u i d h t n s \047 Return \n\
+  Shift æ q j k x b m w v z Multi_key Shift_R \n\
+  MainMenu Caps\nLock Alt Meta space Meta Alt left right up down Focus
+
+xvkbd.NormalKeyLabels: \
+  F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 Backspace \n\
+  Escape 1 2 3 4 5 6 7 8 9 0 - = \134 ~ \n\
+  Tab å , . p y f g c r l \042 ~ Delete \n\
+  Control a o e u i d h t n s \047 Return \n\
+  Shift æ q j k x b m w v z Multi_key Shift_R \n\
+  MainMenu Caps\nLock Alt Meta space Meta Alt left right up down Focus
+
+xvkbd.ShiftKeyLabels:  \
+  F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12 Delete \n\
+  Escape ! \047 # $ % & / ( ) = ? ` | ~ \n\
+  Tab Å ; \072 P Y F G R L * ^ = BackSpace \n\
+  Ctrl A O E U I D H T N S - Return \n\
+  Shift Æ Q J K X B M V W Z Comp Shift \n\
+  MainMenu Caps Alt Meta space Meta Alt left right up down Focus
