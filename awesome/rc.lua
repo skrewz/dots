@@ -293,7 +293,7 @@ vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 1.0)
 
 -- {{{ Wibox'es:
 -- Create a textclock widget
-local my_home_textclock = wibox.widget.textclock("%a  %H:%M:%S\n%Y-%m-%d",10,"Australia/Sydney")
+local my_home_textclock = wibox.widget.textclock("SYD %a %H:%M\n%Y-%m-%d",10,"Australia/Sydney")
 local my_cph_textclock = wibox.widget.textclock("CPH %a %H:%M",1,"Europe/Copenhagen")
 --local my_us_textclock   = wibox.widget.textclock("CA %a %H:%M",1,"America/Los_Angeles")
 
