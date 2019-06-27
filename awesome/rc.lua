@@ -29,7 +29,7 @@ local localopts = require("localopts")
 print("Entered rc.lua: " .. os.time())
 
 -- Load Debian menu entries
--- require("debian.menu")
+require("debian.menu")
 
 
 
@@ -245,13 +245,13 @@ local myawesomemenu = {
 }
 
 local mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    --{ "Debian", debian.menu.Debian_menu.Debian },
+                                    { "Debian", debian.menu.Debian_menu.Debian },
                                     { "open terminal", terminal }
                                   }
                         })
 
---mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
---                                     menu = mymainmenu })
+mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+                                     menu = mymainmenu })
 -- }}}
 
 -- lain widgets {{{
@@ -367,7 +367,6 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Widgets that are aligned to the left
     local top_layout = wibox.layout.fixed.vertical()
-    --top_layout:add(mylauncher)
     --top_layout:add(lain_cpu_widget)
     --top_layout:add(lain_bat_widget)
     top_layout:add(vicious_memwidget)
@@ -385,10 +384,40 @@ awful.screen.connect_for_each_screen(function(s)
     --bottom_layout:add(memwidget)
     --bottom_layout:add(batwidget)
     --bottom_layout:add(my_us_textclock)
+
+
+    local xfe_widget = wibox.widget{
+      markup = 'xfe',
+      widget = wibox.widget.textbox
+    }
+    local xvkbd_widget = wibox.widget{
+      markup = 'xvk',
+      widget = wibox.widget.textbox
+    }
+    xvkbd_widget:buttons (awful.util.table.join(
+      awful.button({ }, 1, function()
+        scratch.drop("xvkbd","center", "bottom",0.5, 0.25, true,1)
+      end)
+    ))
+    xfe_widget:buttons (awful.util.table.join(
+      awful.button({ }, 1, function()
+      awful.spawn("xfe")
+      end)
+    ))
+    -- skrewz@20190601: this is tablet-friendly
+    local constrained_layoutbox = wibox.container.constraint(s.mylayoutbox,'max',32,32)
+    local constrained_launcher = wibox.container.constraint(mylauncher,'max',32,32)
+    local tablet_widgets = wibox.widget {
+      xvkbd_widget,
+      constrained_launcher,
+      constrained_layoutbox,
+      layout  = wibox.layout.align.horizontal
+    }
+    bottom_layout:add(tablet_widgets)
+    bottom_layout:add(xfe_widget)
+
     bottom_layout:add(my_cph_textclock)
     bottom_layout:add(my_home_textclock)
-    -- skrewz@20160207: This currently is a bit big:
-    --bottom_layout:add(s.mylayoutbox)
 
     -- http://awesome.naquadah.org/doc/api/modules/wibox.layout.align.html :
     -- Returns a new vertical align layout. An align layout can display up to
@@ -598,9 +627,6 @@ local globalkeys = awful.util.table.join(
 
     -- Standard program
     --keydoc.group("spawn commands"),
-    awful.key({ modkey,           }, "q", function ()
-      scratch.drop(".config/awesome/support_scripts/s-scratch-left","center", "left",0.5, 0.80, true,1)
-    end),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end),
     awful.key({ modkey,           }, "BackSpace", function ()
       awful.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh")
@@ -736,6 +762,7 @@ local clientkeys = awful.util.table.join(
 local clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
+    awful.button({ }, 2, awful.mouse.client.move),
     awful.button({ modkey }, 3, awful.mouse.client.resize),
     awful.button({ modkey }, 4, function () awful.util.spawn("transset --point --min 0.1 --inc 0.02") end),
     awful.button({ modkey }, 5, function () awful.util.spawn("transset --point --min 0.1 --dec 0.05") end))
