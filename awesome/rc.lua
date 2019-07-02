@@ -669,6 +669,7 @@ local clientkeys = awful.util.table.join(
       "instance = " .. tostring(c.instance) .. "\n" ..
       ".", timeout = 10 })
     end),
+    awful.key({ modkey,         }, "1", function (c) awful.util.spawn("transset --id "..c.window.." 0.999") end),
     awful.key({ modkey, "Shift" }, "a", function (c) awful.client.movetoscreen(c,localopts.left_screen) end),
     awful.key({ modkey, "Shift" }, "o", function (c) awful.client.movetoscreen(c,localopts.middle_screen) end),
     awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,localopts.right_screen) end),
