@@ -611,6 +611,9 @@ local globalkeys = awful.util.table.join(
     awful.key({ modkey, "Ctrl"    },  "e", function ()
       awful.screen.focused().selected_tag.screen = localopts.right_screen
     end),
+    awful.key({ modkey,           },  "d", function ()
+      awful.spawn("/usr/bin/emojione-picker")
+    end),
 
     awful.key({ modkey            },  "a", function ()
       awful.screen.focus(localopts.left_screen)
