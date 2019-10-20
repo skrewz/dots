@@ -35,14 +35,14 @@ do
     while true do
       local before = socket.gettime()
       http.request{
-        url = "http://ping.skrewz.net",
+        url = "http://syd1.speedtest.telstra.net",
         -- To avoid DNS lookups:
         --url = "http://176.9.241.9",
         --headers = {Host="ping.skrewz.net"},
         redirect = false,
       }
       print (string.format("%.3f",socket.gettime()-before))
-      socket.sleep(2)
+      socket.sleep(3)
     end
   ']]
 
