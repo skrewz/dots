@@ -369,6 +369,7 @@ awful.screen.connect_for_each_screen(function(s)
     local top_layout = wibox.layout.fixed.vertical()
     --top_layout:add(lain_cpu_widget)
     --top_layout:add(lain_bat_widget)
+    top_layout:add(s_widgets.screensaver_widget_stack)
     top_layout:add(vicious_memwidget)
     top_layout:add(s_widgets.net_widget_stack)
     top_layout:add(s_widgets.rtt_widget_stack)
@@ -594,6 +595,12 @@ local globalkeys = awful.util.table.join(
     end),
     awful.key({ modkey, "Shift"   }, "F7",   function ()
       awful.spawn(".config/awesome/support_scripts/s-screenshot-capture --block")
+    end),
+    awful.key({ modkey,           }, "F8",   function ()
+      awful.spawn(".config/awesome/support_scripts/s-screensaver-wrap --block-another-hour")
+    end),
+    awful.key({ modkey, "Shift"   }, "F8",   function ()
+      awful.spawn(".config/awesome/support_scripts/s-screensaver-wrap --block-until-midnight")
     end),
     awful.key({ modkey,           }, "F5", function ()
       awful.spawn(".config/awesome/support_scripts/s-wifi-control --re-setup-on-osd")

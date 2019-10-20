@@ -3,6 +3,7 @@ local awful = require("awful")
 local gears = require("gears")
 local vicious = require("vicious")
 local localopts = require("localopts")
+local time = require("posix.time")
 
 
 local M
@@ -60,6 +61,42 @@ do
       rtt_text_widget.markup = '<span foreground="#'..color..'" size="8000">' .. ms .. "ms</span>"
     end
   })
+
+  ---------------- screensaver widget ---------------------
+
+  local screensaver_text_widget = wibox.widget.textbox()
+  screensaver_text_widget.align = 'right'
+  local screensaver_widget_stack = wibox.widget {
+    --screensaver_graph_widget,
+    screensaver_text_widget,
+    layout = wibox.layout.stack
+  }
+
+  local function update_screensaver_left ()
+    local file = awful.util.getdir("cache") .. "/screensaver_disable_to_epoch"
+    local f = io.open(file, "r")
+    if f then
+      for line in f:lines() do
+        if time.time() < tonumber(line) then
+          local localtime = time.localtime(tonumber(line))
+          local timeout_formatted = time.strftime("%H:%M:%S",localtime)
+          screensaver_text_widget.markup = 'Bl→<b>'..timeout_formatted..'</b>'
+        else
+          screensaver_text_widget.markup = ""
+        end
+      end
+    else
+        screensaver_text_widget.markup = ""
+    end
+  end
+
+  local screensaver_tmr
+  screensaver_tmr = gears.timer({timeout = 5.00})
+  screensaver_tmr:connect_signal("timeout", function()
+    update_screensaver_left()
+  end)
+  screensaver_tmr:start()
+
 
   ---------------- network throughput widget ---------------------
 
@@ -150,6 +187,7 @@ do
 
   M = {
     rtt_widget_stack = rtt_widget_stack,
+    screensaver_widget_stack = screensaver_widget_stack,
     net_widget_stack = net_widget_stack,
     cpufreq_widget_stack = cpufreq_widget_stack
   }
