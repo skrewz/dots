@@ -1,5 +1,9 @@
 #!/bin/bash
 
+xset r rate 400 60 &
+xset m 5 1 &
+setxkbmap skrewz-dvorak
+
 function get_output_for_edid_line ()
 {
     xrandroutput="$(cat)"
@@ -15,9 +19,10 @@ xrandroutput="$(xrandr --verbose)"
 declare -A display
 display['pos_0_screen_0']="$(echo "$xrandroutput" | get_output_for_edid_line "00483958533230363834310a202000e4")"
 
-display['pos_1_screen_right']="$(echo "$xrandroutput" | get_output_for_edid_line "0002410328001200000a010a2020004a")"
-display['pos_1_screen_middle']="$(echo "$xrandroutput" | get_output_for_edid_line "0038561e711e010a20202020202001b2")"
-display['pos_1_screen_left']="$(echo "$xrandroutput" | get_output_for_edid_line "0038561e711e010a2020202020200189")"
+display['pos_1_screen_right']="$(echo "$xrandroutput" | get_output_for_edid_line "000c44ff0b3c6e160e1a6e00000000e3")"
+display['pos_1_screen_middle']="$(echo "$xrandroutput" | get_output_for_edid_line "00384c1e5311010a20202020202000e3")"
+display['pos_1_screen_left']="$(echo "$xrandroutput" | get_output_for_edid_line "00384c1e5311010a20202020202000e7")"
+
 
 disconnected_but_used_displays="$(sed -nre 's/^([^ ]+) disconnected [0-9]+x[0-9]+[+][0-9]+[+][0-9]+ .*$/\1/;T;p' <<< "$xrandroutput")"
 
@@ -27,9 +32,9 @@ if [ -n "${display['pos_1_screen_left']:-}" ] &&
    [ -n "${display['pos_1_screen_right']:-}" ]; then
   notify-send -u "low" -t 2000 "Considering this position 1"
   sleep 2
-  xrandr --output "${display['pos_1_screen_left']:-}"   --mode 2560x1440 --crtc 2 --pos 0x0             --rotate left \
-         --output "${display['pos_1_screen_middle']:-}" --mode 2560x1440 --crtc 1 --pos 1440x0          --rotate right \
-         --output "${display['pos_1_screen_right']:-}"  --mode 1920x1080 --crtc 0 --pos $((1440*2))x$((2560*1/3))   --rotate normal
+  xrandr --output "${display['pos_1_screen_left']:-}"   --mode 1920x1080 --crtc 2 --pos 0x0             --rotate left \
+         --output "${display['pos_1_screen_middle']:-}" --mode 1920x1080 --crtc 1 --pos 1080x0          --rotate left \
+         --output "${display['pos_1_screen_right']:-}"  --mode 1920x1080 --crtc 0 --pos $((1080*2))x$((1920*1/3))   --rotate normal
 elif [ -n "${display['pos_1_screen_right']:-}" ]; then
   xrandr --output "${display['pos_1_screen_left']:-}"   --off \
          --output "${display['pos_1_screen_middle']:-}" --off  \
@@ -55,5 +60,7 @@ fi
 convert xc:black /tmp/black.png
 feh --bg-fill /tmp/black.png
 rm /tmp/black.png
+
+
 #feh --bg-fill /tmp/background.png
 #xrandr --output eDP-1   --mode 1920x1080 --right-of DP-3
