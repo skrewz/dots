@@ -21,6 +21,9 @@ local vicious  = require("vicious")
 -- shifty - dynamic tagging library
 local shifty = require("shifty")
 
+-- https://github.com/francois2metz/pomodoro-awesome
+local pomodoro = require("pomodoro")
+
 local localopts = require("localopts")
 
 --local lain = require("lain")
@@ -405,17 +408,18 @@ awful.screen.connect_for_each_screen(function(s)
       awful.spawn("xfe")
       end)
     ))
+
     -- skrewz@20190601: this is tablet-friendly
-    local constrained_layoutbox = wibox.container.constraint(s.mylayoutbox,'max',32,32)
-    local constrained_launcher = wibox.container.constraint(mylauncher,'max',32,32)
-    local tablet_widgets = wibox.widget {
-      xvkbd_widget,
-      constrained_launcher,
-      constrained_layoutbox,
-      layout  = wibox.layout.align.horizontal
-    }
-    bottom_layout:add(tablet_widgets)
-    bottom_layout:add(xfe_widget)
+    local firstrack = wibox.widget {layout=wibox.layout.fixed.horizontal}
+    local secondrack = wibox.widget {layout=wibox.layout.fixed.horizontal}
+    firstrack:add(pomodoro)
+    firstrack:add(xvkbd_widget)
+    secondrack:add(mylauncher)
+    secondrack:add(s.mylayoutbox)
+    secondrack:add(xfe_widget)
+
+    bottom_layout:add(wibox.container.constraint(firstrack,'max',nil,32))
+    bottom_layout:add(wibox.container.constraint(secondrack,'max',nil,32))
 
     bottom_layout:add(my_cph_textclock)
     bottom_layout:add(my_home_textclock)
