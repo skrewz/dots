@@ -37,7 +37,7 @@ xkb_symbols "basic" {
     key <AC08> { [t          , T          , Down                              ] };
     key <AC09> { [n          , N          , Up                                ] };
     key <AC10> { [s          , S          , Right                             ] };
-    key <AC11> { [minus      , slash      , underscore      , diaeresis       ] };
+    key <AC11> { [minus      , slash      , underscore      , U2014           ] };
     // AC12 sits under the L of a UK keyboard layout (not useful for skrewz.)
     //key <AC12> { [equal      , underscore , dead_tilde      , guillemotright  ] };
 
