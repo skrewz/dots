@@ -296,8 +296,9 @@ vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 1.0)
 
 -- {{{ Wibox'es:
 -- Create a textclock widget
-local my_home_textclock = wibox.widget.textclock("SYD %a %H:%M\n%Y-%m-%d",10,"Australia/Sydney")
-local my_cph_textclock = wibox.widget.textclock("CPH %a %H:%M",1,"Europe/Copenhagen")
+local my_home_textclock = wibox.widget.textclock('<span fgcolor="grey" font_desc="Sans 7">SYD %a <b>%H:%M</b>\n%Y-%m-%d</span>',10,"Australia/Sydney")
+local my_cph_textclock = wibox.widget.textclock('<span fgcolor="grey" font_desc="Sans 5">CPH %a %H:%M</span>',1,"Europe/Copenhagen")
+local my_utc_textclock = wibox.widget.textclock('<span fgcolor="grey" font_desc="Sans 5">UTC %a %H:%M</span>',1,"UTC")
 --local my_us_textclock   = wibox.widget.textclock("CA %a %H:%M",1,"America/Los_Angeles")
 
 -- Create a wibox for each screen and add it
@@ -391,11 +392,11 @@ awful.screen.connect_for_each_screen(function(s)
 
 
     local xfe_widget = wibox.widget{
-      markup = 'xfe',
+      markup = '<span fgcolor="grey" font_desc="sans 5">xfe</span>',
       widget = wibox.widget.textbox
     }
     local xvkbd_widget = wibox.widget{
-      markup = 'xvk',
+      markup = '<span fgcolor="grey" font_desc="14">⌨</span>',
       widget = wibox.widget.textbox
     }
     xvkbd_widget:buttons (awful.util.table.join(
@@ -422,6 +423,7 @@ awful.screen.connect_for_each_screen(function(s)
     bottom_layout:add(wibox.container.constraint(secondrack,'max',nil,32))
 
     bottom_layout:add(my_cph_textclock)
+    bottom_layout:add(my_utc_textclock)
     bottom_layout:add(my_home_textclock)
 
     -- http://awesome.naquadah.org/doc/api/modules/wibox.layout.align.html :
@@ -679,6 +681,7 @@ local clientkeys = awful.util.table.join(
       "class = " .. c.class .. "\n" ..
       "name = " .. c.name .. "\n" ..
       "window id = " .. c.window .. "\n" ..
+      "ontop = " .. tostring(c.ontop) .. "\n" ..
       "type = " .. tostring(c.type) .. "\n" ..
       "instance = " .. tostring(c.instance) .. "\n" ..
       ".", timeout = 10 })
@@ -693,12 +696,12 @@ local clientkeys = awful.util.table.join(
         c.sticky = false
         c.ontop = false
         c.size_hints_honor = false
-        awful.client.floating.set(c,false)
+        c.floating = false
       else
         c.sticky = true
         c.ontop = true
         c.size_hints_honor = true
-        awful.client.floating.set(c,true)
+        c.floating = true
       end
       naughty.notify({
 	title = "Omni+mini+sticky",
