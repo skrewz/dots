@@ -1,5 +1,6 @@
 #!/bin/bash
-alias bashcolors='for first in {0..47}; do for second in {0..8}; do printf "  \\e[%u;%um%s[%0.2u;%0.2um\e[0m "  $first $second "\e" $first $second; done; echo; done'
+alias bashcolors='for i in {0..255} ; do printf "\x1b[48;5;%sm%3d\e[0m " "$i" "$i"; if (( i == 15 )) || (( i > 15 )) && (( (i-15) % 6 == 0 )); then printf "\n"; fi; done'
+
 
 if [ -d ~/repos ]; then
   alias my_local_diffs='echo "Wrong alias. Try s-git-local-diffs"'
