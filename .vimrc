@@ -124,9 +124,17 @@ Plugin 'tpope/vim-commentary'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'pangloss/vim-javascript'
+Plugin 'rhysd/vim-grammarous'
+let g:grammarous#use_vim_spelllang = 1
+let g:grammarous#disabled_rules = {
+            \ '*' : [],
+            \ 'markdown' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+            \ }
+
 Plugin 'mbbill/undotree'
 " https://github.com/Shougo/deoplete.nvim#install
 Plugin 'Shougo/deoplete.nvim'
+Plugin 'deoplete-plugins/deoplete-dictionary'
 " not relevant on nvim:
 "Plugin 'roxma/nvim-yarp'
 "Plugin 'roxma/vim-hug-neovim-rpc'
@@ -174,6 +182,18 @@ let g:indent_guides_enable_on_vim_startup=1
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black    ctermbg=234
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=235
+
+setlocal dictionary+=/usr/share/dict/british-english
+" Remove this if you'd like to use fuzzy search
+call deoplete#custom#source(
+\ 'dictionary', 'matchers', ['matcher_head'])
+" If dictionary is already sorted, no need to sort it again.
+call deoplete#custom#source(
+\ 'dictionary', 'sorters', [])
+" Do not complete too short words
+call deoplete#custom#source(
+      \ 'dictionary', 'min_pattern_length', 4)
+
 
 " }}}
 
