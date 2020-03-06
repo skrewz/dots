@@ -130,10 +130,12 @@ let g:grammarous#disabled_rules = {
             \ '*' : [],
             \ 'markdown' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
             \ }
+let g:deoplete#sources#jedi#show_docstring
 
 Plugin 'mbbill/undotree'
 " https://github.com/Shougo/deoplete.nvim#install
 Plugin 'Shougo/deoplete.nvim'
+Plugin 'deoplete-plugins/deoplete-jedi'
 Plugin 'deoplete-plugins/deoplete-dictionary'
 " not relevant on nvim:
 "Plugin 'roxma/nvim-yarp'
