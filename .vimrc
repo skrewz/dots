@@ -204,22 +204,6 @@ let g:deoplete#enable_at_startup = 1
 " }}}
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MULTIPURPOSE TAB KEY
-" Indent if we're at the beginning of a line. Else, do completion.
-" Yanked off:
-" https://github.com/garybernhardt/dotfiles/blob/99b7d2537ad98dd7a9d3c82b8775f0de1718b356/.vimrc#L166-L180.
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
-inoremap <expr> <tab> InsertTabWrapper()
-inoremap <s-tab> <c-p><Paste>
 
 " vim-terraform configuration: {{{
 let g:terraform_align=1
@@ -279,8 +263,8 @@ execute "set spellfile=~/.vim_synced/spell/wordlist.".&g:spelllang.".utf-8.add"
 " http://stackoverflow.com/a/3098685
 if ! filereadable($HOME . "/.vim/dont_do_dvorak_binds")
   " The following mappings get in the way of search hit traversal, so this:
-  noremap <S-k> <S-n>
-  noremap k n
+  noremap <S-m> <S-n>
+  noremap m n
 
   noremap h h
   noremap t j
@@ -296,6 +280,10 @@ endif
 
 if filereadable($HOME . "/.vim/abbreviations.vim")
   source $HOME . "/.vim/abbreviations.vim"
+endif
+
+if filereadable($HOME . "/.vim/localtweaks.vim")
+  exec "source " . $HOME . "/.vim/localtweaks.vim"
 endif
 
 " Fuzzyfinder
