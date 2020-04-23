@@ -6,53 +6,54 @@
 // specified as ``U2030'', too.
 partial alphanumeric_keys
 xkb_symbols "basic" {
-    include "no(dvorak)"
+    include "us(dvorak)"
     include "altwin(swap_lalt_lwin)"
 
     name[Group1]="Danish Custom Dvorak";
     key <AE04> { [4          , dollar     , currency        , onequarter      ] };
 
-    key <TLDE> { [brokenbar  , section    , brokenbar       , paragraph       ] };
+    //key <TLDE> { [brokenbar  , section    , brokenbar       , paragraph       ] };
+  
 
-    key <AC03> { [e          , E          , F5              , cent            ] };
-    key <AC04> { [u          , U          , F6                                ] };
+    key <AC01> { [a          , A          , aring           , Aring           ] };
+    //                                      ^^ å              ^^ Å
+    key <AC02> { [o          , O          , oslash          , Oslash           ] };
+    //                                      ^^ ø              ^^ Ø
+    key <AC03> { [e          , E          , ae              , AE              ] };
+    //                                      ^^ æ              ^^ Æ
     key <AC05> { [i          , I          , Insert          , Insert          ] };
-    key <AC06> { [d          , D          , eth             , ETH             ] };
-    key <AC10> { [s          , S          , ssharp                            ] };
 
-    key <AD01> { [aring      , Aring      , oslash          , Oslash          ] };
-    //            ^^ å         ^^ Å         ^^ ø              ^^ Ø
     key <AD04> { [p          , P          , bar                               ] };
-    key <AB01> { [ae         , AE         , braceleft       , bracketleft     ] };
+    //key <AB01> { [ae         , AE         , braceleft       , bracketleft     ] };
 
 
     key <LSGT> { [oslash     , Ooblique   , bar             , backslash       ] };
 
     // Productivity improvements, here:
-    key <AB06> { [b          , B          , less                              ] };
-    key <AB07> { [m          , M          , greater                           ] };
+    key <AB06> { [b          , B                                              ] };
+    key <AB07> { [m          , M                                              ] };
     key <AB05> { [x          , X          , multiply                          ] };
     key <AC06> { [d          , D          , backslash                         ] };
     key <AC07> { [h          , H          , Left                              ] };
     key <AC08> { [t          , T          , Down                              ] };
     key <AC09> { [n          , N          , Up                                ] };
     key <AC10> { [s          , S          , Right                             ] };
-    key <AC11> { [minus      , slash      , underscore      , U2014           ] };
-    // AC12 sits under the L of a UK keyboard layout (not useful for skrewz.)
+    key <AC11> { [minus      , underscore , U2013           , U2014           ] };
+    //AC12 sits under the L of a UK keyboard layout (not useful for skrewz.)
     //key <AC12> { [equal      , underscore , dead_tilde      , guillemotright  ] };
 
     // This sits above enter on a us/qwerty layout:
-    key <BKSL> { [asciitilde , equal      , equal                            ] };
+    //key <BKSL> { [asciitilde , equal      , equal                            ] };
 
     // brackets on the row above the home row's right hand:
-    key <AD07> { [g          , G          , bracketleft                       ] };
-    key <AD08> { [c          , C          , bracketright                      ] };
-    key <AD09> { [r          , R          , braceleft                         ] };
-    key <AD10> { [l          , L          , braceright                        ] };
+    //key <AD07> { [g          , G          , bracketleft                       ] };
+    //key <AD08> { [c          , C          , bracketright                      ] };
+    //key <AD09> { [r          , R          , braceleft                         ] };
+    //key <AD10> { [l          , L          , braceright                        ] };
 
-    key <AD11> { [apostrophe , asterisk   , dead_circumflex , acute           ] };
+    //key <AD11> { [apostrophe , question   , dead_circumflex , acute           ] };
     //            ^^ '         ^^ *         ^^ ê or ô         ^^ ´
-    key <AD12> { [asciitilde , asciicircum, dead_diaeresis  , dead_caron      ] };
+    //key <AD12> { [asciitilde , asciicircum, dead_diaeresis  , dead_caron      ] };
     //            ^^ ~         ^^ ^         ^^ ě or ǒ         ^^^ ě or ǒ
 
     // Bind to something meaningless (so that awesome can refer to it by name):
