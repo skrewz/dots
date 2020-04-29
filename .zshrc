@@ -107,7 +107,11 @@ export EDITOR='nvim'
 # Prefer readline bindings for word-rubout
 stty werase ^= > /dev/null 2>&1
 
-for sourceable in ~/.bash/.bash_aliases ~/.bash_aliases_local; do
+for sourceable in \
+  ~/.bash/.bash_aliases \
+  ~/.bash_aliases_local \
+  ~/.zshrc_local \
+  ; do
   if [ -f "$sourceable" ]; then
     source "$sourceable"
   fi
