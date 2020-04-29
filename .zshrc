@@ -107,9 +107,12 @@ export EDITOR='nvim'
 # Prefer readline bindings for word-rubout
 stty werase ^= > /dev/null 2>&1
 
-if [ -f ~/.bash_aliases_local ]; then
-  source ~/.bash_aliases_local
-fi
+for sourceable in ~/.bash/.bash_aliases ~/.bash_aliases_local; do
+  if [ -f "$sourceable" ]; then
+    source "$sourceable"
+  fi
+done
+
 
 # https://opensource.com/article/18/9/tips-productivity-zsh
 alias -g G='| grep -i'

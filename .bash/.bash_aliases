@@ -145,48 +145,6 @@ function s-mlgrep ()
   eval "parallel --gnu --pipe --block 1 --recstart \"$delim\" \"egrep --colour=always -C9999999 $@\"" 2> >(grep --line-buffered -vF "parallel: Warning: A full record was not matched in a block.")
 } # }}}
 
-function s-apt-fullupgrade()
-{ # {{{
-
-  echo "=> Running \`apt update\`..."
-  apt update
-  echo "=> Running \`apt full-upgrade\` (a 'y' keypress will be needed)..."
-  DEBIAN_FRONTEND=noninteractive apt full-upgrade
-  echo "=> Running \`apt autoremove\`"
-  DEBIAN_FRONTEND=noninteractive apt autoremove
-
-  i=0
-  while [ -n "$(deborphan)" ] && ((i++ < 10)); do
-    echo "=> Running \`apt remove \$(deborphan)\`"
-    DEBIAN_FRONTEND=noninteractive apt remove $(deborphan)
-  done
-
-  echo ""
-  kern_output="$(apt list --installed 'linux-image-[0-9]*' 2>/dev/null | grep ^linux-image)"
-  if [ "1" != "$(wc -l <<< "$kern_output")" ]; then
-    echo "Looks like there are duplicate kernels:"
-    echo "$kern_output"
-  else
-    echo "✓ Seem to be duplicate-kernel clean."
-  fi
-
-  if [ -x /opt/repos/s-monitoring/snippets/s-mon-kernel-checks ]; then
-    echo ""
-    if ! /opt/repos/s-monitoring/snippets/s-mon-kernel-checks --check if-newer-installed &>/dev/null; then
-      timeout=120
-      echo "System needs a reboot:"
-      /opt/repos/s-monitoring/snippets/s-mon-kernel-checks --check if-newer-installed
-      read -p "(timeout $timeout) enter anything to reboot now: " -t $timeout answer
-      if [ -n "$answer" ]; then
-        reboot
-      fi
-    else
-      echo "✓ System does not need a reboot:"
-      /opt/repos/s-monitoring/snippets/s-mon-kernel-checks --check if-newer-installed
-    fi
-
-  fi
-} # }}}
 
 
 function s-hex-to-binary-and-decimal ()
@@ -340,7 +298,6 @@ function cpwh()
   cp -v "$(which "$1")" "$2"
 } # }}}
 
-complete -c wh vimwh cdwh cpwh
 
 function s-git-commit-rebase-push()
 { # {{{
@@ -417,6 +374,7 @@ alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 alias s-mutt="TERM=rxvt-256color mutt"
 alias pcat="pygmentize -f terminal256 -O style=native -g"
+alias gs="git status"
 
 function s-taillogs ()
 { # {{{
