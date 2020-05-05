@@ -211,6 +211,9 @@ prompt_virtualenv() {
 
 # Battery: if discharging
 prompt_battery() {
+  if [[ ! -e /sys/class/power_supply/BAT0/status ]]; then
+    return
+  fi
   if [[ "Discharging" == $(< /sys/class/power_supply/BAT0/status) ]]; then
     local bat_pct="$(< /sys/class/power_supply/BAT0/capacity)"
     if ((30 < bat_pct)); then
