@@ -117,6 +117,9 @@ for sourceable in \
   fi
 done
 
+eval "$(dircolors ~/repos/dots/.dircolors )"
+export LS_OPTIONS='--color=auto'
+alias ls='ls $LS_OPTIONS'
 
 # https://opensource.com/article/18/9/tips-productivity-zsh
 alias -g G='| grep -i'
