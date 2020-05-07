@@ -233,11 +233,12 @@ prompt_battery() {
 prompt_status() {
   local -a symbols
 
+  local bg=black
   [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$RETVAL"
-  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
+  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡" && bg=red
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
 
-  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+  [[ -n "$symbols" ]] && prompt_segment $bg default "$symbols"
 }
 
 #AWS Profile:
