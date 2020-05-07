@@ -254,6 +254,23 @@ prompt_aws() {
   esac
 }
 
+
+# Vi mode; cf. https://superuser.com/a/156204
+function zle-line-init zle-keymap-select {
+    VIMODE="${${KEYMAP/vicmd/command}/(main|viins)/}"
+    zle reset-prompt
+}
+zle -N zle-keymap-select
+prompt_vimode() {
+  local bg=27
+  local w='I'
+  if [[ $KEYMAP == 'vicmd' ]]; then
+    bg=221
+    local w='N'
+  fi
+  prompt_segment $bg black "$w"
+}
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
@@ -266,6 +283,7 @@ build_prompt() {
   prompt_git
   prompt_bzr
   prompt_hg
+  prompt_vimode
   prompt_end
 }
 
