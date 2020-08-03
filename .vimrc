@@ -331,9 +331,12 @@ noremap <Leader>gd :Gvdiff<Enter>
 
 noremap <Leader>m <C-W>\|<C-W>_
 
-nmap <Leader>s <Plug>(easymotion-sn)
-xmap <Leader>s <Plug>(easymotion-sn)
-omap <Leader>s <Plug>(easymotion-sn)
+nmap <Leader>s <Plug>(easymotion-overwin-f2)
+"xmap <Leader>s <Plug>(easymotion-owerwin-f2)
+"omap <Leader>s <Plug>(easymotion-owerwin-f2)
+nmap <Leader>t <Plug>(easymotion-sn)
+xmap <Leader>t <Plug>(easymotion-sn)
+omap <Leader>t <Plug>(easymotion-sn)
 
 " netrw config:
 " buggy tree list style surrounding symlinks:
