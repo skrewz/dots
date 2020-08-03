@@ -337,7 +337,9 @@ noremap <Leader>gc :Gcommit -v<Enter>
 noremap <Leader>gs :Gstatus<Enter>
 noremap <Leader>gd :Gvdiff<Enter>
 
-noremap <Leader>m <C-W>\|<C-W>_
+noremap <Leader>gd :Gvdiff<Enter>
+
+noremap <Leader>mo :MochaOnlyToggle<Enter>
 
 nmap <Leader>s <Plug>(easymotion-overwin-f2)
 "xmap <Leader>s <Plug>(easymotion-owerwin-f2)
