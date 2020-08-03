@@ -106,11 +106,12 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 " Plugin 'chriskempson/tomorrow-theme'
 " Makes vundle handle itself:
 Plugin 'VundleVim/Vundle.vim'
 " Plugin 'scrooloose/nerdtree'
-Plugin 'Lokaltog/vim-easymotion'
+Plugin 'easymotion/vim-easymotion'
 Plugin 'nathanaelkane/vim-indent-guides'
 " Plugin 'Valloric/YouCompleteMe'
 Plugin 'tomlion/vim-solidity'
@@ -134,6 +135,7 @@ let g:grammarous#disabled_rules = {
             \ 'markdown' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
             \ }
 
+Plugin 'gerrard00/vim-mocha-only'
 Plugin 'mbbill/undotree'
 " https://github.com/Shougo/deoplete.nvim#install
 Plugin 'Shougo/deoplete.nvim'
