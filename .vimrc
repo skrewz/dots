@@ -5,6 +5,8 @@ set foldmethod=syntax
 set foldminlines=10
 " Extra space when scrolling:
 set so=10
+" Reduced for more immediate updates in e.g. airblade/vim-gitgutter:
+set updatetime=100
 set switchbuf=useopen,usetab
 
 set hlsearch
