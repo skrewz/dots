@@ -94,8 +94,8 @@ autocmd FileType gitcommit setlocal spell
 
 " python3 configuration: {{{
 " https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv suggests:
-" (made with `cd ~/.config/nvim; virtualenv -p python3 py3venv; source $HOME/.config/nvim/py3venv/bin/activate; pip3 install neovim`).
-let g:python3_host_prog = '/home/skrewz/.config/nvim/py3venv/bin/python3'
+" (made with `cd ~/.config/nvim; python3 -m venv py3venv; source $HOME/.config/nvim/py3venv/bin/activate; pip3 install neovim`).
+let g:python3_host_prog = $HOME . '/.config/nvim/py3venv/bin/python3'
 " }}}
 
 " Setting up Vundle: {{{
