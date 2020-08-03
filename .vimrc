@@ -207,6 +207,26 @@ let g:deoplete#enable_at_startup = 1
 
 
 
+function! WrapInOpenScadBlock (blocktype)
+  let lineno = line('.')
+  let baseindent = indent(lineno)
+  let indentspacing = repeat(" ",baseindent)
+  let additionallineindent = repeat(" ",2)
+  call setline(lineno,additionallineindent.getline("."))
+  call append(lineno,indentspacing."}")
+  call append(lineno-1,indentspacing."{")
+  call append(lineno-1,indentspacing.a:blocktype)
+endfunction
+
+noremap <Leader>od :call WrapInOpenScadBlock('difference()')<Enter>
+noremap <Leader>ou :call WrapInOpenScadBlock('union()')<Enter>
+noremap <Leader>oi :call WrapInOpenScadBlock('intersection()')<Enter>
+
+" Oddball; kinda want to put cursor into the paranthesis, here:
+noremap <Leader>ot :call WrapInOpenScadBlock('translate([0,0,0])')<Enter>
+noremap <Leader>or :call WrapInOpenScadBlock('rotate([0,0,0])')<Enter>
+
+
 " vim-terraform configuration: {{{
 let g:terraform_align=1
 autocmd FileType terraform setlocal commentstring=#%s
