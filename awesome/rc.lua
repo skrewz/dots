@@ -295,10 +295,16 @@ vicious.register(vicious_cpuwidget, vicious.widgets.cpu, "$1", 1.0)
 
 
 -- {{{ Wibox'es:
--- Create a textclock widget
+-- Create textclock widgets (home/other)
+
 local my_home_textclock = wibox.widget.textclock('<span fgcolor="grey" font_desc="Sans 7">SYD %a <b>%H:%M</b>\n%Y-%m-%d</span>',10,"Australia/Sydney")
-local my_cph_textclock = wibox.widget.textclock('<span fgcolor="grey" font_desc="Sans 5">CPH %a %H:%M</span>',1,"Europe/Copenhagen")
-local my_utc_textclock = wibox.widget.textclock('<span fgcolor="grey" font_desc="Sans 5">UTC %a %H:%M</span>',1,"UTC")
+
+local my_other_textclocks = {}
+for name, tzspec in pairs(localopts.othertimezones) do
+  print('Key: '..name..', Value: '..tzspec)
+  table.insert(my_other_textclocks,wibox.widget.textclock('<span fgcolor="grey" font_desc="Sans 5">'..name..' %a %H:%M</span>',1,tzspec))
+end
+
 --local my_us_textclock   = wibox.widget.textclock("CA %a %H:%M",1,"America/Los_Angeles")
 
 -- Create a wibox for each screen and add it
@@ -422,8 +428,9 @@ awful.screen.connect_for_each_screen(function(s)
     bottom_layout:add(wibox.container.constraint(firstrack,'max',nil,32))
     bottom_layout:add(wibox.container.constraint(secondrack,'max',nil,32))
 
-    bottom_layout:add(my_cph_textclock)
-    bottom_layout:add(my_utc_textclock)
+    for k, textclock in ipairs(my_other_textclocks) do
+      bottom_layout:add(textclock)
+    end
     bottom_layout:add(my_home_textclock)
 
     -- http://awesome.naquadah.org/doc/api/modules/wibox.layout.align.html :
