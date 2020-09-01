@@ -525,10 +525,6 @@ local globalkeys = awful.util.table.join(
     -- Shifty: keybindings specific to shifty
     --keydoc.group("tag interaction"),
     awful.key({modkey, "Shift"},   "c", shifty.del),
-    awful.key({modkey, "Shift"},   "g", shifty.send_prev),
-    awful.key({modkey, "Shift"},   "l", shifty.send_next),
-    awful.key({modkey},            "g", awful.tag.viewprev),
-    awful.key({modkey},            "l", awful.tag.viewnext),
     awful.key({modkey, "Control"}, "g", shifty.shift_prev),
     awful.key({modkey, "Control"}, "l", shifty.shift_next),
     awful.key({modkey           }, "r", shifty.search_tag_interactive),
