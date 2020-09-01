@@ -7,6 +7,6 @@
 [color]
 	ui = true
 [core]
-	pager = /bin/less
+	pager = less
 [push]
 	default = matching
