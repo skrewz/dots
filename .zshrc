@@ -111,6 +111,7 @@ for sourceable in \
   ~/.bash/.bash_aliases \
   ~/.bash_aliases_local \
   ~/.zshrc_local \
+  /usr/share/doc/fzf/examples/key-bindings.zsh \
   ; do
   if [ -f "$sourceable" ]; then
     source "$sourceable"
