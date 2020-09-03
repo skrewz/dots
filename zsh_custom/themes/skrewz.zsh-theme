@@ -234,7 +234,9 @@ prompt_status() {
   local -a symbols
 
   local bg=black
-  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$RETVAL"
+  if [[ $RETVAL -ne 0 ]]; then
+    [[ $UID -eq 0 ]] && symbols+="%{%F{white}%}$RETVAL" || symbols+="%{%F{red}%}$RETVAL"
+  fi
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡" && bg=red
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
 
