@@ -124,3 +124,4 @@ alias ls='ls $LS_OPTIONS'
 
 # https://opensource.com/article/18/9/tips-productivity-zsh
 alias -g G='| grep -i'
+alias -g B='& disown; exit'
