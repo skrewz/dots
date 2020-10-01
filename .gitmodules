@@ -4,3 +4,9 @@
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh
+[submodule "fzf"]
+	path = fzf
+	url = https://github.com/junegunn/fzf.git
+[submodule ".config/nvim/autoload/vim-plug"]
+	path = .config/nvim/autoload/vim-plug
+	url = https://github.com/junegunn/vim-plug
