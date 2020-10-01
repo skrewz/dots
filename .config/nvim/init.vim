@@ -112,12 +112,12 @@ Plug 'easymotion/vim-easymotion'
 Plug 'nathanaelkane/vim-indent-guides'
 " Plug 'Valloric/YouCompleteMe'
 Plug 'tomlion/vim-solidity'
-Plug 'puppetlabs/puppet-syntax-vim'
+Plug 'rodjek/vim-puppet'
 Plug 'chrisbra/unicode.vim'
 " Plug 'vim-syntastic/syntastic'
-Plug 'w0rp/ale'
-Plug 'tpope/vim-git'
-"Plug 'tpope/vim-fugitive'
+Plug 'dense-analysis/ale'
+" Plug 'tpope/vim-git'
+" Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
@@ -125,16 +125,10 @@ Plug 'kien/rainbow_parentheses.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'rhysd/vim-grammarous'
-let g:grammarous#use_vim_spelllang = 1
-let g:grammarous#disabled_rules = {
-            \ '*' : [],
-            \ 'markdown' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
-            \ }
-
-Plug 'gerrard00/vim-mocha-only'
+Plug 'gerrard00/vim-mocha-only', { 'for': ['javascript'] }
 Plug 'mbbill/undotree'
 " https://github.com/Shougo/deoplete.nvim#install
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'deoplete-plugins/deoplete-dictionary'
 " not relevant on nvim:
@@ -147,6 +141,15 @@ Plug 'kien/ctrlp.vim'
 call plug#end()
 " }}}
 
+" Grammarous configuration: {{{
+let g:grammarous#use_vim_spelllang = 1
+let g:grammarous#disabled_rules = {
+            \ '*' : [],
+            \ 'markdown' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+            \ }
+" }}}
+
+
 " Indent guides configuration: {{{
 " :help indent_guides_auto_colors  for a start.
 
@@ -155,7 +158,9 @@ let g:indent_guides_enable_on_vim_startup=1
 
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black    ctermbg=234
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=235
+" }}}
 
+" Deoplete configuration: {{{
 setlocal dictionary+=/usr/share/dict/british-english
 " Remove this if you'd like to use fuzzy search
 call deoplete#custom#source(
@@ -167,10 +172,6 @@ call deoplete#custom#source(
 call deoplete#custom#source(
       \ 'dictionary', 'min_pattern_length', 4)
 
-
-" }}}
-
-" deoplete configuration: {{{
 " (https://github.com/Shougo/deoplete.nvim#configuration)
 let g:deoplete#enable_at_startup = 1
 
