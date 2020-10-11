@@ -535,6 +535,7 @@ local globalkeys = awful.util.table.join(
     awful.key({modkey, "Control"}, "g", shifty.shift_prev),
     awful.key({modkey, "Control"}, "l", shifty.shift_next),
     awful.key({modkey           }, "r", shifty.search_tag_interactive),
+    awful.key({modkey           }, "v", shifty.search_client_interactive),
 
     awful.key({modkey, "Control"}, ",",
               function()
