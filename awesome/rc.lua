@@ -535,6 +535,7 @@ local globalkeys = awful.util.table.join(
     awful.key({modkey, "Control"}, "g", shifty.shift_prev),
     awful.key({modkey, "Control"}, "l", shifty.shift_next),
     awful.key({modkey           }, "r", shifty.search_tag_interactive),
+    awful.key({modkey, "Control"}, "r", shifty.move_marked_to_tag_interactive),
     awful.key({modkey           }, "v", shifty.search_client_interactive),
 
     awful.key({modkey, "Control"}, ",",
@@ -659,7 +660,7 @@ local globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "BackSpace", function ()
       awful.spawn(".config/awesome/support_scripts/skrewz-spawn-browser.sh --non-private")
     end),
-    awful.key({ modkey, "Control" }, "r", awesome.restart)
+    awful.key({ modkey, "Shift", "Control" }, "r", awesome.restart)
     -- awful.key({ modkey, "Shift"   }, "q", awesome.quit), -- Don't want this. :S
 
 
@@ -684,7 +685,10 @@ local clientkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle),
     -- awful.key({ modkey, "Shift"   }, "Return", awful.client.setmaster),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
+
+    awful.key({ modkey,           }, "'",     function (c)
+      c.marked = not c.marked
+    end),
     awful.key({ modkey,           }, "w",      function (c)
       naughty.notify({ title = "Window ID", text = "Client: "..
       "class = " .. c.class .. "\n" ..
@@ -862,15 +866,34 @@ client.connect_signal("manage", function (c, startup)
 end)
 
 client.connect_signal("focus", function(c)
-  c.border_color = beautiful.border_focus
-  -- skrewz@20160207: debugging where the initial frame color goes:
-  --naughty.notify({ title = "Window ID", text = "focus hook: "..  " = " .. c.class .. "\n" .. "window id = " .. c.window .. "\n" .. "border color: " ..c.border_color })
-
+  if c.marked then
+    c.border_color = beautiful.border_focus_marked
+  else
+    c.border_color = beautiful.border_focus
+  end
 end)
 client.connect_signal("unfocus", function(c)
-  c.border_color = beautiful.border_normal
-  -- skrewz@20160207: debugging where the initial frame color goes:
-  --naughty.notify({ title = "Window ID", text = "unfocus hook: "..  " = " .. c.class .. "\n" .. "window id = " .. c.window .. "\n" .. "border color: " ..c.border_color })
+  if c.marked then
+    c.border_color = beautiful.border_marked
+  else
+    c.border_color = beautiful.border_normal
+  end
+end)
+
+client.connect_signal("property::marked", function(c)
+  if c == client.focus then
+    if c.marked then
+      c.border_color = beautiful.border_focus_marked
+    else
+      c.border_color = beautiful.border_focus
+    end
+  else
+    if c.marked then
+      c.border_color = beautiful.border_focus
+    else
+      c.border_color = beautiful.border_normal
+    end
+  end
 end)
 -- }}}
 
