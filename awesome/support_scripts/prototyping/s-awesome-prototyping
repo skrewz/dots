@@ -46,7 +46,7 @@ function start_instance()
       DISPLAY=:1 awesome  -c "$awesome_configuration_file" &> "$basedir/.logs/$instance.log" & pid="$!"
       ;;
     xephyr)
-      Xephyr -screen 800x600 :1 &> "$basedir/.logs/$instance.log" & pid="$!"
+      Xephyr -screen 1024x768 :1 &> "$basedir/.logs/$instance.log" & pid="$!"
       sleep 2 # to allow Xephyr to start properly
       ;;
   esac
@@ -74,9 +74,8 @@ declare -A options=( \
 
 while [ "0" != "$#" ]; do
   for key in "${!options[@]}"; do
-    if [[ "--$key" == "$1" ]]; then
+    if [[ "--${key%%:}" == "$1" ]]; then
       if [[ $key =~ : ]]; then
-        echo "Key matched colon; setting value instead." &>2
         options["$key"]="$2"
         shift
       else

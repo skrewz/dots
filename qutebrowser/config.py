@@ -9,6 +9,9 @@ config.set('url.searchengines', {
     "wp": "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go",
     "youtube": "https://www.youtube.com/results?search_query={}",
 })
+config.set('url.start_pages','https://dashboards.skrewz.net/newtab')
+
+#config.set('ui.default-zoom',1.2)
 
 # Privacy centric stuff:
 #
@@ -18,11 +21,27 @@ config.set('url.searchengines', {
 config.set('content.headers.accept_language','en-US,en;q=0.5')
 config.set('content.headers.custom',{"accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"})
 
+
 # Background tabs:
 config.set('tabs.background',True)
+config.set('tabs.tree_tabs',True)
+config.set('tabs.position','left')
+config.set('tabs.max_width',300)
+config.set('tabs.min_width',200)
+config.set('colors.tabs.bar.bg','#000000')
+config.set('colors.tabs.even.bg','#111111')
+config.set('colors.tabs.odd.bg','#222222')
+config.set('colors.tabs.selected.even.bg','#bbbbbb')
+config.set('colors.tabs.selected.odd.bg','#aaaaaa')
+# Private is the default; highlight whenever non-private
+config.set('colors.statusbar.private.bg','black')
+config.set('colors.statusbar.normal.bg','red')
+config.set('downloads.location.directory',"/tmp/")
+config.set('content.autoplay',False)
 
 # /usr/share/qutebrowser/scripts/dictcli.py install en-GB
 config.set('spellcheck.languages',["en-GB","da-DK"])
+
 
 # Dvorak right hand-friendly scroll controls:
 config.bind('h', 'scroll-page -0.3 0')
@@ -39,13 +58,13 @@ config.bind('m', 'search-next')
 config.bind('M', 'search-prev')
 
 config.bind('O', 'set-cmd-text -s :open {url}')
-config.bind('T', 'set-cmd-text -s :open -rt')
+config.bind('T', 'set-cmd-text -s :open -t')
 config.bind('pt', 'open -rt {primary}')
 
 # These sit awkwardly close to each other on Dvorak, and J sits to the left of
 # K. So inverting this default binding:
-config.bind('J', 'tab-prev')
-config.bind('K', 'tab-next')
+config.bind('j', 'tab-prev')
+config.bind('k', 'tab-next')
 
 ############################################################
 # Hints stuff
@@ -60,6 +79,7 @@ config.set('hints.chars',"huetonaspgid")
 
 # Get-rid-of-habit-binds
 config.bind('<Ctrl-f>', 'nop')
+config.bind('<Ctrl-t>', 'nop')
 config.bind('<Ctrl-0>', 'nop')
 
 # Convenience binds
@@ -72,14 +92,14 @@ config.bind('<Ctrl-l>u', 'spawn --userscript qute-pass --username-only', mode='p
 config.bind('<Ctrl-l>p', 'spawn --userscript qute-pass --password-only')
 config.bind('<Ctrl-l>p', 'spawn --userscript qute-pass --password-only', mode='insert')
 config.bind('<Ctrl-l>p', 'spawn --userscript qute-pass --password-only', mode='prompt')
-config.bind(',v', 'spawn mpv {url}')
+config.bind(',v', 'spawn mpv --force-window=immediate {url}')
+config.bind(',q', 'spawn --userscript ~/.config/qutebrowser/show-qr-in-display {url}')
 
 config.bind(',<Left>', 'set tabs.position left')
 config.bind(',<Up>'  , 'set tabs.position top')
+config.bind(',n', 'config-cycle content.user_stylesheets ~/repos/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css ""')
+#config.bind(',n','set ui user-stylesheet ~/repos/solarized-everything-css/css/solarized-all-sites-dark.css "" ;; reload')
 
 # colours:
 
 
-# Private is the default; highlight whenever non-private
-config.bind('colors.statusbar.private.bg','black')
-config.bind('colors.statusbar.normal.bg','red')

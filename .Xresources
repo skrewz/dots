@@ -45,6 +45,8 @@ URxvt.matcher.pattern.1:  \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
 !URxvt.matcher.pattern.2:  \\B(/\\S+?):(\\d+)(?=:|$)
 !URxvt.matcher.launcher.2: gvim +$2 $1
 
+URxvt.highlight-under-cursor.rend.0:  fg:9 bg:6 Italic
+
 ! Makes urxvt set the urgent flag in your window manager when a bell
 ! would (otherwise) have been released. Can be quite useful.
 URxvt.urgentOnBell: true
@@ -71,7 +73,7 @@ Xft.rgba:       rgb
 URxvt.font:          xft:Hack:size=10:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False
 URxvt.boldFont:      xft:Hack:bold:size=10:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False
 URxvt.italicFont:    xft:Hack:italic:size=10:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False
-URxvt.letterSpace: 0
+URxvt.letterSpace: -1
 
 !URxvt.boldItalicFont:-*-clean-bold-i-*-*-12-*-*-*-*-*-*-*
 ! Font-change bindings:

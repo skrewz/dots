@@ -1,6 +1,6 @@
 #!/bin/bash
 private="by default"
-url="duckduckgo.com"
+url="https://dashboards.skrewz.net/newtab"
 
 
 while [ "0" != "$#" ]; do
@@ -21,4 +21,4 @@ else
   private_infix="-w "
 fi
 
-qutebrowser --qt-flag disable-reading-from-canvas --target window ":open ${private_infix}$url"
+~/repos/qutebrowser-pinusc/qutebrowser.py --qt-flag disable-reading-from-canvas --target window ":open ${private_infix}$url"

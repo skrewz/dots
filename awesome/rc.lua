@@ -545,9 +545,9 @@ local globalkeys = awful.util.table.join(
                   t = shifty.tagtoscr(s, t)
                   t:view_only()
               end),
-    awful.key({modkey},          "p", shifty.rename),
-    awful.key({modkey},          ".", shifty.add),
-    awful.key({modkey, "Shift"}, ".", function()
+    awful.key({modkey, "Shift"}, "r", shifty.rename),
+    awful.key({modkey, "Shift"}, "n", shifty.add),
+    awful.key({modkey, "Control", "Shift"}, "n", function()
         shifty.add({name = '━━━━━━━━━━━━━━━'})
     end),
 
@@ -628,8 +628,13 @@ local globalkeys = awful.util.table.join(
     awful.key({ modkey, "Ctrl"    },  "e", function ()
       awful.screen.focused().selected_tag.screen = localopts.right_screen
     end),
-    awful.key({ modkey,           },  "d", function ()
-      awful.spawn("/usr/bin/emojione-picker")
+    awful.key({ modkey,           },  ".", function ()
+      awful.spawn(".config/awesome/support_scripts/s-emoji-picker",
+      {
+        floating  = true,
+        ontop     = true,
+        opacity   = 0.999,
+      })
     end),
 
     awful.key({ modkey            },  "a", function ()

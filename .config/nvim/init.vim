@@ -137,7 +137,7 @@ Plug 'deoplete-plugins/deoplete-dictionary'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'sirtaj/vim-openscad'
 Plug 'saltstack/salt-vim'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 " }}}
 
@@ -147,6 +147,10 @@ let g:grammarous#disabled_rules = {
             \ '*' : [],
             \ 'markdown' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
             \ }
+" }}}
+
+" Airline configuration: {{{
+let g:airline_powerline_fonts = 1
 " }}}
 
 

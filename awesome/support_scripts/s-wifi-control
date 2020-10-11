@@ -20,5 +20,5 @@ if [ -n "$resetup_on_osd" ]; then
     sudo /sbin/ifup "$iface" 2>&1
     echo
     echo "Done."
-  ) | osd_cat -p top -A right -l 10 -c white
+  ) | osd_cat -p top -A right -l 10 -c white -O 1 -u black -d 12
 fi
