@@ -118,6 +118,22 @@ for sourceable in \
   fi
 done
 
+
+bindkey -v # Vim bindings
+
+# modified vim bindings for Dvorak (and shifted off
+# from hjkl to htns, under the index finger):
+
+bindkey -M vicmd 'h' vi-backward-char
+bindkey -M vicmd 's' vi-forward-char
+bindkey -M vicmd '^p' up-line-or-history
+bindkey -M vicmd '^n' down-line-or-history
+
+# This has a whole zshzle manpage section to itself:
+# also consider vi-history-search-backward (/) in vicmd mode
+bindkey -M viins '^r' history-incremental-search-backward
+
+
 eval "$(dircolors ~/repos/dots/.dircolors )"
 export LS_OPTIONS='--color=auto'
 alias ls='ls $LS_OPTIONS'
