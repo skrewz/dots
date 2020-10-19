@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/repos/dots/oh-my-zsh"
+export ZSH="$HOME/repos/dots/ohmyzsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -107,18 +107,6 @@ export EDITOR='nvim'
 # Prefer readline bindings for word-rubout
 stty werase ^= > /dev/null 2>&1
 
-for sourceable in \
-  ~/.bash/.bash_aliases \
-  ~/.bash_aliases_local \
-  ~/.zshrc_local \
-  /usr/share/doc/fzf/examples/key-bindings.zsh \
-  ; do
-  if [ -f "$sourceable" ]; then
-    source "$sourceable"
-  fi
-done
-
-
 bindkey -v # Vim bindings
 
 # modified vim bindings for Dvorak (and shifted off
@@ -132,6 +120,18 @@ bindkey -M vicmd '^n' down-line-or-history
 # This has a whole zshzle manpage section to itself:
 # also consider vi-history-search-backward (/) in vicmd mode
 bindkey -M viins '^r' history-incremental-search-backward
+
+for sourceable in \
+  ~/.bash/.bash_aliases \
+  ~/.bash_aliases_local \
+  ~/.zshrc_local \
+  /usr/share/doc/fzf/examples/key-bindings.zsh \
+  ; do
+  if [ -f "$sourceable" ]; then
+    source "$sourceable"
+  fi
+done
+
 
 
 eval "$(dircolors ~/repos/dots/.dircolors )"

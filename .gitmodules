@@ -7,3 +7,6 @@
 [submodule ".config/nvim/autoload/vim-plug"]
 	path = .config/nvim/autoload/vim-plug
 	url = https://github.com/junegunn/vim-plug
+[submodule "ohmyzsh"]
+	path = ohmyzsh
+	url = https://github.com/ohmyzsh/ohmyzsh
