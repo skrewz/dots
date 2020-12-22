@@ -63,13 +63,16 @@ VIRTUAL_ENV_DISABLE_PROMPT="set to something"
 
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM="$HOME/repos/dots/zsh_custom"
+SAVEHIST=1000000
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git git-auto-fetch last-working-dir timer colored-man-pages colorize)
+
+
 
 source $ZSH/oh-my-zsh.sh
 
@@ -120,6 +123,9 @@ bindkey -M vicmd '^n' down-line-or-history
 # This has a whole zshzle manpage section to itself:
 # also consider vi-history-search-backward (/) in vicmd mode
 bindkey -M viins '^r' history-incremental-search-backward
+
+# old habits die hard:
+bindkey '\e.' insert-last-word
 
 for sourceable in \
   ~/.bash/.bash_aliases \
