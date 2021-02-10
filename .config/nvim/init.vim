@@ -141,6 +141,12 @@ Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 " }}}
 
+" CtrlP configuration: {{{
+noremap <Leader>f :CtrlPRoot<Enter>
+noremap <Leader>F :CtrlP<Enter>
+noremap <Leader>b :CtrlPBuffer<Enter>
+" }}}
+
 " Grammarous configuration: {{{
 let g:grammarous#use_vim_spelllang = 1
 let g:grammarous#disabled_rules = {
@@ -288,21 +294,7 @@ if filereadable($HOME . "/.vim/localtweaks.vim")
   exec "source " . $HOME . "/.vim/localtweaks.vim"
 endif
 
-" Fuzzyfinder
-" http://www.vim.org/scripts/script.php?script_id=1984
-let g:fuf_modesDisable = []
-" default; allows you to C-j or C-] one's way to 
-let g:fuf_reuseWindow = 1
-" Mind you: You can open a selected item in various ways:
-"
-" <CR>  - opens in a previous window.
-" <C-j> - opens in a split window.
-" <C-k> - opens in a vertical-split window.
-" <C-]> - opens in a new tab page.
 
-noremap <Leader>f :FufMruFile<Enter>
-noremap <Leader>F :FufFile<Enter>
-noremap <Leader>b :FufBuffer<Enter>
 noremap <Leader>u :UndotreeToggle<Enter>
 " Consider: https://www.reddit.com/r/vim/comments/21f4gm/best_workflow_when_using_fugitive/
 noremap <Leader>gc :Gcommit -v<Enter>
