@@ -613,6 +613,9 @@ local globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "F8",   function ()
       awful.spawn(".config/awesome/support_scripts/s-screensaver-wrap --block-until-midnight")
     end),
+    awful.key({ modkey, "Shift"   }, "s",   function ()
+      awful.spawn(".config/awesome/support_scripts/s-screenshot-snippet")
+    end),
     awful.key({ modkey,           }, "F5", function ()
       awful.spawn(".config/awesome/support_scripts/s-wifi-control --re-setup-on-osd")
     end),
