@@ -374,7 +374,6 @@ alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 alias s-mutt="TERM=rxvt-256color mutt"
 alias pcat="pygmentize -f terminal256 -O style=native -g"
-alias gs="git status"
 
 function s-taillogs ()
 { # {{{
