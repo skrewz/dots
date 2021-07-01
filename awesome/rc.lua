@@ -708,7 +708,10 @@ local clientkeys = awful.util.table.join(
     awful.key({ modkey, "Shift" }, "e", function (c) awful.client.movetoscreen(c,localopts.right_screen) end),
     awful.key({ modkey, "Shift"   }, "w", function (c)
       -- Attempt at getting initial sizing for this one too:
-      if c.sticky == true then
+      if c.sticky == true
+        and c.ontop == true
+        and c.size_hints_honor == true
+        and c.floating == true then
         c.sticky = false
         c.ontop = false
         c.size_hints_honor = false
