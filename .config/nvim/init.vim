@@ -42,6 +42,9 @@ autocmd VimEnter,Colorscheme * highlight SignColumn ctermbg=234
 set listchars=tab:\ \ ,trail:\ ,extends:·
 highlight SpecialKey ctermbg=red
 
+highlight BadWhitespace ctermbg=red
+match BadWhitespace /\s\+\%#\@<!$/
+
 " skrewz@20150118: Not needed, turns ``bottom overflow'' $colour.
 " highlight NonText    ctermbg=green
 
@@ -257,7 +260,7 @@ let g:gutentags_cache_dir = '~/.vim_local/tagfiles'
 
 " spelling settings
 setglobal spelllang=en
-" setglobal nospell 
+" setglobal nospell
 let g:tex_comment_nospell= 1
 
 execute "set spellfile=~/.vim_synced/spell/wordlist.".&g:spelllang.".utf-8.add"
