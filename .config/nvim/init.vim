@@ -142,8 +142,7 @@ call plug#end()
 " }}}
 
 " CtrlP configuration: {{{
-noremap <Leader>f :CtrlPRoot<Enter>
-noremap <Leader>F :CtrlP<Enter>
+noremap <Leader>f :CtrlP<Enter>
 noremap <Leader>b :CtrlPBuffer<Enter>
 noremap <Leader>a :mark A<Enter>gg=G`A
 " }}}
