@@ -140,13 +140,15 @@ Plug 'deoplete-plugins/deoplete-dictionary'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'sirtaj/vim-openscad'
 Plug 'saltstack/salt-vim'
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 " }}}
 
-" CtrlP configuration: {{{
-noremap <Leader>f :CtrlP<Enter>
-noremap <Leader>b :CtrlPBuffer<Enter>
+" fzf configuration: {{{
+noremap <Leader>f :GFiles<Enter>
+noremap <Leader>b :Buffers<Enter>
 noremap <Leader>a :mark A<Enter>gg=G`A
 " }}}
 
