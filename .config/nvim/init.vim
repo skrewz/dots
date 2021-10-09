@@ -148,7 +148,9 @@ call plug#end()
 
 " fzf configuration: {{{
 noremap <Leader>f :GFiles<Enter>
+noremap <Leader>F :GFiles?<Enter>
 noremap <Leader>b :Buffers<Enter>
+noremap <Leader>r :Rg<Enter>
 noremap <Leader>a :mark A<Enter>gg=G`A
 " }}}
 
