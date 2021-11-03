@@ -139,6 +139,9 @@ for sourceable in \
 done
 
 
+# make bat never use a pager:
+export BAT_PAGER=''
+alias bat='batcat'
 
 eval "$(dircolors ~/repos/dots/.dircolors )"
 export LS_OPTIONS='--color=auto'
