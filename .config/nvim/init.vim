@@ -150,6 +150,7 @@ call plug#end()
 " }}}
 
 " fzf configuration: {{{
+noremap <Leader>H :History<Enter>
 noremap <Leader>f :GFiles<Enter>
 noremap <Leader>F :GFiles?<Enter>
 noremap <Leader>b :Buffers<Enter>
