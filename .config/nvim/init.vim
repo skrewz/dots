@@ -168,6 +168,7 @@ let g:grammarous#disabled_rules = {
 
 " Airline configuration: {{{
 let g:airline_powerline_fonts = 1
+let g:airline_theme = 'bubblegum'
 " }}}
 
 " focus setup {{{
