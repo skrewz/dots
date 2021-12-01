@@ -9,6 +9,8 @@ set so=10
 set updatetime=100
 set switchbuf=useopen,usetab
 
+set guifont=Hack:h6
+
 set hlsearch
 set incsearch
 
@@ -34,7 +36,7 @@ if &term =~ "xterm\\|rxvt"
   " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
 endif
 
-autocmd VimEnter,Colorscheme * highlight SignColumn ctermbg=234
+autocmd VimEnter,Colorscheme * highlight SignColumn ctermbg=234 guibg=#444444
 
 
 
@@ -173,8 +175,8 @@ let g:airline_powerline_fonts = 1
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup=1
 
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black    ctermbg=234
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=235
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#444444 ctermbg=234
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#333333 ctermbg=235
 " }}}
 
 " Deoplete configuration: {{{
