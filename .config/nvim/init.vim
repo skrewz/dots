@@ -136,6 +136,7 @@ Plug 'mbbill/undotree'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'deoplete-plugins/deoplete-dictionary'
+Plug 'beauwilliams/focus.nvim'
 " not relevant on nvim:
 "Plug 'roxma/nvim-yarp'
 "Plug 'roxma/vim-hug-neovim-rpc'
@@ -166,6 +167,11 @@ let g:grammarous#disabled_rules = {
 
 " Airline configuration: {{{
 let g:airline_powerline_fonts = 1
+" }}}
+
+" focus setup {{{
+"You must run setup() to begin using focus
+lua require("focus").setup()
 " }}}
 
 
