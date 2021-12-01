@@ -632,15 +632,7 @@ local globalkeys = awful.util.table.join(
     awful.key({ modkey, "Ctrl"    },  "e", function ()
       awful.screen.focused().selected_tag.screen = localopts.right_screen
     end),
-    awful.key({ modkey,           },  ".", function ()
-      awful.spawn(".config/awesome/support_scripts/s-emoji-picker",
-      {
-        floating  = true,
-        ontop     = true,
-        opacity   = 0.999,
-      })
-    end),
-
+    
     awful.key({ modkey            },  "a", function ()
       awful.screen.focus(localopts.left_screen)
       if client.focus then client.focus:raise() end
