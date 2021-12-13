@@ -182,7 +182,7 @@ beautiful.init(awful.util.getdir("config") .. "/themes/skrewzawesometheme/theme.
 --beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-local terminal = "urxvt"
+local terminal = "kitty"
 local editor = os.getenv("EDITOR") or "editor"
 local editor_cmd = terminal .. " -e " .. editor
 
