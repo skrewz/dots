@@ -145,7 +145,9 @@ alias bat='batcat'
 
 eval "$(dircolors ~/repos/dots/.dircolors )"
 export LS_OPTIONS='--color=auto'
-alias ls='ls $LS_OPTIONS'
+alias ll='exa -la'
+alias l='exa -l'
+alias ls='exa'
 alias gs='git status'
 alias gr='cd "$(git rev-parse --show-toplevel)"'
 alias gd='git diff'
