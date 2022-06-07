@@ -69,6 +69,7 @@ config.bind('k', 'tab-next')
 ############################################################
 # Hints stuff
 ############################################################
+config.set('fonts.hints','7pt default_family')
 config.set('hints.auto_follow_timeout',100)
 # Set hints chars for Dvorak users:
 config.set('hints.mode',"letter")
