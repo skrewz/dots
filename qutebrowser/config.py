@@ -93,7 +93,7 @@ config.bind('<Ctrl-l>u', 'spawn --userscript qute-pass --username-only', mode='p
 config.bind('<Ctrl-l>p', 'spawn --userscript qute-pass --password-only')
 config.bind('<Ctrl-l>p', 'spawn --userscript qute-pass --password-only', mode='insert')
 config.bind('<Ctrl-l>p', 'spawn --userscript qute-pass --password-only', mode='prompt')
-config.bind(',v', 'spawn mpv --force-window=immediate {url}')
+config.bind(',v', 'spawn mpv --pause --osd-level=3 --ytdl-format="bestvideo[height<=1080]+bestaudio/best[height<=1080]" --force-window=immediate {url}')
 config.bind(',q', 'spawn --userscript ~/.config/qutebrowser/show-qr-in-display {url}')
 
 config.bind(',<Left>', 'set tabs.position left')
