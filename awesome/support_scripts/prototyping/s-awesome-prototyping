@@ -48,6 +48,8 @@ function start_instance()
       DISPLAY=:1 awesome  -c "$awesome_configuration_file" &> "$basedir/.logs/$instance.log" & pid="$!"
       ;;
     xephyr)
+      # https://bugs.archlinux.org/task/73274#comment204938
+      unset XDG_SEAT
       Xephyr -screen 1024x768 :1 &> "$basedir/.logs/$instance.log" & pid="$!"
       sleep 2 # to allow Xephyr to start properly
       ;;
@@ -63,7 +65,7 @@ function load_xkb()
 function load_xresources()
 { # {{{
   ensure_instance_started awesome_dev
-  DISPLAY=:1 xrdb ~/.Xresources
+  #DISPLAY=:1 xrdb ~/.Xresources
 } # }}}
 
 declare -A options=( \
@@ -93,7 +95,7 @@ while [ "0" != "$#" ]; do
       echo "(no automatic parsing of \$options here, yet. These are a good starting point, though:)"
       for key in "${!options[@]}"; do
         echo "--$key: ${options[$key]##.*##}"
-      done | column -t
+      done
       ;;
     *)
       echo "Unrecogized option: \"$1\". Aborting."
@@ -110,7 +112,8 @@ if [[ -n "${options['start']}" ]]; then
   load_xkb
   load_xresources
 elif [[ -n "${options['taillogs']}" ]]; then
-  tail -F $(for key in "${!pids[@]}"; do echo -n " $basedir/.logs/$key.log"; done)
+  # shellcheck disable=SC2046
+  tail -F $(for key in "${!pids[@]}"; do echo "$basedir/.logs/$key.log"; done)
 elif [[ -n "${options['restart']}" ]]; then
   ensure_instance_stopped awesome_dev
   ensure_instance_started awesome_dev
