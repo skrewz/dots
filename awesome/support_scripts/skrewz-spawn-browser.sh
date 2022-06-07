@@ -21,4 +21,4 @@ else
   private_infix="-w "
 fi
 
-~/repos/qutebrowser-pinusc/qutebrowser.py --qt-flag disable-reading-from-canvas --target window ":open ${private_infix}$url"
+exec ~/repos/qutebrowser-pinusc/qutebrowser.py --qt-flag disable-reading-from-canvas --target window ":open ${private_infix}$url"
