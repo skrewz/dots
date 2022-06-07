@@ -147,6 +147,7 @@ eval "$(dircolors ~/repos/dots/.dircolors )"
 export LS_OPTIONS='--color=auto'
 alias ls='ls $LS_OPTIONS'
 alias gs='git status'
+alias gr='cd "$(git rev-parse --show-toplevel)"'
 alias gd='git diff'
 # https://opensource.com/article/18/9/tips-productivity-zsh
 alias -g G='| grep -i'
