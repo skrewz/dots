@@ -7,12 +7,12 @@ setxkbmap skrewz-dvorak
 function get_output_for_edid_line ()
 {
     xrandroutput="$(cat)"
-    if [ "1" != "$(echo "$xrandroutput" | grep "$1" | wc -l)" ]; then
+    if [ "1" != "$(echo "$xrandroutput" | grep -c "$1")" ]; then
         #echo "Not unique: $1, aborting:" >&2
         echo "$xrandroutput" | grep "$1" >&2
         exit 1
     fi
-    echo "$xrandroutput" | grep -B 999 "$1" | grep "connected" | tail -1 | egrep -o "^[^ ]+"
+    echo "$xrandroutput" | grep -B 999 "$1" | grep "connected" | tail -1 | grep -Eo "^[^ ]+"
 }
 
 xrandroutput="$(xrandr --verbose)"
