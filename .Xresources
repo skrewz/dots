@@ -70,18 +70,18 @@ Xft.hinting:    1
 Xft.rgba:       rgb
 
 ! https://github.com/powerline/fonts/issues/176#issuecomment-370198936 :
-URxvt.font:          xft:Hack:size=10:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False
-URxvt.boldFont:      xft:Hack:bold:size=10:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False
-URxvt.italicFont:    xft:Hack:italic:size=10:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False
+URxvt.font:          xft:Hack:size=7:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False
+URxvt.boldFont:      xft:Hack:bold:size=7:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False
+URxvt.italicFont:    xft:Hack:italic:size=7:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False
 URxvt.letterSpace: -1
 
 !URxvt.boldItalicFont:-*-clean-bold-i-*-*-12-*-*-*-*-*-*-*
 ! Font-change bindings:
 !######################
-URxvt.keysym.M-F9: command:\033]710;xft:Hack:size=10:antialias=true\007\033]711;\007\033]712;xft:Hack:bold:size=10:antialias=true\007\033]713;xft:Hack:italic:size=10:antialias=true\007
-URxvt.keysym.M-F10: command:\033]710;xft:Hack:size=12:antialias=true\007\033]711;\007\033]712;xft:Hack:bold:size=12:antialias=true\007\033]713;xft:Hack:italic:size=12:antialias=true\007
-URxvt.keysym.M-F11: command:\033]710;xft:Hack:size=18:antialias=true\007\033]711;\007\033]712;xft:Hack:bold:size=18:antialias=true\007\033]713;xft:Hack:italic:size=18:antialias=true\007
-URxvt.keysym.M-F12: command:\033]710;xft:Hack:size=32:antialias=true\007\033]711;\007\033]712;xft:Hack:bold:size=32:antialias=true\007\033]713;xft:Hack:italic:size=32:antialias=true\007
+URxvt.keysym.M-F9: command:\033]710;xft:Hack:size=9:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007\033]711;\007\033]712;xft:Hack:bold:size=9:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007\033]713;xft:Hack:italic:size=9:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007
+URxvt.keysym.M-F10: command:\033]710;xft:Hack:size=11:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007\033]711;\007\033]712;xft:Hack:bold:size=11:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007\033]713;xft:Hack:italic:size=11:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007
+URxvt.keysym.M-F11: command:\033]710;xft:Hack:size=14:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007\033]711;\007\033]712;xft:Hack:bold:size=14:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007\033]713;xft:Hack:italic:size=14:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007
+URxvt.keysym.M-F12: command:\033]710;xft:Hack:size=32:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007\033]711;\007\033]712;xft:Hack:bold:size=32:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007\033]713;xft:Hack:italic:size=32:antialias=true,xft:Symbola,xft:Noto Emoji:minspace=False\007
 !URxvt.keysym.M-F10: command:\033]710;-*-terminus-medium-r-*-*-9-*-*-*-*-*-*-u\007\033]711;-*-terminus-bold-r-*-*-9-*-*-*-*-*-*-u\007\033]712;-*-terminus-medium-o-*-*-9-*-*-*-*-*-*-u\007\033]713;-*-terminus-bold-o-*-*-9-*-*-*-*-*-*-u\007
 !URxvt.keysym.M-F11: command:\033]710;-*-terminus-medium-r-*-*-14-*-*-*-*-*-*-u\007\033]711;-*-terminus-bold-r-*-*-14-*-*-*-*-*-*-u\007\033]712;-*-terminus-medium-o-*-*-14-*-*-*-*-*-*-u\007\033]713;-*-terminus-bold-o-*-*-14-*-*-*-*-*-*-u\007
 !URxvt.keysym.M-F12: command:\033]710;-*-terminus-medium-r-*-*-48-*-*-*-*-*-*-u\007\033]711;-*-terminus-bold-r-*-*-48-*-*-*-*-*-*-u\007\033]712;-*-terminus-medium-o-*-*-48-*-*-*-*-*-*-u\007\033]713;-*-terminus-bold-o-*-*-48-*-*-*-*-*-*-u\007
