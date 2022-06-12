@@ -23,10 +23,13 @@ while [ "0" != "$#" ]; do
       rm /tmp/blurredbg.png
       # to cause display(s) to come off:
       sleep 5
+      xset s 110 10
       xset dpms force suspend
       ;;
     --block-until-midnight)
       date -d "23:59:59" +%s > ~/.cache/awesome/screensaver_disable_to_epoch
+      xset s 0 0
+      xset -dpms
       ;;
     --block-another-hour)
       if [ -e ~/.cache/awesome/screensaver_disable_to_epoch ]; then
@@ -38,6 +41,8 @@ while [ "0" != "$#" ]; do
         starttime="$(date +%s)"
       fi
       echo "$((starttime+3600))" > ~/.cache/awesome/screensaver_disable_to_epoch 
+      xset -dpms
+      xset s 0 0
       ;;
     --warn-of-impending-lock)
       if ! is_block_in_place; then
@@ -52,6 +57,7 @@ while [ "0" != "$#" ]; do
         i3lock --show-failed-attempts --image /tmp/blurredbg.png
         rm /tmp/blurredbg.png
       fi
+      xset s 110 10
       ;;
     --lock-because-suspend)
       clear_block
