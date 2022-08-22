@@ -142,10 +142,12 @@ done
 # make bat never use a pager:
 export BAT_PAGER=''
 alias bat='batcat'
+alias cat='bat --pager=None --plain --tabs 0'
+alias icat="kitty +kitten icat --align=left"
 
 eval "$(dircolors ~/repos/dots/.dircolors )"
 export LS_OPTIONS='--color=auto'
-alias ll='exa -la'
+alias ll='exa -lga'
 alias l='exa -l'
 alias ls='exa'
 alias gs='git status'
