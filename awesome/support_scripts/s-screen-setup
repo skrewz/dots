@@ -20,7 +20,7 @@ declare -A display
 display['pos_0_screen_0']="$(echo "$xrandroutput" | get_output_for_edid_line "4720446973706c61790a2020000000fe")"
 
 display['pos_1_screen_left']="$(echo "$xrandroutput" | get_output_for_edid_line "4720446973706c61790a2020000000fe")"
-display['pos_1_screen_middle']="$(echo "$xrandroutput" | get_output_for_edid_line "4d6c80a070703e8030203a006d552100")"
+display['pos_1_screen_middle']="$(echo "$xrandroutput" | get_output_for_edid_line "552100001e4d6c80a070703e8030203a")"
 
 display['pos_2_screen_bottom']="$(echo "$xrandroutput" | get_output_for_edid_line "4720446973706c61790a2020000000fe")"
 display['pos_2_screen_top']="$(echo "$xrandroutput" | get_output_for_edid_line "846300001e8c0ad08a20e02d10103e96")"
