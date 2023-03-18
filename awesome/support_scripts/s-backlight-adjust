@@ -21,14 +21,14 @@ if ! grep -q ^i2c.dev /proc/modules; then
 fi
 
 if [ "$1" = "--low" ]; then
-  set_external_brightness 1
   echo -n '10' | sudo -n /usr/bin/tee /sys/class/backlight/intel_backlight/brightness >/dev/null
+  set_external_brightness 1
 elif [ "$1" = "--middle" ] || [ "$1" = "--mid" ]; then
-  set_external_brightness 10
   echo -n '200' | sudo -n /usr/bin/tee /sys/class/backlight/intel_backlight/brightness >/dev/null
+  set_external_brightness 10
 elif [ "$1" = "--high" ]; then
-  set_external_brightness 100
   echo -n '1023' | sudo -n /usr/bin/tee /sys/class/backlight/intel_backlight/brightness >/dev/null
+  set_external_brightness 100
 else
   echo "Neither --low, --mid nor --high specified."
   exit 1
