@@ -20,8 +20,8 @@ declare -A display
 display['pos_0_screen_0']="$(echo "$xrandroutput" | get_output_for_edid_line "4720446973706c61790a2020000000fe")"
 display['pos_0_lid_state']='.*'
 
-display['pos_1_screen_left']="$(echo "$xrandroutput" | get_output_for_edid_line "4720446973706c61790a2020000000fe")"
 display['pos_1_screen_middle']="$(echo "$xrandroutput" | get_output_for_edid_line "552100001e4d6c80a070703e8030203a")"
+display['pos_1_screen_right']="$(echo "$xrandroutput" | get_output_for_edid_line "4720446973706c61790a2020000000fe")"
 display['pos_1_lid_state']='^state:.*open$'
 
 display['pos_2_screen_left']="$(echo "$xrandroutput" | get_output_for_edid_line "4720446973706c61790a2020000000fe")"
@@ -43,13 +43,13 @@ if [ -n "${display['pos_3_screen_bottom']:-}" ] &&
   xrandr --output "${display['pos_3_screen_top']:-}"    --mode 1920x1080 --crtc 0 --pos 0x0 --rotate normal \
          --output "${display['pos_3_screen_bottom']:-}" --mode 2560x1440 --crtc 1 --pos 0x1080 --rotate normal
 
-elif [ -n "${display['pos_1_screen_left']:-}" ] &&
+elif [ -n "${display['pos_1_screen_right']:-}" ] &&
      [ -n "${display['pos_1_screen_middle']:-}" ] &&
      grep -q "${display['pos_1_lid_state']}" /proc/acpi/button/lid/LID/state; then
   notify-send -u "low" -t 2000 "Considering this position 1"
   sleep 1
-  xrandr --output "${display['pos_1_screen_left']:-}"   --mode 2560x1440 --crtc 0 --pos 0x2160 --rotate normal \
-         --output "${display['pos_1_screen_middle']:-}" --mode 3840x2160 --crtc 1 --pos 2560x0 --rotate normal
+  xrandr --output "${display['pos_1_screen_middle']:-}" --mode 3840x2160 --crtc 1 --pos 0x0 --rotate normal \
+         --output "${display['pos_1_screen_right']:-}"  --mode 2560x1440 --crtc 0 --pos 3840x1080 --rotate normal
 
 elif [ -n "${display['pos_2_screen_left']:-}" ] &&
      [ -n "${display['pos_2_screen_middle']:-}" ] &&
