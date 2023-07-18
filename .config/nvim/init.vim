@@ -132,6 +132,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'rhysd/vim-grammarous'
 Plug 'gerrard00/vim-mocha-only', { 'for': ['javascript'] }
 Plug 'mbbill/undotree'
+Plug 'm4xshen/hardtime.nvim'
 " https://github.com/Shougo/deoplete.nvim#install
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deoplete-plugins/deoplete-jedi'
@@ -174,6 +175,30 @@ let g:airline_theme = 'bubblegum'
 " focus setup {{{
 "You must run setup() to begin using focus
 lua require("focus").setup()
+" }}}
+"
+" hardtime setup {{{
+"You must run setup() to begin using hardtime
+lua << HARDTIME
+require("hardtime").setup(
+{
+  restricted_keys = {
+        ["h"] = { "n", "x" },
+        ["t"] = { "n", "x" },
+        ["n"] = { "n", "x" },
+        ["s"] = { "n", "x" },
+        ["-"] = { "n", "x" },
+        ["+"] = { "n", "x" },
+        ["gj"] = { "n", "x" },
+        ["gk"] = { "n", "x" },
+        ["<CR>"] = { "n", "x" },
+        ["<C-M>"] = { "n", "x" },
+        ["<C-N>"] = { "n", "x" },
+        ["<C-P>"] = { "n", "x" },
+     },
+  }
+)
+HARDTIME
 " }}}
 
 
