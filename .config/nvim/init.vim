@@ -124,6 +124,7 @@ Plug 'dense-analysis/ale'
 " Plug 'tpope/vim-git'
 " Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
 Plug 'kien/rainbow_parentheses.vim'
@@ -144,18 +145,20 @@ Plug 'beauwilliams/focus.nvim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'sirtaj/vim-openscad'
 Plug 'saltstack/salt-vim'
-"Plug 'ctrlpvim/ctrlp.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kkharji/sqlite.lua'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
+Plug 'cljoly/telescope-repo.nvim'
+Plug 'nvim-telescope/telescope-frecency.nvim'
 call plug#end()
 " }}}
 
-" fzf configuration: {{{
-noremap <Leader>H :History<Enter>
-noremap <Leader>f :GFiles<Enter>
-noremap <Leader>F :GFiles?<Enter>
-noremap <Leader>b :Buffers<Enter>
-noremap <Leader>r :Rg<Enter>
+" Telescope configuration: {{{
+noremap <Leader>H <cmd>Telescope frecency<Enter>
+noremap <Leader>f <cmd>Telescope find_files<Enter>
+noremap <Leader>b <cmd>Telescope buffers<Enter>
+noremap <Leader>r <cmd>Telescope live_grep<Enter>
 noremap <Leader>a :mark A<Enter>gg=G`A
 " }}}
 
@@ -201,6 +204,11 @@ require("hardtime").setup(
 HARDTIME
 " }}}
 
+" telescope-frecency setup {{{
+lua << FRECENCY
+require("telescope").load_extension("frecency")
+FRECENCY
+" }}}
 
 " Indent guides configuration: {{{
 " :help indent_guides_auto_colors  for a start.
