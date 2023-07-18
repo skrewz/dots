@@ -96,8 +96,9 @@ endif
 autocmd FileType mail setlocal colorcolumn=85
 highlight ColorColumn ctermbg=52
 
-" spelling in git commits:
+" Enable spellchecking by default in certain files:
 autocmd FileType gitcommit setlocal spell
+autocmd FileType markdown setlocal spell
 
 " python3 configuration: {{{
 " https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv suggests:
