@@ -162,6 +162,8 @@ noremap <Leader>b <cmd>Telescope buffers<Enter>
 noremap <Leader>r <cmd>Telescope live_grep<Enter>
 noremap <Leader>a :mark A<Enter>gg=G`A
 " }}}
+imap <S-Insert> <C-R>*
+noremap <Leader>c :q<Enter>
 
 " Grammarous configuration: {{{
 let g:grammarous#use_vim_spelllang = 1
