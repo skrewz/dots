@@ -11,6 +11,8 @@ export ZSH="$HOME/repos/dots/ohmyzsh"
 ZSH_THEME="skrewz"
 VIRTUAL_ENV_DISABLE_PROMPT="set to something"
 
+source ~/repos/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
@@ -117,12 +119,30 @@ bindkey -v # Vim bindings
 
 bindkey -M vicmd 'h' vi-backward-char
 bindkey -M vicmd 's' vi-forward-char
-bindkey -M vicmd '^p' up-line-or-history
-bindkey -M vicmd '^n' down-line-or-history
+
+() {
+   local -a prefix=( '\e'{\[,O} )
+   local -a up=( ${^prefix}A '^p' ) down=( ${^prefix}B '^n' )
+   local key=
+   for key in $up[@]; do
+      bindkey -M viins "$key" up-line-or-search
+      #bindkey -M viins "$key" history-beginning-search-backward
+   done
+   for key in $down[@]; do
+      bindkey -M viins "$key" down-line-or-search
+      #bindkey -M viins "$key" history-beginning-search-forward
+   done
+}
+# From https://github.com/marlonrichert/zsh-autocomplete#first-insert-the-common-substring
+# all Tab widgets
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
+
+# all history widgets
+zstyle ':autocomplete:*history*:*' insert-unambiguous yes
 
 # This has a whole zshzle manpage section to itself:
 # also consider vi-history-search-backward (/) in vicmd mode
-bindkey -M viins '^r' history-incremental-search-backward
+#bindkey -M viins '^r' history-incremental-search-backward
 
 # old habits die hard:
 bindkey '\e.' insert-last-word
@@ -131,7 +151,6 @@ for sourceable in \
   ~/.bash/.bash_aliases \
   ~/.bash_aliases_local \
   ~/.zshrc_local \
-  /usr/share/doc/fzf/examples/key-bindings.zsh \
   ; do
   if [ -f "$sourceable" ]; then
     source "$sourceable"
