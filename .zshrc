@@ -1,6 +1,10 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# If I find myself troubleshooting startup time again:
+# set -x
+# export PS4='[%n]%D{%D_%T_%9.3s} '
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/repos/dots/ohmyzsh"
 
@@ -65,7 +69,20 @@ source ~/repos/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM="$HOME/repos/dots/zsh_custom"
-SAVEHIST=1000000
+
+# I used to use SAVEHIST=1000000, but eventually this caused ~1.5 zsh startup
+# times around 61k entries.
+# Thus, reducing it.
+SAVEHIST=10000
+# But also, I want to retain shell history forever, really, so:
+#
+# Ensure ~/.zsh_history_backup is populated with some regularity
+# Use crontab like this to ensure this is the case:
+# 0 * 1,15 * * cat ~/.zsh_history | xz > ~/.zsh_history_backup/.zsh_history_as_of_$(date +\%F).xz
+if [ -z "$(find ~/.zsh_history_backup -mtime -30 -ls)" ]; then
+  echo "WARNING: ~/.zsh_history_backup seems unkept."
+  sleep 5
+fi
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
