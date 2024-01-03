@@ -42,6 +42,9 @@ exec mako
 # Running redshift for eye relief niceness
 exec redshift
 
+# Running waybar to get vertical bar with gimmicky things
+exec waybar
+
 ### Input configuration
 #
 # Example configuration:
@@ -156,24 +159,3 @@ bindsym $mod+Shift+r exec ~/repos/dots/sway/scripts/rename-workspace.sh
 bindsym $mod+Shift+c exec ~/repos/dots/sway/scripts/create-workspace.sh
 bindsym $mod+u       exec ~/repos/dots/sway/scripts/select-urgent-container.sh
 bindsym $mod+Escape workspace back_and_forth
-
-
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %H:%M:%S%z'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
-
-include /etc/sway/config.d/*
