@@ -1,0 +1,9 @@
+output 'left 4k monitor identifier' {
+  scale 1.0
+  pos 0,0
+}
+
+output 'right laptop display' {
+  scale 1.0
+  pos 3840,2160
+}
