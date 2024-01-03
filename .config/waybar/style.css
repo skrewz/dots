@@ -124,6 +124,10 @@ button:hover {
     }
 }
 
+#battery.warning:not(.charging) {
+    background-color: #ffa800;
+    color: #ffffff;
+}
 #battery.critical:not(.charging) {
     background-color: #f53c3c;
     color: #ffffff;
@@ -209,11 +213,18 @@ label:focus {
 #idle_inhibitor {
 }
 
+@keyframes blink-and-grow {
+    to {
+        color: #000000;
+        padding: 30px;
+    }
+}
+
 #idle_inhibitor.activated {
     background-color: #f53c3c;
     color: #ffffff;
-    animation-name: blink;
-    animation-duration: 0.5s;
+    animation-name: blink-and-grow;
+    animation-duration: 0.25s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
