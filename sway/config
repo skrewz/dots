@@ -39,6 +39,9 @@ exec swayidle -w \
 # Running mako for notify-send etc
 exec mako
 
+# Running redshift for eye relief niceness
+exec redshift
+
 ### Input configuration
 #
 # Example configuration:
