@@ -64,8 +64,9 @@ input * xkb_layout "skrewz-dvorak"
 # Basics:
 #
 # Start a terminal
-bindsym $mod+Return exec $term
+bindsym $mod+Return    exec $term
 bindsym $mod+Backspace exec $browser
+bindsym $mod+Ctrl+s    exec ~/.config/sway/scripts/screenshot-snippet.sh
 
 # Kill focused window
 bindsym $mod+c kill
