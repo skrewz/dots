@@ -26,3 +26,5 @@
 [interactive]
 #    diffFilter = delta --color-only
   diffFilter = delta
+[pull]
+	ff = only
