@@ -103,6 +103,11 @@ bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
+
+# Move the focused workspace
+bindsym $mod+Ctrl+Shift+$left move workspace to output left
+bindsym $mod+Ctrl+Shift+$right move workspace to output right
+
 #
 # Layout stuff:
 #
