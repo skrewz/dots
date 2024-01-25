@@ -153,6 +153,9 @@ mode "resize" {
 }
 #bindsym $mod+Shift+r mode "resize"
 
+bindsym --locked XF86MonBrightnessUp exec sudo light -T 1.4
+bindsym --locked XF86MonBrightnessDown exec sudo light -T 0.72
+
 
 bindsym $mod+Shift+v exec ~/repos/dots/sway/scripts/fuzzy-select-container.sh
 bindsym $mod+Shift+r exec ~/repos/dots/sway/scripts/rename-workspace.sh
