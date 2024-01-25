@@ -156,6 +156,10 @@ mode "resize" {
 bindsym --locked XF86MonBrightnessUp exec sudo light -T 1.4
 bindsym --locked XF86MonBrightnessDown exec sudo light -T 0.72
 
+# For historical reasons, KP_End is the physical escape key in my setup, which
+# can be used to lock or sleep the system, here:
+bindsym --locked KP_End exec swaylock -f -c 000000
+bindsym --locked Shift+KP_End exec sudo systemctl suspend
 
 bindsym $mod+Shift+v exec ~/repos/dots/sway/scripts/fuzzy-select-container.sh
 bindsym $mod+Shift+r exec ~/repos/dots/sway/scripts/rename-workspace.sh
