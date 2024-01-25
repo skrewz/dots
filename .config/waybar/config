@@ -75,7 +75,8 @@
         "format-icons": {
             "activated": "",
             "deactivated": ""
-        }
+        },
+        "timeout": 60
     },
     "tray": {
         // "icon-size": 21,
