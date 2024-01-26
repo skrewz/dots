@@ -169,5 +169,5 @@ bindsym --locked Shift+KP_End exec sudo systemctl suspend
 bindsym $mod+Shift+v exec ~/repos/dots/sway/scripts/fuzzy-select-container.sh
 bindsym $mod+Shift+r exec ~/repos/dots/sway/scripts/rename-workspace.sh
 bindsym $mod+Shift+c exec ~/repos/dots/sway/scripts/create-workspace.sh
-bindsym $mod+u       exec ~/repos/dots/sway/scripts/select-urgent-container.sh
+bindsym $mod+u       [urgent=oldest] focus
 bindsym $mod+Escape workspace back_and_forth
