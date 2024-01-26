@@ -32,9 +32,9 @@ include ~/.config/sway/config-screen
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
+         timeout 300 'swaylock -f -c 000000 --scaling center --image ~/.config/sway/s-swaylock-bg-red.png' \
          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-         before-sleep 'swaylock -f -c 000000'
+         before-sleep 'swaylock -f -c 000000 --scaling center --image ~/.config/sway/s-swaylock-bg-blue.png'
 
 # Running mako for notify-send etc
 exec mako
@@ -163,7 +163,7 @@ bindsym --locked XF86MonBrightnessDown exec sudo light -T 0.72
 
 # For historical reasons, KP_End is the physical escape key in my setup, which
 # can be used to lock or sleep the system, here:
-bindsym --locked KP_End exec swaylock -f -c 000000
+bindsym --locked KP_End exec swaylock -f -c 000000 --scaling center --image ~/.config/sway/s-swaylock-bg-green.png
 bindsym --locked Shift+KP_End exec sudo systemctl suspend
 
 bindsym $mod+Shift+v exec ~/repos/dots/sway/scripts/fuzzy-select-container.sh
