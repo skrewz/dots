@@ -27,9 +27,6 @@ include /etc/sway/config-vars.d/*
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/.config/sway/s-black-bg.png fill
 
-# `swaymsg -t get_outputs` is a way to remind oneself of how to construe such a file:
-include ~/.config/sway/config-screen
-
 ### Idle configuration
 exec swayidle -w \
          timeout 300 'swaylock -f -c 000000 --scaling center --image ~/.config/sway/s-swaylock-bg-red.png' \
@@ -60,7 +57,8 @@ exec waybar
 # Read `man 5 sway-input` for more information about this section.
 
 # This assumes /usr/share/X11/xkb/symbols/skrewz-dvorak exists and is a symlink
-input * xkb_layout "skrewz-dvorak"
+# Semi-private configuration has been moved to a config.d style folder
+include ~/.config/sway/config.d/*
 
 ### Key bindings
 #
