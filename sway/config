@@ -27,6 +27,8 @@ include /etc/sway/config-vars.d/*
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/.config/sway/s-black-bg.png fill
 
+for_window [shell="xwayland"] title_format "[XWayland] %title"
+
 ### Idle configuration
 exec swayidle -w \
          timeout 300 'swaylock -f -c 000000 --scaling center --image ~/.config/sway/s-swaylock-bg-red.png' \
