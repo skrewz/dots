@@ -9,7 +9,7 @@ set so=10
 set updatetime=100
 set switchbuf=useopen,usetab
 
-set guifont=Hack:h6
+set guifont=Hack:h8
 
 set hlsearch
 set incsearch
@@ -21,6 +21,7 @@ set cursorline cursorcolumn
 "highlight CursorColumn term=bold ctermbg=black cterm=none
 highlight CursorLine   term=none ctermbg=233 cterm=bold
 highlight CursorColumn term=none ctermbg=233 cterm=none
+highlight SpellBad ctermfg=4
 " Autoread is tremendously useful for long-running vim sessions on VCS'ed data
 set autoread
 
@@ -50,9 +51,17 @@ match BadWhitespace /\s\+\%#\@<!$/
 " skrewz@20150118: Not needed, turns ``bottom overflow'' $colour.
 " highlight NonText    ctermbg=green
 
+" highlight words after a while:
+" https://vi.stackexchange.com/a/25687:
+highlight HighlightedWord cterm=undercurl ctermfg=211
+augroup highlight_current_word
+  au!
+  au CursorHold * :silent! :exec 'match HighlightedWord /\V\<' . expand('<cword>') . '\>/'
+augroup END
+
 set list
 set modeline
-set number
+set relativenumber
 set hidden
 set scroll=10
 set shiftwidth=2
@@ -128,7 +137,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
-Plug 'kien/rainbow_parentheses.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'rhysd/vim-grammarous'
@@ -276,13 +284,6 @@ let g:terraform_align=1
 autocmd FileType terraform setlocal commentstring=#%s
 " }}}
 
-" Rainbow Parentheses configuration: {{{
-
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
     \ ['Darkblue',    'SeaGreen3'],
@@ -363,7 +364,7 @@ noremap <Leader>gd :Gvdiff<Enter>
 
 noremap <Leader>mo :MochaOnlyToggle<Enter>
 
-nmap <Leader>w :wa<Enter>
+nmap <Leader>w :wa<Enter>:w<Enter>
 
 nmap <Leader>s <Plug>(easymotion-overwin-f2)
 "xmap <Leader>s <Plug>(easymotion-owerwin-f2)
