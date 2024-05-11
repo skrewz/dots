@@ -214,12 +214,12 @@ require("hardtime").setup(
     ["<C-N>"] = { "n", "x" },
     ["<C-P>"] = { "n", "x" },
  },
-  disabled_keys = {
-     ["<UP>"] = {},
-     ["<DOWN>"] = {},
-     ["<LEFT>"] = {},
-     ["<RIGHT>"] = {},
-  },
+ disabled_keys = {
+   ["<Up>"] = {},
+   ["<Down>"] = {},
+   ["<Left>"] = {},
+   ["<Right>"] = {},
+  }
 })
 HARDTIME
 " }}}
