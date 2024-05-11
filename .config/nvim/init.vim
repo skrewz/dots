@@ -162,6 +162,7 @@ Plug 'kkharji/sqlite.lua'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' }
 Plug 'cljoly/telescope-repo.nvim'
 Plug 'nvim-telescope/telescope-frecency.nvim'
+Plug 'lervag/vimtex'
 Plug 'ray-x/go.nvim'
 call plug#end()
 " }}}
