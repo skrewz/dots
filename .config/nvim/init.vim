@@ -147,6 +147,7 @@ Plug 'm4xshen/hardtime.nvim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'deoplete-plugins/deoplete-dictionary'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'beauwilliams/focus.nvim'
 " not relevant on nvim:
 "Plug 'roxma/nvim-yarp'
