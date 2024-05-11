@@ -377,6 +377,8 @@ nmap <Leader>t <Plug>(easymotion-sn)
 xmap <Leader>t <Plug>(easymotion-sn)
 omap <Leader>t <Plug>(easymotion-sn)
 
+command LatexTableReformat normal! <s-v>?begin.tabularx<cr><down>o/end.tabularx<cr><up>:'<,'>.!sed -r 's/\s*(\\\\|&)\s*/|\1 /g' | column -ts'|' | sort<cr>
+
 " netrw config:
 " buggy tree list style surrounding symlinks:
 " https://github.com/vim/vim/issues/2386
