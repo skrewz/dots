@@ -41,6 +41,9 @@ exec swayidle -w \
 default_border normal 8
 titlebar_border_thickness 0
 titlebar_padding 3
+
+# This is https://github.com/OctopusET/sway-contrib:
+exec python3 ~/repos/sway-contrib/inactive-windows-transparency.py --opacity 0.8
 # Running mako for notify-send etc
 exec mako
 
