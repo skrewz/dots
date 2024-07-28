@@ -79,9 +79,6 @@ bindsym $mod+Ctrl+s    exec ~/.config/sway/scripts/screenshot-snippet.sh
 # Kill focused window
 bindsym $mod+c kill
 
-# Start your launcher
-bindsym $mod+d exec $menu
-
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
 # Despite the name, also works for non-floating windows.
@@ -126,6 +123,7 @@ bindsym $mod+b splith
 bindsym $mod+v splitv
 
 # Switch the current container between different layout styles
+bindsym $mod+d layout default
 bindsym $mod+z layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
@@ -169,14 +167,20 @@ mode "resize" {
 bindsym --locked XF86MonBrightnessUp exec sudo light -T 1.4
 bindsym --locked XF86MonBrightnessDown exec sudo light -T 0.72
 
+bindsym $mod+period exec ~/repos/bemoji/bemoji --type -n
+bindsym $mod+F7 exec ~/repos/independent-scripts/automatic_webcam_pic/take_video_and_announce.sh --manual --capture-screenshot
+
 # For historical reasons, KP_End is the physical escape key in my setup, which
 # can be used to lock or sleep the system, here:
 bindsym --locked KP_End exec swaylock -f -c 000000 --scaling center --image ~/.config/sway/s-swaylock-bg-green.png
-bindsym --locked Shift+KP_End exec sudo systemctl suspend
+bindsym --locked Shift+KP_End exec sleep 5 && sudo systemctl suspend
 
 bindsym $mod+Shift+v exec ~/repos/dots/sway/scripts/fuzzy-select-container.sh
 bindsym $mod+Shift+r exec ~/repos/dots/sway/scripts/rename-workspace.sh
 bindsym $mod+Shift+c exec ~/repos/dots/sway/scripts/create-workspace.sh
+bindsym $mod+l workspace next_on_output
+bindsym $mod+g workspace prev_on_output
+
 bindsym $mod+u       [urgent=oldest] focus
 bindsym $mod+Escape workspace back_and_forth
 
