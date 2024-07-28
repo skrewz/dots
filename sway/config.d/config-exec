@@ -1,0 +1,2 @@
+# Running redshift for eye relief niceness
+exec redshift -l -33.8:151.2
