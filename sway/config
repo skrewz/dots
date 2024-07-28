@@ -35,6 +35,12 @@ exec swayidle -w \
          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
          before-sleep 'swaylock -f -c 000000 --scaling center --image ~/.config/sway/s-swaylock-bg-blue.png'
 
+# Looks
+
+# This makes it easier to see where keyboard focus is:
+default_border normal 8
+titlebar_border_thickness 0
+titlebar_padding 3
 # Running mako for notify-send etc
 exec mako
 
