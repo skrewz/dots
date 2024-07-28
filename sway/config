@@ -47,6 +47,8 @@ exec mako
 # Running waybar to get vertical bar with gimmicky things
 exec waybar
 
+exec_always systemctl --user start sway-session.target
+
 ### Input configuration
 #
 # Example configuration:
@@ -177,3 +179,6 @@ bindsym $mod+Shift+r exec ~/repos/dots/sway/scripts/rename-workspace.sh
 bindsym $mod+Shift+c exec ~/repos/dots/sway/scripts/create-workspace.sh
 bindsym $mod+u       [urgent=oldest] focus
 bindsym $mod+Escape workspace back_and_forth
+
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
