@@ -173,10 +173,11 @@ vim.api.nvim_create_augroup("FiletypeSpecificMappings", {
 })
 
 vim.api.nvim_create_autocmd({"FileType"},{
-  pattern="markdown",
+  pattern="go",
   group="FiletypeSpecificMappings",
   callback = function(ev)
-    print(string.format('event fired: %s', vim.inspect(ev)))
+    vim.opt.shiftwidth=4
+    vim.opt.tabstop=4
   end
   -- pattern="netrw",
   -- callback = function()
