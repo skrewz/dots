@@ -216,7 +216,7 @@ require("focus").setup()
 require("telescope").load_extension("frecency")
 
 vim.keymap.set('n', '<Leader>H', '<cmd>Telescope frecency<Enter>', { noremap = true })
-vim.keymap.set('n', '<Leader>f', '<cmd>Telescope find_files<Enter>', { noremap = true })
+vim.keymap.set('n', '<Leader>f', '<cmd>Telescope find_files hidden=true<Enter>', { noremap = true })
 vim.keymap.set('n', '<Leader>b', '<cmd>Telescope buffers<Enter>', { noremap = true })
 vim.keymap.set('n', '<Leader>r', '<cmd>Telescope live_grep<Enter>', { noremap = true })
 
