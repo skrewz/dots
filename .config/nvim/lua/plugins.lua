@@ -23,7 +23,6 @@ return {
   --'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' },
   'deoplete-plugins/deoplete-jedi',
   'deoplete-plugins/deoplete-dictionary',
-  --'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}, -- We recommend updating the parsers on update
   'beauwilliams/focus.nvim',
   'ludovicchabant/vim-gutentags',
   'salkin-mada/openscad.nvim',
@@ -46,6 +45,25 @@ return {
     },
     opts = {},
     ft = "gitcommit",
+  },
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      { "fredrikaverpil/neotest-golang", version = "*" }, -- Installation
+    },
+    keys = {
+      {
+        "<Leader>tf",
+        function()
+          require("neotest").run.run(vim.fn.expand("%"))
+        end,
+        desc = "Debug nearest test",
+      },
+    },
   },
   'kkharji/sqlite.lua',
   'nvim-telescope/telescope.nvim',

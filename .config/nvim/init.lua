@@ -188,6 +188,20 @@ vim.api.nvim_create_autocmd({"FileType"},{
   -- end,
 })
 
+vim.api.nvim_create_augroup("AutoTest", {})
+
+vim.api.nvim_create_autocmd(
+    "BufWritePost",
+    {
+        pattern = "*.go",
+        group = "AutoTest",
+        callback = function()
+            require("neotest").run.run(vim.fn.expand("%"))
+        end,
+    }
+)
+
+
 
 --------------------------------------------------------------------------------
 -- Generic keymap configuration
@@ -332,6 +346,27 @@ nvim_lsp['gopls'].setup{
     usePlaceholders = true,
   }
 }
+
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the listed parsers MUST always be installed)
+  ensure_installed = { "go", "lua", "vim", "markdown", "markdown_inline" },
+  sync_install = false,
+  auto_install = true,
+}
+
+-- Neotest setup:
+require("neotest").setup({
+  adapters = {
+    require("neotest-golang")({ -- Specify configuration
+      go_test_args = {
+        "-v",
+        "-race",
+        "-count=1",
+        "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
+      },
+    }), -- Registration
+  },
+})
 
 require('leap')
 vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
