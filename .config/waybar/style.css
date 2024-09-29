@@ -162,11 +162,11 @@ label:focus {
 }
 
 #pulseaudio {
+    background-color: #f53c3c;
 }
 
 #pulseaudio.muted {
-    background-color: #90b1b1;
-    color: #2a5c45;
+    background-color: rgba(43, 48, 59, 0.5);
 }
 
 #wireplumber {
@@ -223,11 +223,14 @@ label:focus {
 #idle_inhibitor.activated {
     background-color: #f53c3c;
     color: #ffffff;
+    padding: 70px 0px 70px 0px;
+    /*
     animation-name: blink-and-grow;
-    animation-duration: 0.25s;
+    animation-duration: 0.5s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+    */
 }
 
 #mpd {
