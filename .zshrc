@@ -170,9 +170,9 @@ alias icat="kitty +kitten icat --align=left"
 
 eval "$(dircolors ~/repos/dots/.dircolors )"
 export LS_OPTIONS='--color=auto'
-alias ll='exa -lga'
-alias l='exa -l'
-alias ls='exa'
+alias ll='exa -lbga'
+alias l='exa -bl'
+alias ls='exa -b'
 alias gs='git status'
 alias gr='cd "$(git rev-parse --show-toplevel)"'
 alias gd='git diff'
