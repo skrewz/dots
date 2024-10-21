@@ -134,6 +134,7 @@ export EDITOR='nvim'
 # Prefer readline bindings for word-rubout
 stty werase ^= > /dev/null 2>&1
 
+export KEYTIMEOUT=1
 bindkey -v # Vim bindings
 
 # modified vim bindings for Dvorak (and shifted off
