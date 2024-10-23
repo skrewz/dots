@@ -9,7 +9,6 @@ return {
   'tomlion/vim-solidity',
   'rodjek/vim-puppet',
   'neovim/nvim-lspconfig',
-  'chrisbra/unicode.vim',
   'airblade/vim-gitgutter',
   'airblade/vim-rooter',
   'tpope/vim-vinegar',
