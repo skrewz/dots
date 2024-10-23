@@ -170,6 +170,14 @@ vim.api.nvim_create_augroup("FiletypeSpecificMappings", {
 })
 
 vim.api.nvim_create_autocmd({"FileType"},{
+  pattern="markdown",
+  group="FiletypeSpecificMappings",
+  callback = function(ev)
+    vim.opt.spell = true
+  end
+})
+
+vim.api.nvim_create_autocmd({"FileType"},{
   pattern="go",
   group="FiletypeSpecificMappings",
   callback = function(ev)
