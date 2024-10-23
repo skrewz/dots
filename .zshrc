@@ -154,7 +154,6 @@ bindkey '\e.' insert-last-word
 for sourceable in \
   ~/.bash/.bash_aliases \
   ~/.bash_aliases_local \
-  ~/.zshrc_local \
   /usr/share/doc/fzf/examples/key-bindings.zsh \
   ; do
   if [ -f "$sourceable" ]; then
@@ -180,3 +179,5 @@ alias gd='git diff'
 # https://opensource.com/article/18/9/tips-productivity-zsh
 alias -g G='| grep -i'
 alias -g B='& disown; exit'
+
+! [ -f ~/.zshrc_local ] || source ~/.zshrc_local
