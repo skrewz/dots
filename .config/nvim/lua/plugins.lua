@@ -86,4 +86,5 @@ return {
   --     "nvim-telescope/telescope.nvim"
   --   }
   -- }
+  'marko-cerovac/material.nvim',
 }
