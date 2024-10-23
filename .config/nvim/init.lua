@@ -224,6 +224,14 @@ vim.cmd [[command LatexTableReformat normal! <s-v>?begin.tabularx<cr><down>o/end
 
 require("focus").setup()
 
+require("telescope").setup{
+  defaults = {
+    file_ignore_patterns = {
+      ".git/",
+    }
+  }
+}
+
 require("telescope").load_extension("frecency")
 
 vim.keymap.set('n', '<Leader>H', '<cmd>Telescope frecency<Enter>', { noremap = true })
