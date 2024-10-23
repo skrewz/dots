@@ -1,6 +1,3 @@
-
-vim.cmd.colorscheme("skrewzscheme")
-
 vim.opt.autoread = true
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
@@ -260,7 +257,7 @@ require("hardtime").setup(
 
 require('lualine').setup{
   options = {
-    theme = 'gruvbox'
+    theme = 'material-stealth'
   }
 }
 
