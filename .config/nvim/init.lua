@@ -381,7 +381,7 @@ require("neotest").setup({
   },
 })
 
-require('leap')
+require('leap').opts.safe_labels = {}
 vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
 vim.keymap.set('n', '<Leader>s', function ()
   require('leap').leap {
