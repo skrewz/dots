@@ -173,7 +173,7 @@ vim.api.nvim_create_autocmd({"FileType"},{
   pattern="markdown",
   group="FiletypeSpecificMappings",
   callback = function(ev)
-    vim.opt.spell = true
+    vim.opt_local.spell = true
   end
 })
 
