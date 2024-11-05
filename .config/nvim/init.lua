@@ -196,15 +196,25 @@ vim.api.nvim_create_autocmd({"FileType"},{
 vim.api.nvim_create_augroup("AutoTest", {})
 
 vim.api.nvim_create_autocmd(
-    "BufWritePost",
-    {
-        pattern = "*.go",
-        group = "AutoTest",
-        callback = function()
-            require("neotest").run.run(vim.fn.expand("%"))
-        end,
-    }
+  "BufWritePost",
+  {
+    pattern = "*.go",
+    group = "AutoTest",
+    callback = function()
+      require("neotest").run.run(vim.fn.expand("%"))
+    end,
+  }
 )
+
+local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function()
+   require('go.format').goimports()
+  end,
+  group = format_sync_grp,
+})
+
 
 
 
