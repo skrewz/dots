@@ -316,6 +316,41 @@ local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
+local cmp_ai = require('cmp_ai.config')
+
+cmp_ai:setup({
+  max_lines = 100,
+  provider = 'Ollama',
+  -- note that this plugin always connects to localhost:11434. If that's not
+  -- where ollama listens, something like `socat -dddd TCP-LISTEN:11434,fork
+  -- TCP:otherhost:11434` comes to become handy.
+  provider_options = {
+    -- Settings for codegemma:
+    model = 'codegemma:7b-code',
+    prompt = function(lines_before, lines_after)
+      return lines_before
+    end,
+    suffix = function(lines_after)
+      return lines_after
+    end,
+    -- Settings for llama3.1:
+    -- model = 'llama3.1:8b',
+    -- prompt = function(lines_before, lines_after)
+    --   return "<｜start_header_id｜>"..lines_before.."<｜end_header_id｜>"..lines_after.."<｜eot_id｜>"
+    -- end,
+  },
+  notify = false,
+  -- notify_callback = function(msg)
+  --   vim.notify(msg)
+  -- end,
+  run_on_every_keystroke = true,
+  ignored_file_types = {
+    -- default is not to ignore
+    -- uncomment to ignore in lua:
+    -- lua = true
+  },
+})
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -342,8 +377,21 @@ cmp.setup({
         feedkey("<Plug>(vsnip-jump-prev)", "")
       end
     end, { "i", "s" }),
+    ['<C-x>'] = cmp.mapping(
+      cmp.mapping.complete({
+        config = {
+          sources = cmp.config.sources({
+            { name = 'cmp_ai' },
+          }),
+        },
+      }),
+      { 'i' }
+    ),
   },
   sources = cmp.config.sources({
+    -- If cmp_ai is used here, it'll respect the run_on_every_keystroke seting
+    -- etc—otherwise, it'll only use the explicit C-x mapping above.
+    -- { name = 'cmp_ai' },
     { name = 'nvim_lsp' },
     { name = 'vsnip' }, -- For vsnip users.
     { name = 'gitmoji' },

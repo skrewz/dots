@@ -36,6 +36,8 @@ return {
   'hrsh7th/nvim-cmp',
   'hrsh7th/cmp-vsnip',
   'hrsh7th/cmp-vsnip',
+  {'tzachar/cmp-ai', dependencies = 'nvim-lua/plenary.nvim'},
+  {'hrsh7th/nvim-cmp', dependencies = {'tzachar/cmp-ai'}},
   'hrsh7th/vim-vsnip',
   {
     "Dynge/gitmoji.nvim",
