@@ -299,7 +299,7 @@ require("hardtime").setup(
 
 require('lualine').setup{
   options = {
-    theme = 'material-stealth'
+    theme = 'material-nvim'
   }
 }
 
@@ -448,7 +448,7 @@ require('material').setup({
         -- "which-key",
         -- "nvim-notify",
     },
-    lualine_style = "stealth", -- Lualine style ( can be 'stealth' or 'default' )
+    lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
     async_loading = true, -- Load parts of the theme asynchronously for faster startup (turned on by default)
 })
 
