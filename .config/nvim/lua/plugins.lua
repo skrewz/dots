@@ -23,7 +23,6 @@ return {
   'deoplete-plugins/deoplete-jedi',
   'deoplete-plugins/deoplete-dictionary',
   'beauwilliams/focus.nvim',
-  'ludovicchabant/vim-gutentags',
   'salkin-mada/openscad.nvim',
   'saltstack/salt-vim',
   'nvim-lua/plenary.nvim',
