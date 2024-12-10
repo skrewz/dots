@@ -122,7 +122,7 @@ bindsym $mod+Ctrl+Shift+$right move workspace to output right
 
 # splits
 bindsym $mod+m split none
-bindsym $mod+b splith
+bindsym $mod+w splith
 bindsym $mod+v splitv
 
 # Switch the current container between different layout styles
