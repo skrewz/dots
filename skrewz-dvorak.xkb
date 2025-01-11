@@ -17,7 +17,7 @@ xkb_symbols "basic" {
 
     key <AC01> { [a          , A          , aring           , Aring           ] };
     //                                      ^^ å              ^^ Å
-    key <AC02> { [o          , O          , oslash          , Oslash           ] };
+    key <AC02> { [o          , O          , oslash          , Oslash          ] };
     //                                      ^^ ø              ^^ Ø
     key <AC03> { [e          , E          , ae              , AE              ] };
     //                                      ^^ æ              ^^ Æ
@@ -53,8 +53,6 @@ xkb_symbols "basic" {
 
     //key <AD11> { [apostrophe , question   , dead_circumflex , acute           ] };
     //            ^^ '         ^^ *         ^^ ê or ô         ^^ ´
-    //key <AD12> { [asciitilde , asciicircum, dead_diaeresis  , dead_caron      ] };
-    //            ^^ ~         ^^ ^         ^^ ě or ǒ         ^^^ ě or ǒ
 
     // Bind to something meaningless (so that awesome can refer to it by name):
     key <ESC> { [KP_End                                                       ] };
