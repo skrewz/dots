@@ -10,7 +10,10 @@ xkb_symbols "basic" {
     include "altwin(swap_lalt_lwin)"
 
     name[Group1]="Danish Custom Dvorak";
-    key <AE04> { [4          , dollar     , currency        , onequarter      ] };
+    key <AE01> { [1          , exclam     , dead_macron                       ] };
+    key <AE02> { [2          , at         , dead_acute                        ] };
+    key <AE03> { [3          , numbersign , dead_caron                        ] };
+    key <AE04> { [4          , dollar     , dead_grave                        ] };
 
     //key <TLDE> { [brokenbar  , section    , brokenbar       , paragraph       ] };
   
@@ -51,8 +54,8 @@ xkb_symbols "basic" {
     //key <AD09> { [r          , R          , braceleft                         ] };
     //key <AD10> { [l          , L          , braceright                        ] };
 
-    //key <AD11> { [apostrophe , question   , dead_circumflex , acute           ] };
-    //            ^^ '         ^^ *         ^^ ê or ô         ^^ ´
+    key <AD11> { [slash      , question   , dead_macron                       ] };
+    //            ^^ /         ^^ ?         ^^ ê or ô         ^^ ´
 
     // Bind to something meaningless (so that awesome can refer to it by name):
     key <ESC> { [KP_End                                                       ] };
