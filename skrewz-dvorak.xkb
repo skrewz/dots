@@ -29,6 +29,13 @@ xkb_symbols "basic" {
     key <AD04> { [p          , P          , bar                               ] };
     //key <AB01> { [ae         , AE         , braceleft       , bracketleft     ] };
 
+    // brackets on the row above the home row's right hand:
+    key <AD07> { [g          , G          , bracketleft                       ] };
+    key <AD08> { [c          , C          , bracketright                      ] };
+    key <AD09> { [r          , R          , braceleft                         ] };
+    key <AD10> { [l          , L          , braceright                        ] };
+
+
 
     key <LSGT> { [oslash     , Ooblique   , bar             , backslash       ] };
 
@@ -47,12 +54,6 @@ xkb_symbols "basic" {
 
     // This sits above enter on a us/qwerty layout:
     //key <BKSL> { [asciitilde , equal      , equal                            ] };
-
-    // brackets on the row above the home row's right hand:
-    //key <AD07> { [g          , G          , bracketleft                       ] };
-    //key <AD08> { [c          , C          , bracketright                      ] };
-    //key <AD09> { [r          , R          , braceleft                         ] };
-    //key <AD10> { [l          , L          , braceright                        ] };
 
     key <AD11> { [slash      , question   , dead_macron                       ] };
     //            ^^ /         ^^ ?         ^^ ê or ô         ^^ ´
