@@ -173,9 +173,9 @@ export LS_OPTIONS='--color=auto'
 
 ls_program="$(command -v eza &>/dev/null && echo -n eza || echo -n exa)"
 
-alias ll="$ls_program -lbga"
-alias l="$ls_program -bl"
-alias ls="$ls_program -b"
+alias ll="$ls_program -lbga --hyperlink"
+alias l="$ls_program -bl --hyperlink"
+alias ls="$ls_program -b --hyperlink"
 alias gs='git status'
 alias gr='cd "$(git rev-parse --show-toplevel)"'
 alias gd='git diff'
