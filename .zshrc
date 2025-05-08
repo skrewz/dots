@@ -153,6 +153,7 @@ bindkey '\e.' insert-last-word
 
 for sourceable in \
   ~/.bash/.bash_aliases \
+  ~/.zshrc_local \
   ~/.bash_aliases_local \
   /usr/share/doc/fzf/examples/key-bindings.zsh \
   ; do
