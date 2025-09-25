@@ -428,7 +428,7 @@ end
 
 -- setup languages 
 -- GoLang
-nvim_lsp['gopls'].setup{
+vim.lsp.config('gopls',{
   cmd = {'gopls'},
   -- on_attach = on_attach,
   capabilities = capabilities,
@@ -445,7 +445,7 @@ nvim_lsp['gopls'].setup{
   init_options = {
     usePlaceholders = true,
   }
-}
+})
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
