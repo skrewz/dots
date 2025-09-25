@@ -22,6 +22,8 @@ vim.opt.mouse = ''
 vim.opt.relativenumber = true
 vim.opt.expandtab = true
 
+vim.opt.inccommand = 'nosplit'
+vim.opt.timeoutlen = 400
 vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 
