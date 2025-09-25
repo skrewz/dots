@@ -299,10 +299,24 @@ require("hardtime").setup(
   }
 })
 
+local custom_material = require'lualine.themes.iceberg_dark'
+custom_material.normal.a.bg = '#ffffff'
+-- custom_material.normal.b.bg = '#ffffff'
+custom_material.inactive.a.bg = '#ffffff'
+custom_material.inactive.a.fg = '#000000'
+
 require('lualine').setup{
   options = {
-    theme = 'material-nvim'
-  }
+    theme = custom_material
+  },
+  inactive_sections = {
+    lualine_a = {'filename'},
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {},
+  },
 }
 
 require('ibl').setup()
