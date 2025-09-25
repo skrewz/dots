@@ -462,7 +462,7 @@ require("neotest").setup({
         "-v",
         "-race",
         "-count=1",
-        "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
+        "-coverprofile=" .. vim.fn.getcwd() .. "/.coverage.out",
       },
     }), -- Registration
   },
