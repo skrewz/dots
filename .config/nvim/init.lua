@@ -427,25 +427,6 @@ local on_attach = function(client, bufnr)
 end
 
 -- setup languages 
--- GoLang
-vim.lsp.config('gopls',{
-  cmd = {'gopls'},
-  -- on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    gopls = {
-      experimentalPostfixCompletions = true,
-      analyses = {
-        unusedparams = true,
-        shadow = true,
-      },
-      staticcheck = true,
-    },
-  },
-  init_options = {
-    usePlaceholders = true,
-  }
-})
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
