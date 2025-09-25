@@ -426,9 +426,6 @@ local on_attach = function(client, bufnr)
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
 
--- Setup lspconfig.
-local nvim_lsp = require('lspconfig')
-
 -- setup languages 
 -- GoLang
 nvim_lsp['gopls'].setup{
