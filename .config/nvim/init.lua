@@ -260,8 +260,6 @@ vim.cmd [[command LatexTableReformat normal! <s-v>?begin.tabularx<cr><down>o/end
 -- Plugin configuration
 --------------------------------------------------------------------------------
 
-require("focus").setup()
-
 require("telescope").setup{
   defaults = {
     file_ignore_patterns = {
