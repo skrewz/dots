@@ -80,7 +80,7 @@ SAVEHIST=10000
 # Use crontab like this to ensure this is the case:
 # 0 * 1,15 * * cat ~/.zsh_history | xz > ~/.zsh_history_backup/.zsh_history_as_of_$(date +\%F).xz
 if [ -z "$(find ~/.zsh_history_backup -mtime -30 -ls)" ]; then
-  echo "WARNING: ~/.zsh_history_backup seems unkept."
+  echo "WARNING: ~/.zsh_history_backup seems unkept. Consider running s-zsh-history-compact."
   sleep 5
 fi
 
