@@ -292,7 +292,6 @@ return {
   --'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' },
   'deoplete-plugins/deoplete-jedi',
   'deoplete-plugins/deoplete-dictionary',
-  'beauwilliams/focus.nvim',
   'salkin-mada/openscad.nvim',
   'saltstack/salt-vim',
   'nvim-lua/plenary.nvim',
