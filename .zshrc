@@ -183,5 +183,3 @@ alias gd='git diff'
 # https://opensource.com/article/18/9/tips-productivity-zsh
 alias -g G='| grep -i'
 alias -g B='& disown; exit'
-
-! [ -f ~/.zshrc_local ] || source ~/.zshrc_local
