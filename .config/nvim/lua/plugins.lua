@@ -369,4 +369,21 @@ return {
   --   }
   -- }
   'marko-cerovac/material.nvim',
+  {
+    'folke/which-key.nvim',
+    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+    opts = {
+      delay = 500,
+      icons = {
+        -- set icon mappings to true if you have a Nerd Font
+        mappings = vim.g.have_nerd_font,
+      },
+
+      -- Document existing key chains
+      spec = {
+        { '<leader>w', group = 'Write all buffers' },
+        --{ '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      },
+    },
+  },
 }
