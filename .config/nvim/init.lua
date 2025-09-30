@@ -409,7 +409,6 @@ cmp.setup({
     -- etc—otherwise, it'll only use the explicit C-x mapping above.
     -- { name = 'cmp_ai' },
     { name = 'nvim_lsp' },
-    --{ name = 'vsnip' }, -- For vsnip users.
     { name = 'gitmoji' },
   }, {
     { name = 'buffer' },
