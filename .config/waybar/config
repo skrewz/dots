@@ -89,8 +89,18 @@
         "format-alt": "{:%Y-%m-%d}"
     },
     "cpu": {
-        "format": "{usage}% ",
-        "tooltip": false
+        "tooltip": false,
+        "format": "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
+        "format-icons": [
+          "▁",
+          "▂",
+          "▃",
+          "▄",
+          "<span color='#ffffa5'>▅</span>", // yellow
+          "<span color='#ffffa5'>▆</span>", // yellow
+          "<span color='#ff9977'>▇</span>", // orange
+          "<span color='#dd532e'>█</span>"  // red
+        ]
     },
     "memory": {
         "format": "{}% "
