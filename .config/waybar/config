@@ -93,14 +93,14 @@
         "interval": 1,
         "format": "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15}",
         "format-icons": [
-          "▁",
-          "▂",
-          "▃",
-          "▄",
-          "<span color='#ffffa5'>▅</span>", // yellow
-          "<span color='#ffffa5'>▆</span>", // yellow
-          "<span color='#ff9977'>▇</span>", // orange
-          "<span color='#dd532e'>█</span>"  // red
+          "<span font_size='6pt' color='#888'>▁</span>",
+          "<span font_size='6pt'>▂</span>",
+          "<span font_size='6pt'>▃</span>",
+          "<span font_size='6pt'>▄</span>",
+          "<span font_size='6pt' color='#ffffa5'>▅</span>", // yellow
+          "<span font_size='6pt' color='#ffffa5'>▆</span>", // yellow
+          "<span font_size='6pt' color='#ff9977'>▇</span>", // orange
+          "<span font_size='6pt' color='#dd532e'>█</span>"  // red
         ]
     },
     "memory": {
