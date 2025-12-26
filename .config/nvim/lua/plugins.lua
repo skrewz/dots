@@ -406,6 +406,24 @@ return {
       require('github-theme').setup({
         -- ...
       })
+  },
+  {
+    'ggml-org/llama.vim',
+    init = function()
+      vim.g.llama_config = {
+        endpoint = os.getenv('LLAMA_VIM_ENDPOINT') or 'http://localhost:8080/infill',
+        -- Qwen3-Coder-30B-A3B-Instruct-UD-IQ2_M is perhaps not the best model for this.
+        --
+        -- It's an MoE model but I'm not running with CPU offloading. Thus, n_prefix can
+        -- be 1024 in my case.
+        --
+        -- This is running on a dedicated machine in my setup.
+        model = 'Qwen3-Coder-30B-A3B-Instruct-UD-IQ2_M',
+        show_info = 2,
+        n_prefix = 1024,
+        n_suffix = 64,
+        n_predict = 64,
+      }
 
       vim.cmd('colorscheme github_dark_high_contrast')
     end,
