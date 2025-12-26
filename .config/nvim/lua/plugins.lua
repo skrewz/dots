@@ -424,8 +424,23 @@ return {
         n_suffix = 64,
         n_predict = 64,
       }
-
-      vim.cmd('colorscheme github_dark_high_contrast')
     end,
-  }
+  },
+  {
+    "rachartier/tiny-glimmer.nvim",
+    event = "VeryLazy",
+    priority = 10, -- Low priority to catch other plugins' keybindings
+    config = function()
+      require("tiny-glimmer").setup({
+        refresh_interval_ms = 8,
+
+        -- Automatic keybinding overwrites
+        overwrite = {
+          -- Automatically map keys to overwrite operations
+          -- Set to false if you have custom mappings or prefer manual API calls
+          auto_map = true,
+        }
+      })
+    end,
+  },
 }
