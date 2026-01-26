@@ -15,49 +15,56 @@
 
 ENThumbKey:
   main:
+    key0_0:
+      swipeType: FOUR_WAY_DIAGONAL
+
     key0_1:
       swipeType: FOUR_WAY_CROSS
       right: {text: "!", size: SMALLEST, color: MUTED}
 
+    key0_2:
+      swipeType: FOUR_WAY_DIAGONAL
+      topRight: {text: "å"}
+      bottomRight: {text: "ø"}
+      topLeft: {text: "?", size: SMALLEST, color: MUTED}
+
     key1_0:
-      swipeType: FOUR_WAY_CROSS
+      swipeType: TWO_WAY_HORIZONTAL
       left: {text: "(", size: SMALLEST, color: MUTED}
+
+    key1_1:
+      swipeType: EIGHT_WAY
 
     key1_2:
       swipeType: FOUR_WAY_CROSS
       right: {text: ")", size: SMALLEST, color: MUTED}
 
-    key0_2:
-      # TODO: modify for FOUR_WAY_DIAGONAL, here:
-      swipeType: EIGHT_WAY
-      top: {text: "å"}
-      right: {text: "ø"}
-      left: {text: "?", size: SMALLEST, color: MUTED}
+    key2_0:
+      swipeType: FOUR_WAY_DIAGONAL
 
     key2_1:
+      swipeType: EIGHT_WAY
       bottom: {text: ".", size: SMALLEST, color: MUTED}
       left: {text: ",", size: SMALLEST, color: MUTED}
       bottomLeft: {remove: true}
       topLeft: {text: "\"", size: SMALLEST, color: MUTED}
 
     key2_2:
-      # TODO: modify for FOUR_WAY_DIAGONAL, here:
-      swipeType: EIGHT_WAY
-      right: {text: "æ"}
+      swipeType: FOUR_WAY_DIAGONAL
+      bottomRight: {text: "æ"}
 
   shifted:
     key0_2:
-      # TODO: modify for FOUR_WAY_DIAGONAL, here:
-      swipeType: EIGHT_WAY
-      top: {text: "Å"}
-      right: {text: "Ø"}
+      swipeType: FOUR_WAY_DIAGONAL
+      topRight: {text: "Å"}
+      bottomRight: {text: "Ø"}
 
     key2_1:
       swipeType: EIGHT_WAY
       bottomRight: {text: "—"}
 
     key2_2:
-      right: {text: "Æ"}
+      bottomRight: {text: "Æ"}
 
   numeric:
     key0_1:
