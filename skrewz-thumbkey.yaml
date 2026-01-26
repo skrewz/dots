@@ -1,0 +1,73 @@
+# This is a configuration for Thumb-Key:
+# https://github.com/dessalines/thumb-key.
+#
+# It aims to bring my dual English/Danish typing habits into one layout. This
+# is easiest, starting from ENThumbKey, insofar very little needs to be added
+# to make a Danish-compatible layout. It does however take a lot from
+# ENDAThumbKeySymbols.
+#
+# Technically, this file, as placed in a git repository, cannot be pointed to
+# by the Thumb-Key configuration, but, having it under git control (and
+# copy-pasting it) still is preferable.
+
+
+# Ordering of keys in clockwise rotational order, starting with `top`.
+
+ENThumbKey:
+  main:
+    key0_1:
+      swipeType: FOUR_WAY_CROSS
+      right: {text: "!", size: SMALLEST, color: MUTED}
+
+    key1_0:
+      swipeType: FOUR_WAY_CROSS
+      left: {text: "(", size: SMALLEST, color: MUTED}
+
+    key1_2:
+      swipeType: FOUR_WAY_CROSS
+      right: {text: ")", size: SMALLEST, color: MUTED}
+
+    key0_2:
+      # TODO: modify for FOUR_WAY_DIAGONAL, here:
+      swipeType: EIGHT_WAY
+      top: {text: "å"}
+      right: {text: "ø"}
+      left: {text: "?", size: SMALLEST, color: MUTED}
+
+    key2_1:
+      bottom: {text: ".", size: SMALLEST, color: MUTED}
+      left: {text: ",", size: SMALLEST, color: MUTED}
+      bottomLeft: {remove: true}
+      topLeft: {text: "\"", size: SMALLEST, color: MUTED}
+
+    key2_2:
+      # TODO: modify for FOUR_WAY_DIAGONAL, here:
+      swipeType: EIGHT_WAY
+      right: {text: "æ"}
+
+  shifted:
+    key0_2:
+      # TODO: modify for FOUR_WAY_DIAGONAL, here:
+      swipeType: EIGHT_WAY
+      top: {text: "Å"}
+      right: {text: "Ø"}
+
+    key2_1:
+      swipeType: EIGHT_WAY
+      bottomRight: {text: "—"}
+
+    key2_2:
+      right: {text: "Æ"}
+
+  numeric:
+    key0_1:
+      swipeType: EIGHT_WAY
+      # Here, we're overwriting the non-dead characters in preference for the
+      # dead ones, insofar the non-dead ones are equivalent to modifying a
+      # space character with one of these:
+      topRight: {text: "\u0301", displayText: "◌́"}
+      topLeft: {text: "\u0300", displayText: "◌̀"}
+
+    key2_1:
+      swipeType: EIGHT_WAY
+      bottomRight: {text: "–"}
