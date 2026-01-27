@@ -147,6 +147,12 @@ label:focus {
 
 #memory {
 }
+#memory.critical {
+    color: #eb4d4b;
+}
+#memory.warning {
+    color: #ffa800;
+}
 
 #disk {
 }

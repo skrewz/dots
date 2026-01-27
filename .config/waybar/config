@@ -104,7 +104,12 @@
         ]
     },
     "memory": {
-        "format": "{}% "
+        "interval": 5,
+        "format": "{}% ",
+        "states": {
+            "warning": 80,
+            "critical": 95
+        }
     },
     "temperature": {
         // "thermal-zone": 2,
