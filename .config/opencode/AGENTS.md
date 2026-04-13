@@ -1,0 +1,6 @@
+- You will likely be working with a git worktree. Please orient yourself.
+- Avoid accessing /tmp/ for temporary files. Use a temporary folder within the directory (and clean up) instead.
+- Be podman-centric. Docker is not used here.
+- Check if there are Makefile targets for building and/or linting; use them before handing over the task.
+- When handling errors, make changes only if they relate to the specific error
+- Proactively make use of web search tools for documentation, examples, versions etc

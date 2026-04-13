@@ -1,0 +1,17 @@
+# Build and cache artifacts
+node_modules/
+bun.lock
+package-lock.json
+dist/
+build/
+assets/
+
+# Transient runtime data
+data/
+state/
+.cache/
+
+# Logs and debug output
+logs/
+*.log
+debug-*.log
