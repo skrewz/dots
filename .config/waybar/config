@@ -37,6 +37,9 @@
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
+    "sway/workspaces": {
+        "disable-scroll": true,
+    },
     "sway/scratchpad": {
         "format": "{icon} {count}",
         "show-empty": false,
