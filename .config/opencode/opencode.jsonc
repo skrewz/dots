@@ -1,9 +1,14 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "enabled_providers": [ "reterminator", "openrouter" ],
+    "enabled_providers": [
+      "smallreterminator",
+      "reterminator",
+      "openrouter"
+    ],
     "default_agent": "plan",
     "plugin": ["opencode-smart-voice-notify@latest"],
     "share": "disabled",
+    "small_model": "smallreterminator/qw3.5-2b-nonthinking-Q5_K_S-default-ctx16k",
     "provider": {
         "reterminator": {
             "npm": "@ai-sdk/openai-compatible",
@@ -20,7 +25,18 @@
                 "gemma4-26b-default-Q6_K-lowperf-ctx192k":               { "name": "Gemma4 26B Q6_K lowperf 192k" },
                 "darwin-35b-coding-Q6_K-default-ctx128k":                { "name": "Darwin 35B-A3B Opus distil 128k" },
             }
-        }
+        },
+        "smallreterminator": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "reterminator",
+            "options": {
+                "baseURL": "http://localhost:9292/small/v1/",
+            },
+            "models": {
+                "qw3.5-4b-thinking-Q5_K_S-default-ctx256k":              { "name": "Qwen3.5 thinking 4B Q5_K_S 256" },
+                "qw3.5-4b-nonthinking-Q5_K_S-default-ctx256k":           { "name": "Qwen3.5 nonthinking 4B Q5_K_S 256" },
+            }
+        },
     },
     "mcp": {
         "webmcp": {
