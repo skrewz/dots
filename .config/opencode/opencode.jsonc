@@ -5,6 +5,9 @@
       "reterminator",
       "openrouter"
     ],
+    "instructions": [
+      "{env:HOME}/.config/opencode/karpathy-maxims.md",
+    ],
     "default_agent": "plan",
     "plugin": ["opencode-smart-voice-notify@latest"],
     "share": "disabled",
