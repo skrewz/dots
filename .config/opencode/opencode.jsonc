@@ -66,5 +66,10 @@
           "url": "http://192.168.0.16:9042/mcp",
           "enabled": true,
         },
+        "wayland-screenshot": {
+          "type": "local",
+          "command": ["{env:HOME}/repos/s-mcp-screenuse/scripts/s-mcp-screenuse.sh"],
+          "enabled": true
+        },
     },
 }
