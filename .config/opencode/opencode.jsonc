@@ -63,4 +63,10 @@
           "enabled": true
         },
     },
+    "formatter": {
+      "puppet-lint-dashdash-fix": {
+        "command": ["puppet-lint", "--fix", "$FILE"],
+        "extensions": [".pp"]
+      }
+    },
 }
