@@ -155,7 +155,7 @@ func TestConvertToMarkdown_BasicHTML(t *testing.T) {
 		{
 			name:     "heading",
 			html:     "<h1>Hello World</h1>",
-			expected: "# Hello World",
+			expected: "## Hello World",
 		},
 		{
 			name:     "paragraph",
@@ -181,7 +181,7 @@ func TestConvertToMarkdown_BasicHTML(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := convertToMarkdown(tt.html)
+			result, err := convertToMarkdown(tt.html, "https://example.com")
 			if err != nil {
 				t.Fatalf("expected no error, got %v", err)
 			}
@@ -208,7 +208,7 @@ func TestConvertToMarkdown_ComplexHTML(t *testing.T) {
 	</html>
 	`
 
-	result, err := convertToMarkdown(html)
+	result, err := convertToMarkdown(html, "https://example.com")
 	if err != nil {
 		t.Fatalf("expected no error, got %v", err)
 	}
@@ -218,7 +218,7 @@ func TestConvertToMarkdown_ComplexHTML(t *testing.T) {
 	}
 
 	// Check for key markdown elements
-	expectedElements := []string{"# Main Title", "**paragraph**", "*formatting*", "- Item 1", "[our site](https://example.com)"}
+	expectedElements := []string{"## Main Title", "**paragraph**", "*formatting*", "- Item 1", "[our site](https://example.com)"}
 	for _, element := range expectedElements {
 		if !contains(result, element) {
 			t.Errorf("expected result to contain %q, got %q", element, result)
@@ -239,7 +239,7 @@ func TestConvertToMarkdown_EmptyHTML(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := convertToMarkdown(tt.html)
+			result, err := convertToMarkdown(tt.html, "https://example.com")
 			if err != nil {
 				t.Fatalf("expected no error, got %v", err)
 			}
@@ -275,6 +275,101 @@ func trimSpace(s string) string {
 		end--
 	}
 	return s[start:end]
+}
+
+func TestConvertToMarkdown_Readability(t *testing.T) {
+	htmlWithNoise := `
+		<html>
+			<head><title>Test Article</title></head>
+			<body>
+				<nav>Navigation should be removed</nav>
+				<aside>Sidebar content</aside>
+				<article>
+					<h1>Main Article Title</h1>
+					<p>This is the main content that readability should extract.</p>
+					<p>It has multiple paragraphs.</p>
+				</article>
+				<footer>Footer content</footer>
+			</body>
+		</html>
+	`
+
+	result, err := convertToMarkdown(htmlWithNoise, "https://example.com/article")
+	if err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+
+	if result == "" {
+		t.Fatal("expected non-empty markdown result")
+	}
+
+	if !strings.Contains(result, "Main Article Title") {
+		t.Errorf("expected result to contain article title, got: %s", result)
+	}
+
+	if strings.Contains(result, "Navigation should be removed") {
+		t.Errorf("expected result to NOT contain nav content, got: %s", result)
+	}
+}
+
+func TestConvertToMarkdown_ReadabilityFallback(t *testing.T) {
+	htmlWithBadChars := `
+		<html>
+			<body>
+				<h1>Simple Page</h1>
+				<p>Some content here.</p>
+			</body>
+		</html>
+	`
+
+	result, err := convertToMarkdown(htmlWithBadChars, "https://example.com")
+	if err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+
+	if result == "" {
+		t.Fatal("expected non-empty markdown result")
+	}
+
+	if !strings.Contains(result, "Simple Page") {
+		t.Errorf("expected result to contain heading, got: %s", result)
+	}
+}
+
+func TestConvertToMarkdown_ReadabilityWithArticleTitle(t *testing.T) {
+	html := `
+		<html>
+			<head><title>Page Title</title></head>
+			<body>
+				<article>
+					<h1>Actual Article Heading</h1>
+					<p>Article body text.</p>
+				</article>
+			</body>
+		</html>
+	`
+
+	result, err := convertToMarkdown(html, "https://example.com/article")
+	if err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+
+	if result == "" {
+		t.Fatal("expected non-empty markdown result")
+	}
+}
+
+func TestConvertToMarkdown_NoBaseURL(t *testing.T) {
+	html := `<html><body><h1>Test</h1></body></html>`
+
+	result, err := convertToMarkdown(html, "")
+	if err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+
+	if result == "" {
+		t.Fatal("expected non-empty markdown result")
+	}
 }
 
 func TestDebugLogging(t *testing.T) {

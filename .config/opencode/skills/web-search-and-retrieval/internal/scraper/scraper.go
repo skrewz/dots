@@ -9,11 +9,13 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"strings"
 	"time"
 
 	htmltomarkdown "github.com/JohannesKaufmann/html-to-markdown/v2"
+	"github.com/go-shiori/go-readability"
 	"golang.org/x/net/html"
 )
 
@@ -58,7 +60,7 @@ func (s *Scraper) Fetch(ctx context.Context, urlStr string) (string, error) {
 		return "", err
 	}
 
-	return convertToMarkdown(htmlContent)
+	return convertToMarkdown(htmlContent, urlStr)
 }
 
 func (s *Scraper) FetchHTML(ctx context.Context, urlStr string) (string, error) {
@@ -118,9 +120,29 @@ func isHTMLContentType(contentType string) bool {
 		strings.Contains(contentType, "application/xhtml+xml")
 }
 
-func convertToMarkdown(htmlContent string) (string, error) {
+func convertToMarkdown(htmlContent string, baseURL string) (string, error) {
 	if strings.TrimSpace(htmlContent) == "" {
 		return "", nil
+	}
+
+	parsedURL, err := url.Parse(baseURL)
+	if err != nil {
+		parsedURL = nil
+	}
+
+	article, err := readability.FromReader(strings.NewReader(htmlContent), parsedURL)
+	if err == nil && article.Content != "" {
+		doc, err := html.Parse(strings.NewReader(article.Content))
+		if err != nil {
+			return "", fmt.Errorf("parsing readability content: %w", err)
+		}
+
+		markdown, err := htmltomarkdown.ConvertNode(doc)
+		if err != nil {
+			return "", fmt.Errorf("converting to markdown: %w", err)
+		}
+
+		return strings.TrimSpace(string(markdown)), nil
 	}
 
 	doc, err := html.Parse(strings.NewReader(htmlContent))
