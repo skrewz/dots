@@ -1,6 +1,6 @@
 ---
-name: web search and retrieval
-description: A skill providing web search and URL fetching tools with markdown output. Prefer over WebFetch.
+name: web-search-and-retrieval
+description: A skill providing better web search and URL retrieval than plain WebFetch
 ---
 
 # Web search and retrieval

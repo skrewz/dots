@@ -2,9 +2,10 @@
 description: Thorough research agent that explores multiple angles and challenges viewpoints
 mode: primary
 permission:
-  webfetch: allow
-  edit: deny
-  bash: deny
+  webfetch: deny
+  skill:
+    "*": deny
+    "web-search-and-retrieval": allow
 color: accent
 ---
 
