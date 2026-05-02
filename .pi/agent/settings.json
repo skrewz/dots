@@ -1,3 +1,16 @@
 {
-  "lastChangelogVersion": "0.70.6"
+  "lastChangelogVersion": "0.70.6",
+  "theme": "cyber-glass",
+  "treeFilterMode": "default",
+  "doubleEscapeAction": "tree",
+  "retry": {
+    "enabled": true,
+    "maxRetries": 999,
+    "baseDelayMs": 10000,
+    "provider": {
+      "timeoutMs": 3600000,
+      "maxRetries": 0,
+      "maxRetryDelayMs": 0
+    }
+  }
 }
