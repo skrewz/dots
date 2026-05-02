@@ -1,0 +1,79 @@
+{
+	"$schema": "https://raw.githubusercontent.com/badlogic/pi-mono/main/packages/coding-agent/src/modes/interactive/theme/theme-schema.json",
+	"name": "cyber-glass",
+	"vars": {
+		"cyan": "#00e5ff",
+		"magenta": "#ff00ff",
+		"darkGray": "#404050",
+		"midGray": "#808090",
+		"bgBase": "#000000",
+		"bgSurface": "#050508",
+		"bgSurfaceAlt": "#0a0a12",
+		"successGreen": "#40ff90",
+		"warningAmber": "#ffaa00"
+	},
+	"colors": {
+		"accent": "cyan",
+		"border": "cyan",
+		"borderAccent": "magenta",
+		"borderMuted": "darkGray",
+		"success": "successGreen",
+		"error": "magenta",
+		"warning": "warningAmber",
+		"muted": "#d0d0e0",
+		"dim": "#a0a0b0",
+		"text": "#e8e8f0",
+		"thinkingText": "#d0d0e0",
+
+		"selectedBg": "bgSurfaceAlt",
+		"userMessageBg": "#12121e",
+		"userMessageText": "",
+		"customMessageBg": "bgSurfaceAlt",
+		"customMessageText": "",
+		"customMessageLabel": "magenta",
+		"toolPendingBg": "bgBase",
+		"toolSuccessBg": "#051008",
+		"toolErrorBg": "#100508",
+		"toolTitle": "cyan",
+		"toolOutput": "#d0d0e0",
+
+		"mdHeading": "cyan",
+		"mdLink": "cyan",
+		"mdLinkUrl": "darkGray",
+		"mdCode": "cyan",
+		"mdCodeBlock": "bgBase",
+		"mdCodeBlockBorder": "darkGray",
+		"mdQuote": "#d0d0e0",
+		"mdQuoteBorder": "magenta",
+		"mdHr": "darkGray",
+		"mdListBullet": "cyan",
+
+		"toolDiffAdded": "cyan",
+		"toolDiffRemoved": "magenta",
+		"toolDiffContext": "darkGray",
+
+		"syntaxComment": "darkGray",
+		"syntaxKeyword": "magenta",
+		"syntaxFunction": "#d0d0e0",
+		"syntaxVariable": "cyan",
+		"syntaxString": "#a0d0a0",
+		"syntaxNumber": "magenta",
+		"syntaxType": "cyan",
+		"syntaxOperator": "#d0d0e0",
+		"syntaxPunctuation": "darkGray",
+
+		"thinkingOff": "darkGray",
+		"thinkingMinimal": "#202030",
+		"thinkingLow": "#303050",
+		"thinkingMedium": "cyan",
+		"thinkingHigh": "magenta",
+		"thinkingXhigh": "#ff40ff",
+
+		"bashMode": "magenta"
+	},
+	"export": {
+		"pageBg": "#000000",
+		"cardBg": "#050508",
+		"infoBg": "#1e1a10"
+	}
+}
