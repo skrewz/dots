@@ -12,5 +12,7 @@
       "maxRetries": 0,
       "maxRetryDelayMs": 0
     }
-  }
+  },
+  "defaultProvider": "reterminator",
+  "defaultModel": "default"
 }
