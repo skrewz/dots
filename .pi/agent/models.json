@@ -3,6 +3,7 @@
     "reterminator": {
       "baseUrl": "http://localhost:9292/v1",
       "api": "openai-completions",
+      "apiKey": "not-actually-needed",
       "models": [
         {
           "id": "default",
