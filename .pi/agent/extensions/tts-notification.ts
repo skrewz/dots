@@ -19,29 +19,24 @@ interface TtsConfig {
   voice?: string;
 }
 
-let config: TtsConfig;
+let config: TtsConfig | null = null;
 
 try {
   const raw = readFileSync(CONFIG_PATH, "utf-8");
   config = JSON.parse(raw) as TtsConfig;
-} catch (err) {
-  throw new Error(
-    `[tts-notification] Failed to load config from ${CONFIG_PATH}: ${err instanceof Error ? err.message : String(err)}\n` +
-    `Create the file with at least { "endpoint": "https://your-tts-server/v1/audio/speech" }`
-  );
+} catch {
+  // Config file missing or invalid — silently skip TTS
+  config = null;
 }
 
-if (!config.endpoint) {
-  throw new Error(
-    `[tts-notification] PI_TTS_ENDPOINT is not set and "endpoint" is missing in ${CONFIG_PATH}\n` +
-    `Set PI_TTS_ENDPOINT in your shell, or add "endpoint" to the config file.`
-  );
-}
+const ENDPOINT = config?.endpoint ?? "";
+const API_KEY = config?.apiKey ?? "";
+const MODEL = config?.model || "tts-1";
+const VOICE = config?.voice || "alloy";
 
-const ENDPOINT = config.endpoint;
-const API_KEY = config.apiKey;
-const MODEL = config.model || "tts-1";
-const VOICE = config.voice || "alloy";
+if (!ENDPOINT) {
+  console.warn(`[tts-notification] No TTS endpoint configured — skipping TTS notifications.`);
+}
 
 // --- Summary builder ---
 
@@ -97,6 +92,8 @@ function buildSummary(messages: unknown[]): string {
 
 export default function (pi: ExtensionAPI) {
   pi.on("agent_end", async (_event, ctx) => {
+    if (!ENDPOINT) return;
+
     const summary = buildSummary(_event.messages);
     if (!summary.trim()) return;
 
