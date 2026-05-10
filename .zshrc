@@ -153,6 +153,7 @@ bindkey -M viins '^r' history-incremental-search-backward
 bindkey '\e.' insert-last-word
 
 for sourceable in \
+  /etc/profile.d/*.sh \
   ~/.bash/.bash_aliases \
   ~/.zshrc_local \
   ~/.bash_aliases_local \
