@@ -180,6 +180,8 @@ mode "resize" {
 }
 #bindsym $mod+Shift+r mode "resize"
 
+mouse_warping container
+
 bindsym --locked XF86MonBrightnessUp exec sudo light -T 1.4
 bindsym --locked XF86MonBrightnessDown exec sudo light -T 0.72
 
