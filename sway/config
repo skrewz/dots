@@ -10,8 +10,6 @@ set $left h
 set $down t
 set $up n
 set $right s
-# Your preferred terminal emulator
-set $term kitty
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -81,7 +79,7 @@ include ~/.config/sway/config.d/*
 # Basics:
 #
 # Start a terminal
-bindsym $mod+Return    exec $term
+bindsym $mod+Return    exec kitty --single-instance --listen-on unix:@mykitty
 bindsym $mod+Backspace exec ~/bin/s-browser
 bindsym $mod+Shift+Backspace exec ~/bin/s-chromium
 bindsym Mod1+Shift+4   exec ~/.config/sway/scripts/screenshot-snippet.sh
