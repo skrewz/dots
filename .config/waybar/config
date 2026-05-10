@@ -1,13 +1,14 @@
+// TODO: play around with https://man.archlinux.org/man/waybar-custom.5.en
 {
     // "layer": "top", // Waybar at top layer
     "position": "left", // Waybar position (top|bottom|left|right)
     //"height": 30, // Waybar height (to be removed for auto height)
-    "width": 100, // Waybar width
+    "width": 150, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": ["sway/workspaces"],
     "modules-center": [],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "backlight",  "battery", "clock", "tray", "idle_inhibitor"],
+    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "backlight",  "battery", "clock#time", "clock#date", "tray", "idle_inhibitor"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -85,11 +86,14 @@
         // "icon-size": 21,
         "spacing": 10
     },
-    "clock": {
+    "clock#time": {
         "interval": 1,
         "tooltip-format": "<big>{:%Y-%m}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%a | ---%d | %H:%M:%S}",
-        "format-alt": "{:%Y-%m-%d}"
+        "format": "{:%a %H:%M:%S}"
+    },
+    "clock#date": {
+        "interval": 1,
+        "format": "W{:%W %Y-%m-%d}",
     },
     "cpu": {
         "tooltip": false,

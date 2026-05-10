@@ -5,7 +5,7 @@
 }
 
 window#waybar {
-    background-color: rgba(43, 48, 59, 0.5);
+    background-color: rgba(5, 5, 5, 0.5);
     border-bottom: 3px solid rgba(100, 114, 125, 0.5);
     color: #ffffff;
     transition-property: background-color;
@@ -94,7 +94,7 @@ button:hover {
 
 #window,
 #workspaces {
-    margin: 0 4px;
+    margin: 0px 0px;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -227,9 +227,9 @@ label:focus {
 }
 
 #idle_inhibitor.activated {
-    background-color: #f53c3c;
-    color: #ffffff;
-    padding: 70px 0px 70px 0px;
+    background-color: #000;
+    color: #000;
+    padding: 200px 0px 200px 0px;
     /*
     animation-name: blink-and-grow;
     animation-duration: 0.5s;
