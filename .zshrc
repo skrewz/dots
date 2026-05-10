@@ -176,6 +176,8 @@ export LS_OPTIONS='--color=auto'
 
 ls_program="$(command -v eza &>/dev/null && echo -n eza || echo -n exa)"
 
+eval "$(zoxide init zsh)"
+
 alias ll="$ls_program -lbga --hyperlink"
 alias l="$ls_program -bl --hyperlink"
 alias ls="$ls_program -b --hyperlink"
