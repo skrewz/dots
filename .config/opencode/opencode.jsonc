@@ -57,6 +57,32 @@
             }
         },
     },
+    "permission": {
+      "external_directory": {
+        // Agents regularly try to access their own worktree by absolute paths
+        // (and should have no need to access other worktrees), so let's be
+        // explicit.
+        "~/worktrees/**": "deny",
+        // In spite of my best intentions, models try to use /tmp all the time.
+        // They can do other things.
+        "/tmp/**": "deny",
+      },
+      "bash": {
+        // I (still) do a bit of work that involves deploying through
+        // ssh-backed deployment scripts. (The joys of self-hosting.) Models
+        // sometimes get creative and start ssh'ing to the hosts themselves.
+        //
+        // This is sometimes a good thing. However, I want to be fairly
+        // specific about what activities they should be able to undertake.
+        // Thus, I've implemented (a root-owned—and self-checking that it's
+        // still root-owned) s-agentic-wrap-command, which (through
+        // permissions) OpenCode discovers and interrogates through --help etc.
+        // This (safely) allows OpenCode to run select safe remote commands as
+        // part of its troubleshooting.
+        "ssh *": "deny",
+        "s-agentic-wrap-command *": "allow",
+      },
+    },
     "skills": {
       // This refers to https://github.com/skrewz/s-ai-skills, which has been
       // factored out of my dotfiles:
