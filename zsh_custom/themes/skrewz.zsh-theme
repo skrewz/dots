@@ -279,12 +279,9 @@ build_prompt() {
   prompt_status
   prompt_battery
   prompt_virtualenv
-  prompt_aws
   prompt_context
   prompt_dir
   prompt_git
-  prompt_bzr
-  prompt_hg
   prompt_vimode
   prompt_end
 }
