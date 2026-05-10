@@ -28,9 +28,10 @@ no_focus [floating app_id="com.sw1nn.transcription"]
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000 --scaling center --image ~/.config/sway/s-swaylock-bg-red.png' \
-         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-         before-sleep 'swaylock -f -c 000000 --scaling center --image ~/.config/sway/s-swaylock-bg-blue.png'
+         timeout 300  'swaymsg "output * power off"' \
+         resume 'swaymsg "output * power on"' \
+         timeout 1200 'swaylock -f -c 000000 --indicator-thickness 30 --indicator-radius 300 --scaling center --image ~/.config/sway/s-swaylock-bg-red.png' \
+         before-sleep 'swaylock -f -c 000000 --indicator-thickness 30 --indicator-radius 300 --scaling center --image ~/.config/sway/s-swaylock-bg-blue.png'
 
 # Looks
 
@@ -183,7 +184,7 @@ bindsym $mod+F7 exec ~/repos/independent-scripts/automatic_webcam_pic/take_video
 
 # For historical reasons, KP_End is the physical escape key in my setup, which
 # can be used to lock or sleep the system, here:
-bindsym --locked KP_End exec swaylock -f -c 000000 --scaling center --image ~/.config/sway/s-swaylock-bg-green.png
+bindsym --locked KP_End exec swaylock -f -c 000000 --indicator-thickness 30 --indicator-radius 300 --scaling center --image ~/.config/sway/s-swaylock-bg-green.png
 bindsym --locked Shift+KP_End exec sleep 5 && sudo systemctl suspend
 
 bindsym $mod+Shift+v exec ~/repos/dots/sway/scripts/fuzzy-select-container.sh
