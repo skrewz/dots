@@ -63,6 +63,11 @@
           "enabled": true
         },
     },
+    "skills": {
+      // This refers to https://github.com/skrewz/s-ai-skills, which has been
+      // factored out of my dotfiles:
+      "paths": ["~/repos/s-ai-skills/human-accessible"],
+    },
     "formatter": {
       "puppet-lint-dashdash-fix": {
         "command": ["puppet-lint", "--fix", "$FILE"],

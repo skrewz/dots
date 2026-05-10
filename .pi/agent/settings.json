@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.70.6",
+  "lastChangelogVersion": "0.73.0",
   "theme": "cyber-glass",
   "treeFilterMode": "default",
   "doubleEscapeAction": "tree",
@@ -14,5 +14,8 @@
     }
   },
   "defaultProvider": "reterminator",
-  "defaultModel": "default"
+  "defaultModel": "default",
+  "skills": [
+    "~/repos/s-ai-skills/human-accessible"
+  ]
 }
