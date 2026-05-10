@@ -55,7 +55,7 @@ bindswitch --reload --locked lid:on output $laptop_output disable
 bindswitch --reload --locked lid:off output $laptop_output enable
 exec_always ~/bin/s-sway-lid-handle $laptop_output
 
-bindsym $mod+F1    exec  ~/bin/s-sway-lid-handle $laptop_output
+bindsym --locked $mod+F1    exec  ~/bin/s-sway-lid-handle $laptop_output
 
 
 ### Input configuration
