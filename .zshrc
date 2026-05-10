@@ -92,7 +92,6 @@ alias s-zsh-history-compact='cat ~/.zsh_history | xz > ~/.zsh_history_backup/.zs
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
   git-auto-fetch
   colorize
   zsh-syntax-highlighting
