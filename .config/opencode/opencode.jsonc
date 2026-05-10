@@ -57,23 +57,6 @@
             }
         },
     },
-    "mcp": {
-        "webmcp": {
-          "type": "remote",
-          "url": "http://192.168.0.16:3952/sse",
-          "enabled": true,
-        },
-        "ytsummarisermcp": {
-          "type": "remote",
-          "url": "http://192.168.0.16:9042/mcp",
-          "enabled": true,
-        },
-        "wayland-screenshot": {
-          "type": "local",
-          "command": ["{env:HOME}/repos/s-mcp-screenuse/scripts/s-mcp-screenuse.sh"],
-          "enabled": true
-        },
-    },
     "skills": {
       // This refers to https://github.com/skrewz/s-ai-skills, which has been
       // factored out of my dotfiles:
