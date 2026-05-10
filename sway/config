@@ -28,6 +28,7 @@ include /etc/sway/config-vars.d/*
 output * bg ~/.config/sway/s-black-bg.png tile
 
 for_window [shell="xwayland"] title_format "[XWayland] %title"
+no_focus [floating app_id="com.sw1nn.transcription"] 
 
 ### Idle configuration
 exec swayidle -w \
@@ -85,6 +86,9 @@ include ~/.config/sway/config.d/*
 bindsym $mod+Return    exec $term
 bindsym $mod+Backspace exec $browser
 bindsym $mod+Ctrl+s    exec ~/.config/sway/scripts/screenshot-snippet.sh
+
+bindsym $mod+Tab   exec ~/repos/stentor/target/release/stentorctl transcribe
+bindsym $mod+Shift+Tab   exec ~/repos/stentor/target/release/stentorctl transcribe-end
 
 # Kill focused window
 bindsym $mod+c kill

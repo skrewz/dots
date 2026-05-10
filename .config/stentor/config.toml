@@ -1,0 +1,22 @@
+# Stentor configuration file
+# See https://github.com/sw1nn/stentor
+
+[daemon]
+# Whisper model size: tiny, base, small, medium, large
+model = "base"
+language = "en"
+output-command = 'wl-copy "$TRANSCRIPTION" && wtype "$TRANSCRIPTION"'
+# Seting this really high insofar I always `stentorctl transcribe-end` in this setup:
+silence-duration = 300.0
+
+# How often to transcribe while speaking (in seconds)
+# Provides real-time preview text during long utterances
+# Set to 0 to disable periodic transcription (only transcribe on pause)
+# Default: 1.0
+periodic-transcription-interval = 3.0
+
+# Lag before audio is confirmed (in seconds)
+# Audio is held back this long before being eligible for confirmation
+# Allows whisper time to refine the transcription
+# Default: 1.0
+#transcription-lag = 1.0
