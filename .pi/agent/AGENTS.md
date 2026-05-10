@@ -112,6 +112,7 @@ This skill is **complementary** to other skills like `brainstorming`, `systemati
 # General gotcha's for agents
 
 - You will likely be working with a git worktree. Please orient yourself.
+- Do not add unnessary trailing whitespace (or lines with whitespace only).
 - Avoid accessing /tmp/ for temporary files. Use a temporary folder within the directory (and clean up) instead.
 - Be podman-centric. Docker is not used here.
 - Check if there are Makefile targets for building and/or linting; use them before handing over the task.
