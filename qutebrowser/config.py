@@ -42,6 +42,7 @@ config.set('content.autoplay',False)
 # /usr/share/qutebrowser/scripts/dictcli.py install en-GB
 config.set('spellcheck.languages',["en-GB","da-DK"])
 
+config.set('content.tls.certificate_errors', 'block')
 
 # Dvorak right hand-friendly scroll controls:
 config.bind('h', 'scroll-page -0.3 0')
