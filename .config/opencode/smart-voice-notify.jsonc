@@ -164,7 +164,7 @@
     // 3. Configure voice and model for your server
     
     // Base URL for your TTS server (e.g., "http://192.168.86.43:8880")
-    "openaiTtsEndpoint": "http://127.0.0.1:8880",
+    "openaiTtsEndpoint": "http://smart-voice-notify-host:3000",
     
     // API key (leave empty if your server doesn't require auth)
     "openaiTtsApiKey": "",
