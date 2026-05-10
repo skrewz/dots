@@ -12,8 +12,6 @@ set $up n
 set $right s
 # Your preferred terminal emulator
 set $term kitty
-# This is a bit of a redirect to avoid committing my my browser startup line:
-set $browser ~/bin/s-browser
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -84,7 +82,8 @@ include ~/.config/sway/config.d/*
 #
 # Start a terminal
 bindsym $mod+Return    exec $term
-bindsym $mod+Backspace exec $browser
+bindsym $mod+Backspace exec ~/bin/s-browser
+bindsym $mod+Shift+Backspace exec ~/bin/s-chromium
 bindsym $mod+Ctrl+s    exec ~/.config/sway/scripts/screenshot-snippet.sh
 
 bindsym $mod+Tab   exec ~/repos/stentor/target/release/stentorctl transcribe
