@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-grim -g "$(slurp)" /tmp/screenshot.png || exit 1
+tmpfile="$(mktemp -u /tmp/screenshot_XXXXXX.png)"
+slurpcoords="$(slurp)"
+notify-send -t 5000 "Slurp coordinates" "We have slurpcoords: $slurpcoords"
+
+grim -g "$slurpcoords" "$tmpfile" || exit 1
 
 screenshot_name="$(zenity --title "Screenshot file" --entry --text "screenshot name" | sed 's/[^a-zA-Z0-9-]/_/g')"
 
@@ -9,6 +13,6 @@ if [ -z "$screenshot_name" ]; then
   exit 1
 fi
 
-mv /tmp/screenshot.png "$HOME/screendumps/$(date +%F)_$screenshot_name.png"
+mv "$tmpfile" "$HOME/screendumps/$(date +%F)_$screenshot_name.png"
 
-notify-send -i "$HOME/screendumps/$(date +%F)_$screenshot_name.png" "Captured" "~/screendumps/$(date +%F)_$screenshot_name.png now exists"
+notify-send -t 20000 -i "$HOME/screendumps/$(date +%F)_$screenshot_name.png" "Captured" "\~/screendumps/$(date +%F)_$screenshot_name.png now exists"
