@@ -4,7 +4,7 @@ return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' }
   },
-  'ggandor/leap.nvim',
+  'https://codeberg.org/andyg/leap.nvim',
   { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
   'tomlion/vim-solidity',
   'rodjek/vim-puppet',
