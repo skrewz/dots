@@ -84,7 +84,7 @@ include ~/.config/sway/config.d/*
 bindsym $mod+Return    exec $term
 bindsym $mod+Backspace exec ~/bin/s-browser
 bindsym $mod+Shift+Backspace exec ~/bin/s-chromium
-bindsym $mod+Ctrl+s    exec ~/.config/sway/scripts/screenshot-snippet.sh
+bindsym Mod1+Shift+4   exec ~/.config/sway/scripts/screenshot-snippet.sh
 
 bindsym $mod+Tab   exec ~/repos/stentor/target/release/stentorctl transcribe
 bindsym $mod+Shift+Tab   exec ~/repos/stentor/target/release/stentorctl transcribe-end
