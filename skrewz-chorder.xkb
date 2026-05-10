@@ -1,0 +1,21 @@
+partial alphanumeric_keys
+xkb_symbols "basic" {
+    include "pc+us+inet(evdev)"
+
+    // Bind to something meaningless:
+    key <ESC> { [Escape                                                    ] };
+    key <SPCE> { [space      , space      , space           , space           ] };
+
+    // taken off /usr/share/X11/xkb/symbols/dk:
+    // skrewz@20180405: disabled again; these limit us-ascii binds (AC11 is ';/:', AC10 is '/")
+    //key <AC10>  { [        ae,         AE,        acute,  doubleacute ] };
+    //key <AC11>  { [    oslash,   Ooblique,  asciicircum,        caron ] };
+    //key <AD11>  { [     aring,      Aring,    diaeresis,       degree ] };
+
+    // fixed https://bugs.freedesktop.org/show_bug.cgi?id=4397
+    include "level3(ralt_switch)"
+
+    modifier_map Mod3   { Mode_switch };
+};
+
+// vim: ft=xkb
