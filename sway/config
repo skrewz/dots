@@ -48,6 +48,7 @@ exec mako
 exec waybar
 
 exec_always systemctl --user start sway-session.target
+exec_always ~/repos/sway-workspace-manager/target/debug/sway-workspace-manager reorder --daemon
 
 set $laptop_output eDP-1
 bindswitch --reload --locked lid:on output $laptop_output disable
@@ -194,6 +195,10 @@ bindsym $mod+Shift+v exec ~/repos/dots/sway/scripts/fuzzy-select-container.sh
 bindsym $mod+Shift+r exec ~/repos/dots/sway/scripts/rename-workspace.sh
 bindsym $mod+Shift+c exec ~/repos/dots/sway/scripts/create-workspace.sh
 bindsym $mod+l workspace next_on_output
+bindsym $mod+Shift+g move window to workspace prev; workspace prev
+bindsym $mod+Shift+l move window to workspace next; workspace next
+bindsym $mod+Ctrl+g exec ~/repos/sway-workspace-manager/target/debug/sway-workspace-manager swap prev
+bindsym $mod+Ctrl+l exec ~/repos/sway-workspace-manager/target/debug/sway-workspace-manager swap next
 bindsym $mod+g workspace prev_on_output
 
 bindsym $mod+u       [urgent=oldest] focus
