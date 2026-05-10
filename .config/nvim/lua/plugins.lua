@@ -447,9 +447,9 @@ return {
     'ggml-org/llama.vim',
     init = function()
       vim.g.llama_config = {
-        endpoint = os.getenv('LLAMA_VIM_ENDPOINT') or 'http://localhost:8080/infill',
+        fim_endpoint = os.getenv('LLAMA_VIM_ENDPOINT') or 'http://localhost:8080/infill',
         -- This leverages the default model configured upstream (which ought to sit hot in memory).
-        model = 'default',
+        fim_model = 'default',
         show_info = 2,
         n_prefix = 1024,
         n_suffix = 64,
