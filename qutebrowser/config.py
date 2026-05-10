@@ -9,7 +9,7 @@ config.set('url.searchengines', {
     "wp": "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go",
     "youtube": "https://www.youtube.com/results?search_query={}",
 })
-config.set('url.start_pages','https://dashboards.skrewz.net/newtab')
+config.set('url.start_pages','about:blank')
 
 #config.set('ui.default-zoom',1.2)
 
@@ -34,8 +34,8 @@ config.set('colors.tabs.odd.bg','#222222')
 config.set('colors.tabs.selected.even.bg','#bbbbbb')
 config.set('colors.tabs.selected.odd.bg','#aaaaaa')
 # Private is the default; highlight whenever non-private
-config.set('colors.statusbar.private.bg','black')
-config.set('colors.statusbar.normal.bg','red')
+config.set('colors.statusbar.private.bg','grey')
+config.set('colors.statusbar.normal.bg','black')
 config.set('downloads.location.directory',"/tmp/")
 config.set('content.autoplay',False)
 
