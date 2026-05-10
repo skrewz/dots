@@ -183,7 +183,7 @@ mode "resize" {
 bindsym --locked XF86MonBrightnessUp exec sudo light -T 1.4
 bindsym --locked XF86MonBrightnessDown exec sudo light -T 0.72
 
-bindsym $mod+period exec ~/repos/bemoji/bemoji --type -n
+bindsym $mod+period exec ~/repos/bemoji/bemoji --type -c -n
 bindsym $mod+F7 exec ~/repos/independent-scripts/automatic_webcam_pic/take_video_and_announce.sh --manual --capture-screenshot
 
 # For historical reasons, KP_End is the physical escape key in my setup, which
