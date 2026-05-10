@@ -24,6 +24,7 @@ return {
 
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
+      'saghen/blink.lib',
     },
     config = function()
       --  This function gets run when an LSP attaches to a particular buffer.
