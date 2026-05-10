@@ -273,10 +273,18 @@ prompt_vimode() {
   prompt_segment $bg black "$w"
 }
 
+prompt_sshagent() {
+  local num_keys="$(/usr/bin/ssh-add -l | grep -vF 'The agent has no identities.' | wc -l)"
+  if (( 0 == num_keys )); then
+      prompt_segment 208 190 "⛔ s-k"
+  fi
+}
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
   prompt_status
+  prompt_sshagent
   prompt_battery
   prompt_virtualenv
   prompt_context
