@@ -144,6 +144,11 @@ bindsym $mod+f fullscreen
 # Toggle the current focus between tiling and floating mode
 bindsym $mod+Shift+space floating toggle
 
+# Taggle the currently focused window between being bound to the current
+# workspace or appearing on all workspaces for this output:
+bindsym $mod+Shift+a sticky toggle
+bindsym $mod+Shift+1 exec python3 ~/.config/sway/scripts/set-transparency.py
+
 # Swap focus between the tiling area and the floating area
 bindsym $mod+space focus mode_toggle
 
