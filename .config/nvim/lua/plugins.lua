@@ -350,7 +350,6 @@ return {
   'nvim-telescope/telescope.nvim',
   'cljoly/telescope-repo.nvim',
   'nvim-telescope/telescope-frecency.nvim',
-  'lervag/vimtex',
   {
     "ray-x/go.nvim",
     dependencies = {  -- optional packages
