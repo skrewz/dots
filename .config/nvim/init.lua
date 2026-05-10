@@ -415,16 +415,6 @@ cmp.setup({
   })
 })
 
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities() --nvim-cmp
-
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-end
-
 -- setup languages 
 
 require'nvim-treesitter.configs'.setup {
