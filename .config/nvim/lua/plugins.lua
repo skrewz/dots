@@ -448,13 +448,8 @@ return {
     init = function()
       vim.g.llama_config = {
         endpoint = os.getenv('LLAMA_VIM_ENDPOINT') or 'http://localhost:8080/infill',
-        -- Qwen3-Coder-30B-A3B-Instruct-UD-IQ2_M is perhaps not the best model for this.
-        --
-        -- It's an MoE model but I'm not running with CPU offloading. Thus, n_prefix can
-        -- be 1024 in my case.
-        --
-        -- This is running on a dedicated machine in my setup.
-        model = 'Qwen3-Coder-30B-A3B-Instruct-UD-IQ2_M',
+        -- This leverages the default model configured upstream (which ought to sit hot in memory).
+        model = 'default',
         show_info = 2,
         n_prefix = 1024,
         n_suffix = 64,
