@@ -84,6 +84,8 @@ if [ -z "$(find ~/.zsh_history_backup -mtime -30 -ls)" ]; then
   sleep 5
 fi
 
+alias s-zsh-history-compact='cat ~/.zsh_history | xz > ~/.zsh_history_backup/.zsh_history_as_of_$(date +%F).xz'
+
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
