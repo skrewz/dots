@@ -4,3 +4,7 @@
 - Check if there are Makefile targets for building and/or linting; use them before handing over the task.
 - When handling errors, make changes only if they relate to the specific error
 - Proactively make use of web search tools for documentation, examples, versions etc
+- If producing git commits, use gitmoji and conventional commits
+- Under *no circumstances* are you allowed to push git commits.
+- Do not use complete paths in the read tool if a relative path would do.
+- Always load any web search skills available to you. They will almost always be relevant to your work.
