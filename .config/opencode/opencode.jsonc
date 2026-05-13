@@ -24,12 +24,12 @@
                 "default": {
                   "name": "Upstream default model",
                   "modalities": {
-                    "input": ["text", "image", "audio", "video"],
+                    "input": ["text", "image"],
                     "output": ["text"]
                   },
                   "limit": {
-                    "context": 131072,
-                    "output": 32768,
+                    "context": 262144,
+                    "output": 65536,
                   },
                 },
                 "qw3.6-35b-multimodalcoding-Q6_K-default-ctx256k": {
