@@ -28,3 +28,6 @@
   diffFilter = delta
 [pull]
 	ff = only
+
+[include]
+  path = ~/.gitconfig-auth
