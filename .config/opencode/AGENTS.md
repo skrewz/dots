@@ -7,4 +7,5 @@
 - If producing git commits, use gitmoji and conventional commits
 - Under *no circumstances* are you allowed to push git commits.
 - Do not use complete paths in the read tool if a relative path would do.
+- Do not rename existing variables/names unless you're changing what they do. Keep the diff minimal.
 - Always load any web search skills available to you. They will almost always be relevant to your work.
