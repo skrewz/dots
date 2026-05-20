@@ -123,3 +123,4 @@ This skill is **complementary** to other skills like `brainstorming`, `systemati
 - Do not use complete paths in the read tool if a relative path would do.
 - Always load any web search skills available to you. They will almost always be relevant to your work.
 - It does not make sense to ask the user "shall I continue" if you're still in Plan mode. The user will communicate this when they switch away from Plan mode.
+- Never use internal domain names in examples. Always use example.com-derived domain names.
