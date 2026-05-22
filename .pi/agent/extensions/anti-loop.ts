@@ -1,14 +1,17 @@
 /**
  * Anti-loop extension — prevents the model from getting stuck in a tool-call
- * loop by tracking recent tool calls and blocking repeated ones.
+ * loop by tracking recent tool calls and warning the model when it repeats
+ * the same tool too many times.
  *
  * Rules:
  *   - If the exact same tool call (tool name + serialised arguments) appears
- *     more than 2 times in the last 10 tool calls, the 3rd+ occurrence is
- *     blocked with a warning.
+ *     more than 2 times in the last 10 tool calls, the 3rd+ occurrence
+ *     triggers a gentle warning message to the model.
  *   - If the same tool call appears more than 5 times in the last 10 tool
- *     calls, the occurrence is blocked with a stern "loop detected" message
- *     that tells the model repeating tool calls is disallowed.
+ *     calls, a stern "loop detected" message is sent to the model.
+ *
+ * In both cases the tool is still executed — the warning is delivered as a
+ * steer message so the model sees it before the next LLM call.
  *
  * The sliding window is kept in a simple array of { toolName, argsHash }
  * entries.  Every new tool_call event pushes to the window (max 10) and
@@ -18,8 +21,8 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 const WINDOW_SIZE = 10;
-const WARNING_THRESHOLD = 3;  // block on 3rd+ occurrence in window
-const LOOP_THRESHOLD = 6;     // block on 6th+ occurrence in window
+const WARNING_THRESHOLD = 3;  // warn on 3rd+ occurrence in window
+const LOOP_THRESHOLD = 6;     // stern warning on 6th+ occurrence in window
 
 function hashArgs(input: Record<string, unknown>): string {
 	// Deterministic serialisation of arguments for comparison.
@@ -52,18 +55,30 @@ export default function (pi: ExtensionAPI) {
 
 		if (totalCount >= LOOP_THRESHOLD) {
 			// Stern warning — model is clearly in a loop.
-			return {
-				block: true,
-				reason: `Loop detected: the same tool call (${toolName}) has been made ${totalCount} times in the last ${WINDOW_SIZE} tool calls. Repeating tool calls is strictly disallowed — but do not give up. Change your approach, try a different tool, or provide a text response instead.`,
-			};
+			const message = `Loop detected: the same tool call (${toolName}) has been made ${totalCount} times in the last ${WINDOW_SIZE} tool calls. Repeating tool calls is strictly disallowed — but do not give up. Change your approach, try a different tool, or provide a text response instead.`;
+			pi.sendMessage(
+				{
+					customType: "anti-loop",
+					content: message,
+					display: true,
+				},
+				{ deliverAs: "steer" },
+			);
+			return undefined;
 		}
 
 		if (totalCount >= WARNING_THRESHOLD) {
 			// Gentle warning — model may be stuck.
-			return {
-				block: true,
-				reason: `Warning: the same tool call (${toolName}) has been made ${totalCount} times recently. Repeating the same tool call is unlikely to produce a different result — but do not give up. Try a different approach, modify your arguments, or respond with text instead.`,
-			};
+			const message = `Warning: the same tool call (${toolName}) has been made ${totalCount} times recently. Repeating the same tool call is unlikely to produce a different result — but do not give up. Try a different approach, modify your arguments, or respond with text instead.`;
+			pi.sendMessage(
+				{
+					customType: "anti-loop",
+					content: message,
+					display: true,
+				},
+				{ deliverAs: "steer" },
+			);
+			return undefined;
 		}
 
 		return undefined;
