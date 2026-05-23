@@ -6,8 +6,8 @@
       "apiKey": "not-actually-needed",
       "models": [
         {
-          "id": "default",
-          "name": "default",
+          "id": "default-think",
+          "name": "default-think",
           "reasoning": false,
           "input": ["text", "image"],
           "contextWindow": 128000,
