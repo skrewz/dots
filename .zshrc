@@ -174,6 +174,9 @@ alias icat="kitty +kitten icat --align=left"
 eval "$(dircolors ~/repos/dots/.dircolors )"
 export LS_OPTIONS='--color=auto'
 
+export S_GIT_FEAT_MODEL='default-think'
+export S_GIT_FEAT_ENDPOINT='http://localhost:9292/v1/chat/completions'
+
 ls_program="$(command -v eza &>/dev/null && echo -n eza || echo -n exa)"
 
 eval "$(zoxide init zsh)"
@@ -187,3 +190,34 @@ alias gd='git diff'
 # https://opensource.com/article/18/9/tips-productivity-zsh
 alias -g G='| grep -i'
 alias -g B='& disown; exit'
+
+function gc ()
+{
+  # TODO: add features that'd validate committed content in a light way
+  /usr/bin/git commit --verbose "$@"
+}
+
+function git ()
+{
+  if [ 'commit' = "$1" ]; then
+    echo 'git alias kicking in; use `gc` instead.'
+    return 1
+  else
+    /usr/bin/git "$@"
+  fi
+}
+
+function s-git-worktree-create-from-main ()
+{
+  if [ "--help" = "$1" ]; then
+    echo "Usage: $0 [branchname]"
+    return
+  fi
+  local branchname="$1"
+  branchname="$(sed 's|/|_|g' <<< "$branchname")"
+  local worktree="$HOME/worktrees/$(date +%F_%H_%M_%S)_$(basename "$PWD")_$branchname"
+  git status &>/dev/null || return 1
+  git branch "$branchname" main || return 1
+  git worktree add "$worktree" "$branchname" || return 1
+  cd "$worktree"
+}
