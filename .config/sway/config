@@ -193,9 +193,9 @@ bindsym $mod+F7 exec ~/repos/independent-scripts/automatic_webcam_pic/take_video
 bindsym --locked KP_End exec swaylock -f -c 000000 --indicator-thickness 30 --indicator-radius 300 --scaling center --image ~/.config/sway/s-swaylock-bg-green.png
 bindsym --locked Shift+KP_End exec sudo systemctl suspend
 
-bindsym $mod+Shift+v exec ~/repos/dots/sway/scripts/fuzzy-select-container.sh
-bindsym $mod+Shift+r exec ~/repos/dots/sway/scripts/rename-workspace.sh
-bindsym $mod+Shift+c exec ~/repos/dots/sway/scripts/create-workspace.sh
+bindsym $mod+Shift+v exec ~/repos/dots/.config/sway/scripts/fuzzy-select-container.sh
+bindsym $mod+Shift+r exec ~/repos/dots/.config/sway/scripts/rename-workspace.sh
+bindsym $mod+Shift+c exec ~/repos/dots/.config/sway/scripts/create-workspace.sh
 bindsym $mod+l workspace next_on_output
 bindsym $mod+Shift+g move window to workspace prev; workspace prev
 bindsym $mod+Shift+l move window to workspace next; workspace next
