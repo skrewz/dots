@@ -383,6 +383,22 @@ return {
   'cljoly/telescope-repo.nvim',
   'nvim-telescope/telescope-frecency.nvim',
   {
+    "nvim-treesitter/nvim-treesitter",
+    config = function ()
+    local treesitter = require("nvim-treesitter")
+    treesitter.setup()
+    treesitter.install { 'java', 'c', 'lua', 'vim', 'vimdoc', 'query', 'elixir', 'heex', 'javascript', 'typescript', 'html', 'yaml' }
+
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = {'lua', 'vim', 'javascript', 'typescript', 'html', 'yaml', 'go', 'markdown', 'markdown_inline' },
+      callback = function()
+        -- syntax highlighting, provided by Neovim
+        vim.treesitter.start()
+      end,
+    })
+  end
+  },
+  {
     "ray-x/go.nvim",
     dependencies = {  -- optional packages
       "ray-x/guihua.lua",
