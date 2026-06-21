@@ -43,7 +43,7 @@
 		"mdLink": "cyan",
 		"mdLinkUrl": "darkGray",
 		"mdCode": "cyan",
-		"mdCodeBlock": "bgBase",
+		"mdCodeBlock": "darkGray",
 		"mdCodeBlockBorder": "darkGray",
 		"mdQuote": "#d0d0e0",
 		"mdQuoteBorder": "magenta",
