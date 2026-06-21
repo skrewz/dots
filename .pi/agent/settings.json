@@ -17,5 +17,8 @@
   "defaultModel": "default",
   "skills": [
     "~/repos/s-ai-skills/human-accessible"
+  ],
+  "prompts": [
+    "~/repos/s-ai-skills/prompts"
   ]
 }
