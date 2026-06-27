@@ -16,7 +16,8 @@
   "defaultProvider": "reterminator",
   "defaultModel": "default",
   "skills": [
-    "~/repos/s-ai-skills/human-accessible"
+    "~/repos/s-ai-skills/human-accessible",
+    "~/repos/s-priv-ai-skills/human-accessible"
   ],
   "prompts": [
     "~/repos/s-ai-skills/prompts"
