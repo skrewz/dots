@@ -174,9 +174,9 @@ alias icat="kitty +kitten icat --align=left"
 eval "$(dircolors ~/repos/dots/.dircolors )"
 export LS_OPTIONS='--color=auto'
 
-export S_GIT_FEAT_MODEL='default-think'
-export S_GIT_FEAT_ENDPOINT='http://localhost:9292/v1/chat/completions'
-export S_GIT_FEAT_WHISPER_ENDPOINT='http://localhost:9292/v1/audio/transcriptions'
+export S_GIT_MODEL='default-think'
+export S_GIT_ENDPOINT='http://localhost:9292/v1/chat/completions'
+export S_GIT_WHISPER_ENDPOINT='http://localhost:9292/v1/audio/transcriptions'
 
 ls_program="$(command -v eza &>/dev/null && echo -n eza || echo -n exa)"
 
