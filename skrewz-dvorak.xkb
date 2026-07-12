@@ -15,7 +15,7 @@ xkb_symbols "basic" {
     key <AE03> { [3          , numbersign , dead_caron                        ] };
     key <AE04> { [4          , dollar     , dead_grave                        ] };
 
-    //key <TLDE> { [brokenbar  , section    , brokenbar       , paragraph       ] };
+    key <TLDE> { [NoSymbol   , NoSymbol   , NoSymbol        , NoSymbol        ] };
   
 
     key <AC01> { [a          , A          , aring           , Aring           ] };
@@ -24,6 +24,7 @@ xkb_symbols "basic" {
     //                                      ^^ ø              ^^ Ø
     key <AC03> { [e          , E          , ae              , AE              ] };
     //                                      ^^ æ              ^^ Æ
+    key <AC04> { [u          , U          , grave           , asciitilde    ] };
     key <AC05> { [i          , I          , Insert          , Insert          ] };
 
     key <AD04> { [p          , P          , bar                               ] };
