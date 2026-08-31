@@ -10,6 +10,7 @@ vim.opt.list = true
 vim.opt.listchars = { leadmultispace = "◦···", tab = "⇥ " }
 vim.opt.modeline = true
 vim.opt.scroll=10
+vim.opt.scrolloff=8
 vim.opt.shiftwidth=2
 vim.opt.softtabstop=2
 vim.opt.switchbuf = "useopen,usetab"
