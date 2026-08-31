@@ -23,6 +23,11 @@ vim.opt.mouse = ''
 vim.opt.relativenumber = true
 vim.opt.expandtab = true
 
+-- Neater git diff's
+vim.opt.diffopt:append("algorithm:histogram")
+vim.opt.diffopt:append("indent-heuristic")
+vim.opt.diffopt:append("linematch:60")
+
 vim.opt.inccommand = 'nosplit'
 vim.opt.timeoutlen = 400
 
