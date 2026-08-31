@@ -15,4 +15,6 @@ fi
 
 mv "$tmpfile" "$HOME/screendumps/$(date +%F)_$screenshot_name.png"
 
-notify-send -t 20000 -i "$HOME/screendumps/$(date +%F)_$screenshot_name.png" "Captured" "\~/screendumps/$(date +%F)_$screenshot_name.png now exists"
+wl-copy < "$HOME/screendumps/$(date +%F)_$screenshot_name.png"
+
+notify-send -t 20000 -i "$HOME/screendumps/$(date +%F)_$screenshot_name.png" "Captured" "\~/screendumps/$(date +%F)_$screenshot_name.png now exists (and was copied to pastebuffer)"
