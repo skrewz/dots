@@ -18,6 +18,19 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
 include /etc/sway/config-vars.d/*
 
+### swaylock styling
+#
+# Indicator style differs per trigger (lock key vs. idle timeout vs. suspend),
+# so it's visually obvious *why* the screen locked. Override any of these in
+# a config.d/ snippet by re-`set`-ing the variable - config.d is included
+# immediately below, before any of these are used.
+set $swaylock_lock_command swaylock -f -c 000000 --indicator-thickness 30 --indicator-radius 300 --scaling center --image ~/.config/sway/s-swaylock-bg-green.png
+set $swaylock_inactivity_command swaylock -f -c 000000 --indicator-thickness 30 --indicator-radius 300 --scaling center --image ~/.config/sway/s-swaylock-bg-red.png
+set $swaylock_suspend_command swaylock -f -c 000000 --indicator-thickness 30 --indicator-radius 300 --scaling center --image ~/.config/sway/s-swaylock-bg-blue.png
+
+# Semi-private configuration has been moved to a config.d style folder
+include ~/.config/sway/config.d/*
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
@@ -30,8 +43,8 @@ no_focus [floating app_id="com.sw1nn.transcription"]
 exec swayidle -w \
          timeout 300  'swaymsg "output * power off"' \
          resume 'swaymsg "output * power on"' \
-         timeout 1200 'swaylock -f -c 000000 --indicator-thickness 30 --indicator-radius 300 --scaling center --image ~/.config/sway/s-swaylock-bg-red.png' \
-         before-sleep 'swaylock -f -c 000000 --indicator-thickness 30 --indicator-radius 300 --scaling center --image ~/.config/sway/s-swaylock-bg-blue.png'
+         timeout 1200 '$swaylock_inactivity_command' \
+         before-sleep '$swaylock_suspend_command'
 
 # Looks
 
@@ -73,8 +86,8 @@ bindsym --locked $mod+F1    exec  ~/bin/s-sway-lid-handle $laptop_output
 # Read `man 5 sway-input` for more information about this section.
 
 # This assumes /usr/share/X11/xkb/symbols/skrewz-dvorak exists and is a symlink
-# Semi-private configuration has been moved to a config.d style folder
-include ~/.config/sway/config.d/*
+# (actual per-device input config lives in config.d/, included near the top
+# of this file)
 
 ### Key bindings
 #
@@ -191,7 +204,7 @@ bindsym $mod+F7 exec ~/repos/independent-scripts/automatic_webcam_pic/take_video
 
 # For historical reasons, KP_End is the physical escape key in my setup, which
 # can be used to lock or sleep the system, here:
-bindsym --locked KP_End exec swaylock -f -c 000000 --indicator-thickness 30 --indicator-radius 300 --scaling center --image ~/.config/sway/s-swaylock-bg-green.png
+bindsym --locked KP_End exec $swaylock_lock_command
 bindsym --locked Shift+KP_End exec sudo systemctl suspend
 
 bindsym $mod+Shift+v exec ~/repos/dots/.config/sway/scripts/fuzzy-select-container.sh
