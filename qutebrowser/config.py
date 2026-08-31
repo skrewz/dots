@@ -104,4 +104,12 @@ config.bind(',n', 'config-cycle content.user_stylesheets ~/repos/solarized-every
 
 # colours:
 
+# Only config.py itself is symlinked in from dots - local.py lives directly in
+# ~/.config/qutebrowser (like bookmarks/quickmarks) for machine-specific binds
+# that don't belong in the shared config.
+import os
+local_config = os.path.expanduser('~/.config/qutebrowser/local.py')
+if os.path.exists(local_config):
+    config.source(local_config)
+
 
