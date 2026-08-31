@@ -90,7 +90,25 @@ vim.api.nvim_create_autocmd({"BufWinEnter"},{
 vim.api.nvim_create_autocmd({"ColorScheme", "VimEnter"},{
   pattern="*",
   callback = function()
-    vim.api.nvim_set_hl(0, "SignColumn", { ctermbg=234, bg="#444444" })   
+    vim.api.nvim_set_hl(0, "SignColumn", { ctermbg=234, bg="#444444" })
+  end,
+})
+
+-- The active colorscheme (github_dark_tritanopia) sets `fg` on the diff
+-- groups, which overrides syntax/treesitter highlighting on every
+-- added/changed/removed line (e.g. in octo.nvim PR reviews, or plain
+-- :diffthis) - only `bg` should differ so highlighting still shows through.
+vim.api.nvim_create_autocmd({"ColorScheme", "VimEnter"},{
+  pattern="*",
+  callback = function()
+    for _, g in ipairs({ "DiffAdd", "DiffChange", "DiffDelete", "DiffText" }) do
+      -- link=false resolves through the group's link chain to its actual
+      -- bg/fg (nvim_get_hl on a linked group otherwise just returns the
+      -- link name, with no colors to strip fg from).
+      local hl = vim.api.nvim_get_hl(0, { name = g, link = false })
+      hl.fg = nil
+      vim.api.nvim_set_hl(0, g, hl)
+    end
   end,
 })
 
