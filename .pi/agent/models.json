@@ -33,6 +33,40 @@
           }
         }
       ]
+    },
+    "heavyreterminator": {
+      "baseUrl": "http://localhost:9292/heavy/v1",
+      "api": "openai-completions",
+      "apiKey": "not-actually-needed",
+      "models": [
+        {
+          "id": "coding",
+          "name": "coding",
+          "reasoning": true,
+          "input": ["text", "image"],
+          "contextWindow": 128000,
+          "maxTokens": 16000,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 },
+          "thinkingLevelMap": {
+            "off": null,
+            "minimal": null,
+            "low": "low",
+            "medium": "medium",
+            "high": null,
+            "xhigh": "xhigh",
+            "max": null
+          },
+          "compat": {
+            "maxTokensField": "max_tokens",
+            "supportsDeveloperRole": false,
+            "thinkingFormat": "chat-template",
+            "chatTemplateKwargs": {
+              "enable_thinking": { "$var": "thinking.enabled" },
+              "reasoning_effort": { "$var": "thinking.effort" }
+            }
+          }
+        }
+      ]
     }
   }
 }
