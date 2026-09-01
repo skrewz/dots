@@ -11,7 +11,7 @@
     "default_agent": "plan",
     "plugin": ["opencode-smart-voice-notify@latest"],
     "share": "disabled",
-    "model": "reterminator/default",
+    "model": "reterminator/default-think",
     "small_model": "smallreterminator/qw3.5-2b-nonthinking-Q5_K_S-default-ctx16k",
     "provider": {
         "reterminator": {
@@ -23,6 +23,17 @@
             "models": {
                 "default": {
                   "name": "Upstream default model",
+                  "modalities": {
+                    "input": ["text", "image"],
+                    "output": ["text"]
+                  },
+                  "limit": {
+                    "context": 196608,
+                    "output": 65536,
+                  },
+                },
+                "default-think": {
+                  "name": "Upstream default thinking model",
                   "modalities": {
                     "input": ["text", "image"],
                     "output": ["text"]
