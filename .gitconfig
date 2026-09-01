@@ -6,7 +6,7 @@
 [core]
   pager = less
 [push]
-  default = matching
+	default = upstream
 [init]
   defaultBranch = main
 
@@ -24,10 +24,9 @@
   navigate = true
 
 [interactive]
-#    diffFilter = delta --color-only
   diffFilter = delta
 [pull]
-	ff = only
+  ff = only
 
 [include]
   path = ~/.gitconfig-auth
