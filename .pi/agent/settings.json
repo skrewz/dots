@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.73.1",
+  "lastChangelogVersion": "0.84.4",
   "theme": "cyber-glass",
   "treeFilterMode": "default",
   "doubleEscapeAction": "tree",
@@ -26,5 +26,12 @@
   ],
   "prompts": [
     "~/repos/s-ai-skills/prompts"
-  ]
+  ],
+  "terminal": {
+    "showTerminalProgress": false
+  },
+  "steeringMode": "all",
+  "transport": "auto",
+  "defaultThinkingLevel": "low",
+  "hideThinkingBlock": false
 }
