@@ -3,6 +3,11 @@
   "theme": "cyber-glass",
   "treeFilterMode": "default",
   "doubleEscapeAction": "tree",
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 20000,
+    "keepRecentTokens": 16000
+  },
   "retry": {
     "enabled": true,
     "maxRetries": 999,
