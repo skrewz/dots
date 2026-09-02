@@ -18,8 +18,8 @@
       "maxRetryDelayMs": 0
     }
   },
-  "defaultProvider": "reterminator",
-  "defaultModel": "default",
+  "defaultProvider": "heavyreterminator",
+  "defaultModel": "coding",
   "skills": [
     "~/repos/s-ai-skills/human-accessible",
     "~/repos/s-priv-ai-skills/human-accessible"
