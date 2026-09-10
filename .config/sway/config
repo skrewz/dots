@@ -49,7 +49,8 @@ exec swayidle -w \
 # Looks
 
 # This makes it easier to see where keyboard focus is:
-default_border normal 8
+default_border pixel 8
+default_floating_border pixel 8
 titlebar_border_thickness 0
 titlebar_padding 3
 
