@@ -8,6 +8,7 @@
 		"magentaBg": "#300030",
 		"darkGray": "#737383",
 		"midGray": "#808090",
+		"thinkingGray": "#9a9aac",
 		"bgBase": "#000000",
 		"bgSurface": "#050508",
 		"bgSurfaceAlt": "#0a0a12",
@@ -25,7 +26,7 @@
 		"muted": "#d0d0e0",
 		"dim": "#a0a0b0",
 		"text": "#e8e8f0",
-		"thinkingText": "#d0d0e0",
+		"thinkingText": "thinkingGray",
 
 		"selectedBg": "bgSurfaceAlt",
 		"userMessageBg": "#12121e",
