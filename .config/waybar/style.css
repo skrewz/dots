@@ -80,6 +80,7 @@ button:hover {
 #temperature,
 #backlight,
 #network,
+#custom-netrate,
 #pulseaudio,
 #wireplumber,
 #custom-media,
@@ -165,6 +166,16 @@ label:focus {
 
 #network.disconnected {
     background-color: #f53c3c;
+}
+
+/* Bitrate thresholds are handled by scripts/netrate.sh, which returns both
+   Pango markup (per-arrow colour) and a netrate-{ok,warn,crit} class. A custom
+   module's CSS name is `custom-<name>`, hence #custom-netrate.
+   The orange (warn) tier is deliberately left as colour-only; the background is
+   reserved for the red tier so that saturation stays a genuine alarm. Keep the
+   background darker than the #f53c3c foreground, or the digits vanish in it. */
+#custom-netrate.netrate-crit {
+    background-color: #5a1212;
 }
 
 #pulseaudio {

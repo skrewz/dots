@@ -8,7 +8,7 @@
     // Choose the order of the modules
     "modules-left": ["sway/workspaces"],
     "modules-center": [],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "backlight",  "battery", "clock#time", "clock#date", "tray", "idle_inhibitor"],
+    "modules-right": ["pulseaudio", "network", "custom/netrate", "cpu", "memory", "temperature", "backlight",  "battery", "clock#time", "clock#date", "tray", "idle_inhibitor"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -152,7 +152,8 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "↓{bandwidthDownBits}\n↑{bandwidthUpBits}",
+        // Bitrate moved to custom/netrate, which can colour it by value.
+        "format-wifi": "WiFi {signalStrength}%",
         "interval": 1,
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format-wifi": "{ifname} {essid} ({signalStrength}%)",
@@ -160,6 +161,16 @@
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    // Waybar's network module has no bandwidth-based CSS classes, so the
+    // bitrate lives here instead. The script returns Pango markup (per-arrow
+    // colour) plus a netrate-{ok,warn,crit} class. Keep `escape` unset: if it
+    // were true the markup would be escaped rather than rendered.
+    "custom/netrate": {
+        "format": "{text}",
+        "exec": "$HOME/.config/waybar/scripts/netrate.sh",
+        "interval": 1,
+        "return-type": "json"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
