@@ -12,6 +12,12 @@
 #                               module graph, so the patch is proven to hit the
 #                               class pi actually instantiates
 #
+# The bash-highlight renderer resolver in ../extensions/bash-highlight/index.ts
+# is checked by bash-highlight.test.ts: it must leave every tool it does not own
+# exactly as pi would have rendered it (see "Tool rendering" in pi's
+# docs/extensions.md — returning undefined opts a tool out of rendering rather
+# than passing to the next resolver).
+#
 # They are run with pi's bundled jiti loader — the same loader pi uses to load
 # extensions — so module resolution matches what pi actually does. (Plain
 # `node` cannot run them: native type-stripping does not resolve the
@@ -35,3 +41,4 @@ test:
 	$(JITI) $(HERE)command-gate.smoke.ts
 	$(JITI) $(HERE)thinking-tokens.test.ts
 	$(JITI) $(HERE)thinking-tokens.smoke.ts
+	$(JITI) $(HERE)bash-highlight.test.ts

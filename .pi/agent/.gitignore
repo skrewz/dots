@@ -2,3 +2,6 @@ sessions
 auth.json
 models-store.json
 trust.json
+# Dependencies an extension installs for itself (npm install in its own
+# directory); each extension's README says how. Never vendored.
+extensions/*/node_modules/

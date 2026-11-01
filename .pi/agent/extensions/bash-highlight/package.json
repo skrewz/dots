@@ -1,0 +1,22 @@
+{
+	"name": "pi-bash-highlight",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Syntax-highlight the shell commands pi runs, with the tree-sitter-bash grammar",
+	"license": "MIT",
+	"pi": {
+		"extensions": ["./index.ts"]
+	},
+	"dependencies": {
+		"tree-sitter-bash": "0.25.1",
+		"web-tree-sitter": "0.27.1"
+	},
+	"peerDependencies": {
+		"@earendil-works/pi-coding-agent": "*",
+		"@earendil-works/pi-tui": "*"
+	},
+	"peerDependenciesMeta": {
+		"@earendil-works/pi-coding-agent": { "optional": true },
+		"@earendil-works/pi-tui": { "optional": true }
+	}
+}
