@@ -27,6 +27,7 @@
   "prompts": [
     "~/repos/s-ai-skills/prompts"
   ],
+  "shellCommandPrefix": "export GIT_EDITOR=true GIT_SEQUENCE_EDITOR=true GIT_MERGE_AUTOEDIT=no",
   "terminal": {
     "showTerminalProgress": false
   },
