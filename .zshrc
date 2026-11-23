@@ -144,6 +144,13 @@ bindkey -v # Vim bindings
 bindkey -M vicmd 'h' vi-backward-char
 bindkey -M vicmd 's' vi-forward-char
 
+# oh-my-zsh binds edit-command-line to Ctrl-X Ctrl-E, but only on the emacs
+# keymap that is active when it is sourced. bindkey -v above switches us to the
+# vi keymaps, which do not inherit that binding, so re-bind it here: in normal
+# mode 'v' sends the current line to $EDITOR, in insert mode Ctrl-X Ctrl-E does.
+bindkey -M vicmd 'v' edit-command-line
+bindkey -M viins '^x^e' edit-command-line
+
 
 # This has a whole zshzle manpage section to itself:
 # also consider vi-history-search-backward (/) in vicmd mode
