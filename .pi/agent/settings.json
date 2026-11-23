@@ -33,5 +33,5 @@
   "steeringMode": "all",
   "transport": "auto",
   "defaultThinkingLevel": "low",
-  "hideThinkingBlock": false
+  "hideThinkingBlock": true
 }

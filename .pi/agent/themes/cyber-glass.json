@@ -4,8 +4,7 @@
 	"vars": {
 		"cyan": "#00e5ff",
 		"magenta": "#ff00ff",
-		"cyanBg": "#003040",
-		"magentaBg": "#300030",
+
 		"darkGray": "#737383",
 		"midGray": "#808090",
 		"thinkingGray": "#9a9aac",
@@ -52,9 +51,7 @@
 		"mdListBullet": "cyan",
 
 		"toolDiffAdded": "cyan",
-		"toolDiffAddedBg": "cyanBg",
 		"toolDiffRemoved": "magenta",
-		"toolDiffRemovedBg": "magentaBg",
 		"toolDiffContext": "darkGray",
 
 		"syntaxComment": "darkGray",
