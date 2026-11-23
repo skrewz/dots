@@ -99,7 +99,7 @@ bindsym $mod+Return    exec kitty --single-instance --listen-on unix:@mykitty
 bindsym $mod+Shift+Return exec ~/.config/sway/scripts/spawn-terminal-in-focused-cwd.sh
 bindsym $mod+Backspace exec ~/bin/s-browser
 bindsym $mod+Shift+Backspace exec ~/bin/s-chromium
-bindsym Mod1+Shift+4   exec ~/.config/sway/scripts/screenshot-snippet.sh
+bindsym $mod+4         exec ~/.config/sway/scripts/screenshot-snippet.sh
 
 bindsym $mod+Tab   exec ~/repos/stentor/target/release/stentorctl transcribe
 bindsym $mod+Shift+Tab   exec ~/repos/stentor/target/release/stentorctl transcribe-end
