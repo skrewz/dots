@@ -2,7 +2,7 @@
 
 tmpfile="$(mktemp -u /tmp/screenshot_XXXXXX.png)"
 slurpcoords="$(slurp)"
-notify-send -t 5000 "Slurp coordinates" "We have slurpcoords: $slurpcoords"
+# notify-send -t 5000 "Slurp coordinates" "We have slurpcoords: $slurpcoords"
 
 grim -g "$slurpcoords" "$tmpfile" || exit 1
 
