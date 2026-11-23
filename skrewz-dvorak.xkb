@@ -15,7 +15,9 @@ xkb_symbols "basic" {
     key <AE03> { [3          , numbersign , dead_caron                        ] };
     key <AE04> { [4          , dollar     , dead_grave                        ] };
 
-    key <TLDE> { [NoSymbol   , NoSymbol   , NoSymbol        , NoSymbol        ] };
+    // Inert. VoidSymbol, not NoSymbol: a second definition only merges, so
+    // NoSymbol can't clobber the grave/tilde us(dvorak) already assigned here.
+    key <TLDE> { [VoidSymbol , VoidSymbol , VoidSymbol    , VoidSymbol      ] };
   
 
     key <AC01> { [a          , A          , aring           , Aring           ] };
@@ -31,10 +33,10 @@ xkb_symbols "basic" {
     //key <AB01> { [ae         , AE         , braceleft       , bracketleft     ] };
 
     // brackets on the row above the home row's right hand:
-    key <AD07> { [g          , G          , bracketleft                       ] };
-    key <AD08> { [c          , C          , bracketright                      ] };
-    key <AD09> { [r          , R          , braceleft                         ] };
-    key <AD10> { [l          , L          , braceright                        ] };
+    key <AD07> { [g          , G          , VoidSymbol    , bracketleft       ] };
+    key <AD08> { [c          , C          , VoidSymbol    , bracketright      ] };
+    key <AD09> { [r          , R          , VoidSymbol    , braceleft         ] };
+    key <AD10> { [l          , L          , VoidSymbol    , braceright        ] };
 
 
 
@@ -64,6 +66,12 @@ xkb_symbols "basic" {
     // TODO: There's gotta be some meat on these binds...:
     key <CAPS> { [Escape                                                      ] };
     key <SPCE> { [space      , space      , space           , space           ] };
+
+    // Print key (sits between RAlt and RCtrl on this keyboard) -> Enter:
+    key <PRSC> { [Return                                                      ] };
+
+    // Key to the right of RAlt on this keyboard reports F23 -> Enter:
+    key <FK23> { [Return                                                      ] };
 
     // fixed https://bugs.freedesktop.org/show_bug.cgi?id=4397
     include "level3(ralt_switch)"
